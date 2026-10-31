@@ -18,8 +18,8 @@ Colours:
 - Accents, used sparingly (badges, small highlights only): Antique Gold #E6C79A, Burnt Saffron #C46A2D, Rust Orange #C65D2E, Burnt Terracotta #A44A2F, Muted Ochre #C2A24D
 Typography:
 - Headings and display: "Playfair Display" (stand-in for Canela). Large, elegant, generous letter-spacing on uppercase eyebrow labels.
-- Body, UI, labels, prices: "DM Sans" (stand-in for Maison Neue). Light and Regular weights, wide tracking on small uppercase labels.
-- Script accent: "Mrs Saint Delafield". Use only for rare human-touch moments (founder signature, a word like "Ritual" in a section title, thank-you message). Never for UI.
+- Body, UI, labels, prices: "Albert Sans" (stand-in for Maison Neue). Light and Regular weights, wide tracking on small uppercase labels.
+- Script accent: "Ms Madi" (stand-in for Quentin Script). Use only for rare human-touch moments (founder signature, a word like "Ritual" in a section title, thank-you message). Never for UI.
 Logo: use the uploaded logo file as-is. Do not recolour, crop, rotate, add shadows or effects, lower its opacity, or place it over busy imagery. Give it clear space on all sides.
 Signature design motifs (use subtly, this is what makes the site feel like the brand):
 - Sashiko stitching: a faint diagonal cross-hatch pattern of dashed lines, used as a very low-contrast texture on blush or sand sections.
