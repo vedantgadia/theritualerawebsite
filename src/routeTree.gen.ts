@@ -14,19 +14,23 @@ import { Route as SiteIndexRouteImport } from './routes/_site.index'
 import { Route as SiteAboutRouteImport } from './routes/_site.about'
 import { Route as SiteAccountRouteImport } from './routes/_site.account'
 import { Route as SiteAuthRouteImport } from './routes/_site.auth'
+import { Route as SiteBestsellersRouteImport } from './routes/_site.bestsellers'
 import { Route as SiteCartRouteImport } from './routes/_site.cart'
 import { Route as SiteCheckoutRouteImport } from './routes/_site.checkout'
 import { Route as SiteContactRouteImport } from './routes/_site.contact'
 import { Route as SiteLookbookRouteImport } from './routes/_site.lookbook'
+import { Route as SiteNewArrivalsRouteImport } from './routes/_site.new-arrivals'
 import { Route as SitePopUpsRouteImport } from './routes/_site.pop-ups'
 import { Route as SitePrivacyPolicyRouteImport } from './routes/_site.privacy-policy'
 import { Route as SiteReturnsPolicyRouteImport } from './routes/_site.returns-policy'
 import { Route as SiteShippingPolicyRouteImport } from './routes/_site.shipping-policy'
-import { Route as SiteShopRouteImport } from './routes/_site.shop'
 import { Route as SiteTermsRouteImport } from './routes/_site.terms'
 import { Route as SiteTrackOrderRouteImport } from './routes/_site.track-order'
+import { Route as SiteCollectionsIndexRouteImport } from './routes/_site.collections.index'
+import { Route as SiteCollectionsSlugRouteImport } from './routes/_site.collections.$slug'
 import { Route as SiteLookbookSlugRouteImport } from './routes/_site.lookbook.$slug'
 import { Route as SiteProductSlugRouteImport } from './routes/_site.product.$slug'
+import { Route as SiteShopIndexRouteImport } from './routes/_site.shop.index'
 import { Route as SiteShopCategoryRouteImport } from './routes/_site.shop.$category'
 
 const SiteRoute = SiteRouteImport.update({
@@ -53,6 +57,11 @@ const SiteAuthRoute = SiteAuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => SiteRoute,
 } as any)
+const SiteBestsellersRoute = SiteBestsellersRouteImport.update({
+  id: '/bestsellers',
+  path: '/bestsellers',
+  getParentRoute: () => SiteRoute,
+} as any)
 const SiteCartRoute = SiteCartRouteImport.update({
   id: '/cart',
   path: '/cart',
@@ -71,6 +80,11 @@ const SiteContactRoute = SiteContactRouteImport.update({
 const SiteLookbookRoute = SiteLookbookRouteImport.update({
   id: '/lookbook',
   path: '/lookbook',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteNewArrivalsRoute = SiteNewArrivalsRouteImport.update({
+  id: '/new-arrivals',
+  path: '/new-arrivals',
   getParentRoute: () => SiteRoute,
 } as any)
 const SitePopUpsRoute = SitePopUpsRouteImport.update({
@@ -93,11 +107,6 @@ const SiteShippingPolicyRoute = SiteShippingPolicyRouteImport.update({
   path: '/shipping-policy',
   getParentRoute: () => SiteRoute,
 } as any)
-const SiteShopRoute = SiteShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => SiteRoute,
-} as any)
 const SiteTermsRoute = SiteTermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -106,6 +115,16 @@ const SiteTermsRoute = SiteTermsRouteImport.update({
 const SiteTrackOrderRoute = SiteTrackOrderRouteImport.update({
   id: '/track-order',
   path: '/track-order',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteCollectionsIndexRoute = SiteCollectionsIndexRouteImport.update({
+  id: '/collections/',
+  path: '/collections/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteCollectionsSlugRoute = SiteCollectionsSlugRouteImport.update({
+  id: '/collections/$slug',
+  path: '/collections/$slug',
   getParentRoute: () => SiteRoute,
 } as any)
 const SiteLookbookSlugRoute = SiteLookbookSlugRouteImport.update({
@@ -118,10 +137,15 @@ const SiteProductSlugRoute = SiteProductSlugRouteImport.update({
   path: '/product/$slug',
   getParentRoute: () => SiteRoute,
 } as any)
+const SiteShopIndexRoute = SiteShopIndexRouteImport.update({
+  id: '/shop/',
+  path: '/shop/',
+  getParentRoute: () => SiteRoute,
+} as any)
 const SiteShopCategoryRoute = SiteShopCategoryRouteImport.update({
-  id: '/$category',
-  path: '/$category',
-  getParentRoute: () => SiteShopRoute,
+  id: '/shop/$category',
+  path: '/shop/$category',
+  getParentRoute: () => SiteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -129,40 +153,48 @@ export interface FileRoutesByFullPath {
   '/about': typeof SiteAboutRoute
   '/account': typeof SiteAccountRoute
   '/auth': typeof SiteAuthRoute
+  '/bestsellers': typeof SiteBestsellersRoute
   '/cart': typeof SiteCartRoute
   '/checkout': typeof SiteCheckoutRoute
   '/contact': typeof SiteContactRoute
   '/lookbook': typeof SiteLookbookRouteWithChildren
+  '/new-arrivals': typeof SiteNewArrivalsRoute
   '/pop-ups': typeof SitePopUpsRoute
   '/privacy-policy': typeof SitePrivacyPolicyRoute
   '/returns-policy': typeof SiteReturnsPolicyRoute
   '/shipping-policy': typeof SiteShippingPolicyRoute
-  '/shop': typeof SiteShopRouteWithChildren
   '/terms': typeof SiteTermsRoute
   '/track-order': typeof SiteTrackOrderRoute
+  '/collections/$slug': typeof SiteCollectionsSlugRoute
   '/lookbook/$slug': typeof SiteLookbookSlugRoute
   '/product/$slug': typeof SiteProductSlugRoute
   '/shop/$category': typeof SiteShopCategoryRoute
+  '/collections/': typeof SiteCollectionsIndexRoute
+  '/shop/': typeof SiteShopIndexRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof SiteAboutRoute
   '/account': typeof SiteAccountRoute
   '/auth': typeof SiteAuthRoute
+  '/bestsellers': typeof SiteBestsellersRoute
   '/cart': typeof SiteCartRoute
   '/checkout': typeof SiteCheckoutRoute
   '/contact': typeof SiteContactRoute
   '/lookbook': typeof SiteLookbookRouteWithChildren
+  '/new-arrivals': typeof SiteNewArrivalsRoute
   '/pop-ups': typeof SitePopUpsRoute
   '/privacy-policy': typeof SitePrivacyPolicyRoute
   '/returns-policy': typeof SiteReturnsPolicyRoute
   '/shipping-policy': typeof SiteShippingPolicyRoute
-  '/shop': typeof SiteShopRouteWithChildren
   '/terms': typeof SiteTermsRoute
   '/track-order': typeof SiteTrackOrderRoute
   '/': typeof SiteIndexRoute
+  '/collections/$slug': typeof SiteCollectionsSlugRoute
   '/lookbook/$slug': typeof SiteLookbookSlugRoute
   '/product/$slug': typeof SiteProductSlugRoute
   '/shop/$category': typeof SiteShopCategoryRoute
+  '/collections': typeof SiteCollectionsIndexRoute
+  '/shop': typeof SiteShopIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -170,21 +202,25 @@ export interface FileRoutesById {
   '/_site/about': typeof SiteAboutRoute
   '/_site/account': typeof SiteAccountRoute
   '/_site/auth': typeof SiteAuthRoute
+  '/_site/bestsellers': typeof SiteBestsellersRoute
   '/_site/cart': typeof SiteCartRoute
   '/_site/checkout': typeof SiteCheckoutRoute
   '/_site/contact': typeof SiteContactRoute
   '/_site/lookbook': typeof SiteLookbookRouteWithChildren
+  '/_site/new-arrivals': typeof SiteNewArrivalsRoute
   '/_site/pop-ups': typeof SitePopUpsRoute
   '/_site/privacy-policy': typeof SitePrivacyPolicyRoute
   '/_site/returns-policy': typeof SiteReturnsPolicyRoute
   '/_site/shipping-policy': typeof SiteShippingPolicyRoute
-  '/_site/shop': typeof SiteShopRouteWithChildren
   '/_site/terms': typeof SiteTermsRoute
   '/_site/track-order': typeof SiteTrackOrderRoute
   '/_site/': typeof SiteIndexRoute
+  '/_site/collections/$slug': typeof SiteCollectionsSlugRoute
   '/_site/lookbook/$slug': typeof SiteLookbookSlugRoute
   '/_site/product/$slug': typeof SiteProductSlugRoute
   '/_site/shop/$category': typeof SiteShopCategoryRoute
+  '/_site/collections/': typeof SiteCollectionsIndexRoute
+  '/_site/shop/': typeof SiteShopIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -193,61 +229,73 @@ export interface FileRouteTypes {
     | '/about'
     | '/account'
     | '/auth'
+    | '/bestsellers'
     | '/cart'
     | '/checkout'
     | '/contact'
     | '/lookbook'
+    | '/new-arrivals'
     | '/pop-ups'
     | '/privacy-policy'
     | '/returns-policy'
     | '/shipping-policy'
-    | '/shop'
     | '/terms'
     | '/track-order'
+    | '/collections/$slug'
     | '/lookbook/$slug'
     | '/product/$slug'
     | '/shop/$category'
+    | '/collections/'
+    | '/shop/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/about'
     | '/account'
     | '/auth'
+    | '/bestsellers'
     | '/cart'
     | '/checkout'
     | '/contact'
     | '/lookbook'
+    | '/new-arrivals'
     | '/pop-ups'
     | '/privacy-policy'
     | '/returns-policy'
     | '/shipping-policy'
-    | '/shop'
     | '/terms'
     | '/track-order'
     | '/'
+    | '/collections/$slug'
     | '/lookbook/$slug'
     | '/product/$slug'
     | '/shop/$category'
+    | '/collections'
+    | '/shop'
   id:
     | '__root__'
     | '/_site'
     | '/_site/about'
     | '/_site/account'
     | '/_site/auth'
+    | '/_site/bestsellers'
     | '/_site/cart'
     | '/_site/checkout'
     | '/_site/contact'
     | '/_site/lookbook'
+    | '/_site/new-arrivals'
     | '/_site/pop-ups'
     | '/_site/privacy-policy'
     | '/_site/returns-policy'
     | '/_site/shipping-policy'
-    | '/_site/shop'
     | '/_site/terms'
     | '/_site/track-order'
     | '/_site/'
+    | '/_site/collections/$slug'
     | '/_site/lookbook/$slug'
     | '/_site/product/$slug'
     | '/_site/shop/$category'
+    | '/_site/collections/'
+    | '/_site/shop/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -291,6 +339,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteAuthRouteImport
       parentRoute: typeof SiteRoute
     }
+    '/_site/bestsellers': {
+      id: '/_site/bestsellers'
+      path: '/bestsellers'
+      fullPath: '/bestsellers'
+      preLoaderRoute: typeof SiteBestsellersRouteImport
+      parentRoute: typeof SiteRoute
+    }
     '/_site/cart': {
       id: '/_site/cart'
       path: '/cart'
@@ -317,6 +372,13 @@ declare module '@tanstack/react-router' {
       path: '/lookbook'
       fullPath: '/lookbook'
       preLoaderRoute: typeof SiteLookbookRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/new-arrivals': {
+      id: '/_site/new-arrivals'
+      path: '/new-arrivals'
+      fullPath: '/new-arrivals'
+      preLoaderRoute: typeof SiteNewArrivalsRouteImport
       parentRoute: typeof SiteRoute
     }
     '/_site/pop-ups': {
@@ -347,13 +409,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteShippingPolicyRouteImport
       parentRoute: typeof SiteRoute
     }
-    '/_site/shop': {
-      id: '/_site/shop'
-      path: '/shop'
-      fullPath: '/shop'
-      preLoaderRoute: typeof SiteShopRouteImport
-      parentRoute: typeof SiteRoute
-    }
     '/_site/terms': {
       id: '/_site/terms'
       path: '/terms'
@@ -366,6 +421,20 @@ declare module '@tanstack/react-router' {
       path: '/track-order'
       fullPath: '/track-order'
       preLoaderRoute: typeof SiteTrackOrderRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/collections/': {
+      id: '/_site/collections/'
+      path: '/collections'
+      fullPath: '/collections/'
+      preLoaderRoute: typeof SiteCollectionsIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/collections/$slug': {
+      id: '/_site/collections/$slug'
+      path: '/collections/$slug'
+      fullPath: '/collections/$slug'
+      preLoaderRoute: typeof SiteCollectionsSlugRouteImport
       parentRoute: typeof SiteRoute
     }
     '/_site/lookbook/$slug': {
@@ -382,12 +451,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteProductSlugRouteImport
       parentRoute: typeof SiteRoute
     }
+    '/_site/shop/': {
+      id: '/_site/shop/'
+      path: '/shop'
+      fullPath: '/shop/'
+      preLoaderRoute: typeof SiteShopIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
     '/_site/shop/$category': {
       id: '/_site/shop/$category'
-      path: '/$category'
+      path: '/shop/$category'
       fullPath: '/shop/$category'
       preLoaderRoute: typeof SiteShopCategoryRouteImport
-      parentRoute: typeof SiteShopRoute
+      parentRoute: typeof SiteRoute
     }
   }
 }
@@ -404,54 +480,52 @@ const SiteLookbookRouteWithChildren = SiteLookbookRoute._addFileChildren(
   SiteLookbookRouteChildren,
 )
 
-interface SiteShopRouteChildren {
-  SiteShopCategoryRoute: typeof SiteShopCategoryRoute
-}
-
-const SiteShopRouteChildren: SiteShopRouteChildren = {
-  SiteShopCategoryRoute: SiteShopCategoryRoute,
-}
-
-const SiteShopRouteWithChildren = SiteShopRoute._addFileChildren(
-  SiteShopRouteChildren,
-)
-
 interface SiteRouteChildren {
   SiteAboutRoute: typeof SiteAboutRoute
   SiteAccountRoute: typeof SiteAccountRoute
   SiteAuthRoute: typeof SiteAuthRoute
+  SiteBestsellersRoute: typeof SiteBestsellersRoute
   SiteCartRoute: typeof SiteCartRoute
   SiteCheckoutRoute: typeof SiteCheckoutRoute
   SiteContactRoute: typeof SiteContactRoute
   SiteLookbookRoute: typeof SiteLookbookRouteWithChildren
+  SiteNewArrivalsRoute: typeof SiteNewArrivalsRoute
   SitePopUpsRoute: typeof SitePopUpsRoute
   SitePrivacyPolicyRoute: typeof SitePrivacyPolicyRoute
   SiteReturnsPolicyRoute: typeof SiteReturnsPolicyRoute
   SiteShippingPolicyRoute: typeof SiteShippingPolicyRoute
-  SiteShopRoute: typeof SiteShopRouteWithChildren
   SiteTermsRoute: typeof SiteTermsRoute
   SiteTrackOrderRoute: typeof SiteTrackOrderRoute
   SiteIndexRoute: typeof SiteIndexRoute
+  SiteCollectionsSlugRoute: typeof SiteCollectionsSlugRoute
   SiteProductSlugRoute: typeof SiteProductSlugRoute
+  SiteShopCategoryRoute: typeof SiteShopCategoryRoute
+  SiteCollectionsIndexRoute: typeof SiteCollectionsIndexRoute
+  SiteShopIndexRoute: typeof SiteShopIndexRoute
 }
 
 const SiteRouteChildren: SiteRouteChildren = {
   SiteAboutRoute: SiteAboutRoute,
   SiteAccountRoute: SiteAccountRoute,
   SiteAuthRoute: SiteAuthRoute,
+  SiteBestsellersRoute: SiteBestsellersRoute,
   SiteCartRoute: SiteCartRoute,
   SiteCheckoutRoute: SiteCheckoutRoute,
   SiteContactRoute: SiteContactRoute,
   SiteLookbookRoute: SiteLookbookRouteWithChildren,
+  SiteNewArrivalsRoute: SiteNewArrivalsRoute,
   SitePopUpsRoute: SitePopUpsRoute,
   SitePrivacyPolicyRoute: SitePrivacyPolicyRoute,
   SiteReturnsPolicyRoute: SiteReturnsPolicyRoute,
   SiteShippingPolicyRoute: SiteShippingPolicyRoute,
-  SiteShopRoute: SiteShopRouteWithChildren,
   SiteTermsRoute: SiteTermsRoute,
   SiteTrackOrderRoute: SiteTrackOrderRoute,
   SiteIndexRoute: SiteIndexRoute,
+  SiteCollectionsSlugRoute: SiteCollectionsSlugRoute,
   SiteProductSlugRoute: SiteProductSlugRoute,
+  SiteShopCategoryRoute: SiteShopCategoryRoute,
+  SiteCollectionsIndexRoute: SiteCollectionsIndexRoute,
+  SiteShopIndexRoute: SiteShopIndexRoute,
 }
 
 const SiteRouteWithChildren = SiteRoute._addFileChildren(SiteRouteChildren)

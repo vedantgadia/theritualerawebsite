@@ -2,6 +2,19 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
+import {
+  CATEGORIES,
+  COLLECTIONS,
+  PRODUCTS,
+  careFor,
+  categoriesFor,
+  createdAtFor,
+  imagesFor,
+  stockFor,
+} from "@/lib/mock-catalog";
+
+/* Serve the lookbook mock catalogue instead of Supabase until real products are loaded. */
+const USE_MOCK_CATALOG = true;
 
 /* Publishable-key client for anonymous catalog reads (SSR-safe). */
 function publicClient() {
@@ -39,6 +52,12 @@ export interface CatalogProduct {
   categorySlug: string | null;
   sizes: SizeStock[];
   createdAt: string;
+  fabric: string;
+  colour: string;
+  categorySlugs: string[];
+  collections: string[];
+  isNew: boolean;
+  bestsellerRank: number | null;
 }
 
 export interface SiteSettings {
@@ -64,7 +83,69 @@ function mapProduct(row: any): CatalogProduct {
       .map((s: any) => ({ size: s.size, stock: s.stock }))
       .sort((a: SizeStock, b: SizeStock) => ["XS", "S", "M", "L", "XL"].indexOf(a.size) - ["XS", "S", "M", "L", "XL"].indexOf(b.size)),
     createdAt: row.created_at,
+    fabric: "",
+    colour: "",
+    categorySlugs: row.category?.slug ? [row.category.slug] : [],
+    collections: [],
+    isNew: false,
+    bestsellerRank: null,
   };
+}
+
+const SIZES = ["XS", "S", "M", "L", "XL"];
+const categoryName = (slug: string) => CATEGORIES.find((c) => c.slug === slug)?.name ?? null;
+
+const MOCK_PRODUCTS: ProductDetail[] = PRODUCTS.map((p, i) => ({
+  id: `mock-${i + 1}`,
+  name: p.name,
+  slug: p.slug,
+  description: p.description,
+  price: p.price,
+  compareAtPrice: p.compareAtPrice ?? null,
+  images: imagesFor(p),
+  limitedEdition: !!p.limited,
+  featured: !!p.featured,
+  categoryName: categoryName(p.category),
+  categorySlug: p.category,
+  sizes: stockFor(p, i).map((stock, s) => ({ size: SIZES[s]!, stock })),
+  createdAt: createdAtFor(p, i),
+  fabric: p.fabric,
+  colour: p.colour,
+  categorySlugs: categoriesFor(p),
+  collections: p.collections,
+  isNew: !!p.isNew,
+  bestsellerRank: p.bestseller ?? null,
+  fabricNotes: `${p.fabric}. ${p.details.join(". ")}. Designed and made in-house in Mumbai in small, limited runs.`,
+  fitNotes: `${p.fit} Our model is 5'7" and wears size S.`,
+  careInstructions: careFor(p),
+  shippingReturns:
+    "Ships within 3–5 working days across India. Free shipping on orders above ₹5,000. Exchanges accepted within 7 days of delivery on unworn pieces with tags attached.",
+}));
+
+function mockCatalog(f: CatalogFilters): CatalogProduct[] {
+  let list = MOCK_PRODUCTS.filter((p) => {
+    if (f.category && !p.categorySlugs.includes(f.category)) return false;
+    if (f.collection && !p.collections.includes(f.collection)) return false;
+    if (f.isNew && !p.isNew) return false;
+    if (f.bestseller && p.bestsellerRank == null) return false;
+    if (f.featured && !p.featured) return false;
+    if (f.size && !p.sizes.some((s) => s.size === f.size && s.stock > 0)) return false;
+    if (f.minPrice != null && p.price < f.minPrice) return false;
+    if (f.maxPrice != null && p.price > f.maxPrice) return false;
+    if (f.q) {
+      const q = f.q.toLowerCase();
+      if (![p.name, p.description, p.fabric, p.colour].some((t) => t.toLowerCase().includes(q))) return false;
+    }
+    return true;
+  });
+  const sort = f.sort ?? (f.bestseller ? "bestselling" : "newest");
+  list = [...list].sort((a, b) => {
+    if (sort === "price-asc") return a.price - b.price;
+    if (sort === "price-desc") return b.price - a.price;
+    if (sort === "bestselling") return (a.bestsellerRank ?? 999) - (b.bestsellerRank ?? 999);
+    return b.createdAt.localeCompare(a.createdAt);
+  });
+  return list.slice(0, f.limit ?? 120);
 }
 
 const catalogInput = z.object({
@@ -72,9 +153,12 @@ const catalogInput = z.object({
   size: z.string().optional(),
   minPrice: z.number().optional(),
   maxPrice: z.number().optional(),
-  sort: z.enum(["newest", "price-asc", "price-desc"]).optional(),
+  sort: z.enum(["newest", "price-asc", "price-desc", "bestselling"]).optional(),
   q: z.string().optional(),
   featured: z.boolean().optional(),
+  collection: z.string().optional(),
+  isNew: z.boolean().optional(),
+  bestseller: z.boolean().optional(),
   limit: z.number().optional(),
 });
 
@@ -83,6 +167,7 @@ export type CatalogFilters = z.infer<typeof catalogInput>;
 export const getCatalog = createServerFn({ method: "GET" })
   .inputValidator((d: unknown) => catalogInput.parse(d ?? {}))
   .handler(async ({ data }) => {
+    if (USE_MOCK_CATALOG) return mockCatalog(data);
     const db = publicClient();
     let query = db
       .from("products")
@@ -116,6 +201,7 @@ export interface ProductDetail extends CatalogProduct {
 export const getProductBySlug = createServerFn({ method: "GET" })
   .inputValidator((d: { slug: string }) => z.object({ slug: z.string().min(1).max(120) }).parse(d))
   .handler(async ({ data }) => {
+    if (USE_MOCK_CATALOG) return MOCK_PRODUCTS.find((p) => p.slug === data.slug) ?? null;
     const db = publicClient();
     const { data: row, error } = await db
       .from("products")
@@ -140,6 +226,11 @@ export const getRelatedProducts = createServerFn({ method: "GET" })
     z.object({ categorySlug: z.string().nullable(), excludeSlug: z.string() }).parse(d),
   )
   .handler(async ({ data }) => {
+    if (USE_MOCK_CATALOG) {
+      const others = MOCK_PRODUCTS.filter((p) => p.slug !== data.excludeSlug);
+      const same = others.filter((p) => data.categorySlug && p.categorySlugs.includes(data.categorySlug));
+      return [...same, ...others.filter((p) => !same.includes(p))].slice(0, 4);
+    }
     const db = publicClient();
     let query = db
       .from("products")
@@ -164,6 +255,9 @@ export const getRelatedProducts = createServerFn({ method: "GET" })
   });
 
 export const getSettings = createServerFn({ method: "GET" }).handler(async (): Promise<SiteSettings> => {
+  if (USE_MOCK_CATALOG) {
+    return { shippingFee: 150, freeShippingThreshold: 5000, announcement: "Complimentary shipping across India on orders above ₹5,000" };
+  }
   const db = publicClient();
   const { data } = await db.from("site_settings").select("shipping_fee, free_shipping_threshold, announcement").eq("id", 1).maybeSingle();
   return {
@@ -277,8 +371,30 @@ export const getPopupEvents = createServerFn({ method: "GET" }).handler(async ()
   }));
 });
 
-export const getCategories = createServerFn({ method: "GET" }).handler(async () => {
+export interface ShopCategory {
+  id: string;
+  name: string;
+  slug: string;
+  blurb: string;
+  image: string;
+}
+
+export const getCategories = createServerFn({ method: "GET" }).handler(async (): Promise<ShopCategory[]> => {
+  if (USE_MOCK_CATALOG) return CATEGORIES.map((c) => ({ id: c.slug, ...c }));
   const db = publicClient();
   const { data } = await db.from("categories").select("id, name, slug").order("sort_order", { ascending: true });
-  return data ?? [];
+  return (data ?? []).map((c) => ({ ...c, blurb: "", image: "" }));
 });
+
+export interface ShopCollection {
+  slug: string;
+  name: string;
+  tagline: string;
+  story: string;
+  coverImage: string;
+  count: number;
+}
+
+export const getCollections = createServerFn({ method: "GET" }).handler(async (): Promise<ShopCollection[]> =>
+  COLLECTIONS.map((c) => ({ ...c, count: MOCK_PRODUCTS.filter((p) => p.collections.includes(c.slug)).length })),
+);

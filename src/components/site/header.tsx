@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getCatalog, getSettings, type CatalogProduct } from "@/lib/shop.functions";
+import { getCatalog, getCategories, getCollections, getSettings, type CatalogProduct } from "@/lib/shop.functions";
 import { useBag } from "@/lib/cart";
 import { supabase } from "@/integrations/supabase/client";
 import { formatINR } from "@/lib/format";
@@ -9,10 +9,10 @@ import { formatINR } from "@/lib/format";
 function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
     <Link to="/" className="group block text-center leading-none" aria-label="The Ritual Era — home">
-      <span className={`block font-display text-ink transition-colors group-hover:text-ritual ${compact ? "text-lg tracking-[0.14em]" : "text-xl tracking-[0.18em]"}`}>
+      <span className={`block font-display text-ink transition-colors group-hover:text-ritual ${compact ? "text-lg tracking-[0.14em]" : "text-[15px] tracking-[0.16em] sm:text-xl sm:tracking-[0.18em]"}`}>
         THE RITUAL ERA
       </span>
-      <span className="mt-1 block font-sans text-[8px] font-medium uppercase tracking-[0.34em] text-taupe">
+      <span className="mt-1 hidden font-sans text-[8px] sm:block font-medium uppercase tracking-[0.34em] text-taupe">
         Her Forever Prêt
       </span>
     </Link>
@@ -54,7 +54,7 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
           value={q}
           onChange={(e) => setQ(e.target.value)}
           onKeyDown={(e) => e.key === "Escape" && onClose()}
-          placeholder="Try 'kantha', 'denim', 'wrap'…"
+          placeholder="Try 'ajrakh', 'crochet', 'denim'…"
           className="w-full border-b border-ink/20 bg-transparent pb-3 font-display text-2xl text-ink placeholder:text-taupe/60 focus:border-ritual focus:outline-none"
         />
         <div className="mt-6 divide-y divide-border">
@@ -80,15 +80,32 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
   );
 }
 
+type MenuKey = "clothing" | "collections" | null;
+
+const navLinkClass =
+  "font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-ink/80 transition-colors hover:text-ritual";
+
+function Chevron({ open }: { open: boolean }) {
+  return (
+    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" strokeWidth="1" className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`} aria-hidden>
+      <path d="M1 2.5l3 3 3-3" />
+    </svg>
+  );
+}
+
 export function Header() {
   const bag = useBag();
-  const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileSection, setMobileSection] = useState<MenuKey>(null);
+  const [megaOpen, setMegaOpen] = useState<MenuKey>(null);
   const [signedIn, setSignedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: () => getSettings() });
+  const { data: categories = [] } = useQuery({ queryKey: ["categories"], queryFn: () => getCategories() });
+  const { data: collections = [] } = useQuery({ queryKey: ["collections"], queryFn: () => getCollections() });
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSignedIn(!!data.session));
@@ -104,66 +121,59 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const navLinks = [
-    { label: "Shop", to: "/shop" },
-    { label: "Lookbook", to: "/lookbook" },
-    { label: "Pop-ups", to: "/pop-ups" },
-    { label: "About", to: "/about" },
-  ] as const;
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  // Small delay on close so the pointer can travel from the nav item into the panel.
+  const openMega = (key: MenuKey) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setMegaOpen(key);
+  };
+  const closeMega = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setMegaOpen(null), 140);
+  };
+  const closeAll = () => {
+    setMegaOpen(null);
+    setMenuOpen(false);
+  };
 
   return (
     <>
       {settings?.announcement && (
-        <div className="sashiko-bg-ivory border-b border-border bg-sand/60 px-4 py-2 text-center">
-          <p className="font-sans text-[10px] font-light uppercase tracking-[0.2em] text-washed">{settings.announcement}</p>
+        <div className="border-b border-border bg-ritual px-4 py-2 text-center">
+          <p className="font-sans text-[10px] font-light uppercase tracking-[0.2em] text-ivory/90">{settings.announcement}</p>
         </div>
       )}
 
       <header
         className={`sticky top-0 z-50 border-b border-border bg-ivory/95 backdrop-blur transition-shadow ${scrolled ? "shadow-[0_1px_0_rgba(31,58,95,0.06)]" : ""}`}
+        onMouseLeave={closeMega}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-8">
-          {/* Left — mobile menu / desktop nav */}
-          <div className="flex flex-1 items-center gap-6">
-            <button
-              className="p-1 text-ink lg:hidden"
-              aria-label="Menu"
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((v) => !v)}
-            >
+        <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-4 sm:px-8 lg:pb-3 lg:pt-5">
+          {/* Left — mobile menu / desktop search */}
+          <div className="flex items-center gap-4">
+            <button className="p-1 text-ink lg:hidden" aria-label="Menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
               <svg width="20" height="20" viewBox="0 0 20 20" stroke="currentColor" strokeWidth="1" fill="none">
                 <path d="M1 5h18M1 10h18M1 15h18" />
               </svg>
             </button>
-            <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
-              {navLinks.slice(0, 2).map((l) => (
-                <Link key={l.to} to={l.to} className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-ink/80 transition-colors hover:text-ritual" activeProps={{ className: "text-ritual" }}>
-                  {l.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          {/* Centre — logo */}
-          <div className="flex-none px-4">
-            <Wordmark />
-          </div>
-
-          {/* Right — nav tail + icons */}
-          <div className="flex flex-1 items-center justify-end gap-5">
-            <nav className="hidden items-center gap-7 lg:flex" aria-label="Secondary">
-              {navLinks.slice(2).map((l) => (
-                <Link key={l.to} to={l.to} className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-ink/80 transition-colors hover:text-ritual" activeProps={{ className: "text-ritual" }}>
-                  {l.label}
-                </Link>
-              ))}
-            </nav>
-            <button aria-label="Search" className="text-ink/80 transition-colors hover:text-ritual" onClick={() => setSearchOpen(true)}>
-              <svg width="18" height="18" viewBox="0 0 18 18" stroke="currentColor" strokeWidth="1.1" fill="none">
+            <button aria-label="Search" className="flex items-center gap-2 text-ink/80 transition-colors hover:text-ritual" onClick={() => setSearchOpen(true)}>
+              <svg width="17" height="17" viewBox="0 0 18 18" stroke="currentColor" strokeWidth="1.1" fill="none">
                 <circle cx="7.5" cy="7.5" r="5.5" />
                 <path d="M12 12l5 5" />
               </svg>
+              <span className="hidden font-sans text-[10px] uppercase tracking-[0.2em] lg:inline">Search</span>
             </button>
+          </div>
+
+          <Wordmark />
+
+          <div className="flex items-center justify-end gap-5">
             <Link to={signedIn ? "/account" : "/auth"} aria-label={signedIn ? "Account" : "Sign in"} className="hidden text-ink/80 transition-colors hover:text-ritual sm:block">
               <svg width="18" height="18" viewBox="0 0 18 18" stroke="currentColor" strokeWidth="1.1" fill="none">
                 <circle cx="9" cy="5.5" r="3.5" />
@@ -184,22 +194,173 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile nav drawer */}
-        {menuOpen && (
-          <nav className="border-t border-border bg-ivory px-6 py-4 lg:hidden" aria-label="Mobile">
-            {[...navLinks, { label: "Contact", to: "/contact" }, { label: signedIn ? "Account" : "Sign in", to: signedIn ? "/account" : "/auth" }].map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                onClick={() => setMenuOpen(false)}
-                className="block border-b border-border/60 py-3 font-sans text-[12px] font-medium uppercase tracking-[0.2em] text-ink last:border-0"
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
+        {/* Desktop primary navigation */}
+        <nav className="hidden justify-center gap-10 pb-4 lg:flex" aria-label="Primary">
+          <Link to="/new-arrivals" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
+            New Arrivals
+          </Link>
+          {(["clothing", "collections"] as const).map((key) => (
+            <button
+              key={key}
+              className={`${navLinkClass} flex items-center gap-1.5 ${megaOpen === key ? "text-ritual" : ""}`}
+              aria-expanded={megaOpen === key}
+              onMouseEnter={() => openMega(key)}
+              onFocus={() => openMega(key)}
+              onClick={() => setMegaOpen(megaOpen === key ? null : key)}
+            >
+              {key === "clothing" ? "Clothing" : "Collections"}
+              <Chevron open={megaOpen === key} />
+            </button>
+          ))}
+          <Link to="/bestsellers" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
+            Bestsellers
+          </Link>
+          <Link to="/about" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
+            About Us
+          </Link>
+        </nav>
+
+        {/* Desktop mega panels */}
+        {megaOpen && (
+          <div
+            className="absolute inset-x-0 top-full hidden border-b border-border bg-ivory lg:block"
+            onMouseEnter={() => openMega(megaOpen)}
+            onMouseLeave={closeMega}
+          >
+            {megaOpen === "clothing" ? (
+              <div className="mx-auto grid max-w-7xl grid-cols-[220px_1fr] gap-12 px-8 py-10">
+                <div>
+                  <p className="eyebrow mb-5">Shop by category</p>
+                  <ul className="space-y-3">
+                    <li>
+                      <Link to="/shop" onClick={closeAll} className="font-display text-lg text-ink transition-colors hover:text-ritual">
+                        All Clothing
+                      </Link>
+                    </li>
+                    {categories.map((c) => (
+                      <li key={c.slug}>
+                        <Link to="/shop/$category" params={{ category: c.slug }} onClick={closeAll} className="font-display text-lg text-ink transition-colors hover:text-ritual">
+                          {c.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="grid grid-cols-5 gap-4">
+                  {categories.map((c) => (
+                    <Link key={c.slug} to="/shop/$category" params={{ category: c.slug }} onClick={closeAll} className="group block">
+                      <div className="img-zoom aspect-[3/4] bg-sand/40">
+                        <img src={c.image} alt="" loading="lazy" className="h-full w-full object-cover" />
+                      </div>
+                      <p className="mt-2 font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-ink group-hover:text-ritual">{c.name}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="mx-auto grid max-w-7xl grid-cols-[260px_1fr] gap-12 px-8 py-10">
+                <div>
+                  <p className="eyebrow mb-5">The stories</p>
+                  <ul className="space-y-3">
+                    {collections.map((c) => (
+                      <li key={c.slug}>
+                        <Link to="/collections/$slug" params={{ slug: c.slug }} onClick={closeAll} className="font-display text-lg text-ink transition-colors hover:text-ritual">
+                          {c.name}
+                        </Link>
+                      </li>
+                    ))}
+                    <li className="pt-2">
+                      <Link to="/collections" onClick={closeAll} className="font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-ritual underline underline-offset-4">
+                        All collections
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  {collections.slice(0, 3).map((c) => (
+                    <Link key={c.slug} to="/collections/$slug" params={{ slug: c.slug }} onClick={closeAll} className="group block">
+                      <div className="img-zoom aspect-[4/3] bg-sand/40">
+                        <img src={c.coverImage} alt="" loading="lazy" className="h-full w-full object-cover object-top" />
+                      </div>
+                      <p className="mt-3 font-display text-base text-ink group-hover:text-ritual">{c.name}</p>
+                      <p className="mt-0.5 text-xs font-light text-washed">{c.tagline}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         )}
       </header>
+
+      {/* Mobile menu drawer */}
+      <div className={menuOpen ? "fixed inset-0 z-[85] lg:hidden" : "hidden"}>
+        <div className="absolute inset-0 bg-ink/40" onClick={() => setMenuOpen(false)} aria-hidden />
+        <nav aria-label="Mobile" className="absolute inset-y-0 left-0 flex w-[86%] max-w-sm flex-col overflow-y-auto bg-ivory">
+          <div className="flex items-center justify-between border-b border-border px-6 py-5">
+            <span className="eyebrow">Menu</span>
+            <button onClick={() => setMenuOpen(false)} aria-label="Close menu" className="text-washed hover:text-ink">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1">
+                <path d="M1 1l16 16M17 1L1 17" />
+              </svg>
+            </button>
+          </div>
+          <div className="px-6 py-2">
+            <Link to="/new-arrivals" onClick={closeAll} className="block border-b border-border/60 py-4 font-display text-xl text-ink">
+              New Arrivals
+            </Link>
+            {(["clothing", "collections"] as const).map((key) => (
+              <div key={key} className="border-b border-border/60">
+                <button
+                  className="flex w-full items-center justify-between py-4 font-display text-xl text-ink"
+                  aria-expanded={mobileSection === key}
+                  onClick={() => setMobileSection(mobileSection === key ? null : key)}
+                >
+                  {key === "clothing" ? "Clothing" : "Collections"}
+                  <Chevron open={mobileSection === key} />
+                </button>
+                {mobileSection === key && (
+                  <ul className="space-y-3 pb-5 pl-1">
+                    {key === "clothing" ? (
+                      <>
+                        <li><Link to="/shop" onClick={closeAll} className="text-sm font-light text-washed">All Clothing</Link></li>
+                        {categories.map((c) => (
+                          <li key={c.slug}>
+                            <Link to="/shop/$category" params={{ category: c.slug }} onClick={closeAll} className="text-sm font-light text-washed">{c.name}</Link>
+                          </li>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {collections.map((c) => (
+                          <li key={c.slug}>
+                            <Link to="/collections/$slug" params={{ slug: c.slug }} onClick={closeAll} className="text-sm font-light text-washed">{c.name}</Link>
+                          </li>
+                        ))}
+                        <li><Link to="/collections" onClick={closeAll} className="text-sm font-light text-ritual">All collections</Link></li>
+                      </>
+                    )}
+                  </ul>
+                )}
+              </div>
+            ))}
+            <Link to="/bestsellers" onClick={closeAll} className="block border-b border-border/60 py-4 font-display text-xl text-ink">
+              Bestsellers
+            </Link>
+            <Link to="/about" onClick={closeAll} className="block border-b border-border/60 py-4 font-display text-xl text-ink">
+              About Us
+            </Link>
+          </div>
+          <div className="mt-auto space-y-3 border-t border-border px-6 py-6">
+            <Link to={signedIn ? "/account" : "/auth"} onClick={closeAll} className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink">
+              {signedIn ? "My account" : "Sign in"}
+            </Link>
+            <Link to="/contact" onClick={closeAll} className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink">
+              Contact
+            </Link>
+          </div>
+        </nav>
+      </div>
 
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>

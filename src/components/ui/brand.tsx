@@ -221,9 +221,9 @@ export function Modal({
 
 export function Badge({ children, tone = "gold" }: { children: React.ReactNode; tone?: "gold" | "rust" | "ink" }) {
   const tones = {
-    gold: "border-gold bg-gold/25 text-[#6b5327]",
-    rust: "border-rust/40 bg-rust/10 text-terracotta",
-    ink: "border-ink/20 bg-ink/[0.06] text-ink",
+    gold: "border-gold bg-[#f7ecdc] text-[#6b5327]",
+    rust: "border-rust/40 bg-[#f7e5dc] text-terracotta",
+    ink: "border-ink/20 bg-ivory text-ink",
   } as const;
   return (
     <span className={cn("inline-block rounded-[2px] border px-2 py-0.5 font-sans text-[9px] font-medium uppercase tracking-[0.16em]", tones[tone])}>
