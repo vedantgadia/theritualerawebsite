@@ -5,7 +5,7 @@ import { formatINR } from "@/lib/format";
 import { useBag } from "@/lib/cart";
 import { Accordion, Badge, Button, Sheet } from "@/components/ui/brand";
 import { ProductCard } from "@/components/site/product-card";
-import { ThreadDivider } from "@/components/site/bits";
+import { StitchDivider } from "@/components/site/motion";
 
 export const Route = createFileRoute("/_site/product/$slug")({
   loader: async ({ params }) => {
@@ -104,7 +104,8 @@ function ProductPage() {
               <img
                 src={product.images[active]}
                 alt={product.name}
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.6]"
+                key={active}
+                className="rise-in h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.6]"
                 onMouseMove={(e) => {
                   const r = e.currentTarget.getBoundingClientRect();
                   e.currentTarget.style.transformOrigin = `${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%`;
@@ -120,7 +121,7 @@ function ProductPage() {
         </div>
 
         {/* Details */}
-        <div className="lg:sticky lg:top-36 lg:self-start">
+        <div className="rise-in lg:sticky lg:top-28 lg:self-start" style={{ animationDelay: "0.15s" }}>
           <div className="flex flex-wrap gap-1.5">
             {product.isNew && <Badge tone="ink">New</Badge>}
             {product.limitedEdition && <Badge tone="gold">Limited Edition</Badge>}
@@ -225,8 +226,8 @@ function ProductPage() {
       {related.length > 0 && (
         <section className="border-t border-border">
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-8">
-            <ThreadDivider className="mx-auto mb-10 max-w-xs" />
-            <h2 className="mb-10 text-center font-display text-3xl text-ink">You may also like</h2>
+            <StitchDivider className="mx-auto mb-10 max-w-xs" />
+            <h2 className="mb-10 text-center font-display text-4xl text-ink">You may also <em className="font-normal italic text-ritual">like</em></h2>
             <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
               {related.map((p) => (
                 <ProductCard key={p.id} product={p} />

@@ -1,21 +1,35 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getCatalog, getCategories, getCollections, getSettings, type CatalogProduct } from "@/lib/shop.functions";
+import { getCatalog, getCategories, getCollections, type CatalogProduct } from "@/lib/shop.functions";
 import { useBag } from "@/lib/cart";
 import { supabase } from "@/integrations/supabase/client";
 import { formatINR } from "@/lib/format";
+import { Logo, useCycle } from "@/components/site/motion";
 
 function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
-    <Link to="/" className="group block text-center leading-none" aria-label="The Ritual Era — home">
-      <span className={`block font-display text-ink transition-colors group-hover:text-ritual ${compact ? "text-lg tracking-[0.14em]" : "text-[15px] tracking-[0.16em] sm:text-xl sm:tracking-[0.18em]"}`}>
-        THE RITUAL ERA
-      </span>
-      <span className="mt-1 hidden font-sans text-[8px] sm:block font-medium uppercase tracking-[0.34em] text-taupe">
-        Her Forever Prêt
-      </span>
+    <Link to="/" className="block" aria-label="The Ritual Era — home">
+      <Logo className={`w-auto transition-[height] duration-500 ${compact ? "h-12 lg:h-14" : "h-14 lg:h-20"}`} />
     </Link>
+  );
+}
+
+const ANNOUNCEMENTS = [
+  "Complimentary shipping across India on orders above ₹5,000",
+  "New arrivals — the Autumn Edit is here",
+  "Designed & made in-house in Mumbai · Limited editions",
+  "Made-to-measure on request — message us on WhatsApp",
+];
+
+function AnnouncementBar() {
+  const [i] = useCycle(ANNOUNCEMENTS.length, 4500);
+  return (
+    <div className="stitch-lattice-ink relative z-[51] h-8 overflow-hidden px-4 text-center">
+      <p key={i} className="rise-in flex h-8 items-center justify-center font-sans text-[10px] font-light uppercase tracking-[0.2em] text-ivory/90">
+        {ANNOUNCEMENTS[i]}
+      </p>
+    </div>
   );
 }
 
@@ -83,7 +97,7 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
 type MenuKey = "clothing" | "collections" | null;
 
 const navLinkClass =
-  "font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-ink/80 transition-colors hover:text-ritual";
+  "relative py-1 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-ink/80 transition-colors hover:text-ritual after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-ritual after:transition-transform after:duration-500 hover:after:scale-x-100";
 
 function Chevron({ open }: { open: boolean }) {
   return (
@@ -101,9 +115,9 @@ export function Header() {
   const [megaOpen, setMegaOpen] = useState<MenuKey>(null);
   const [signedIn, setSignedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: () => getSettings() });
   const { data: categories = [] } = useQuery({ queryKey: ["categories"], queryFn: () => getCategories() });
   const { data: collections = [] } = useQuery({ queryKey: ["collections"], queryFn: () => getCollections() });
 
@@ -116,7 +130,16 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      // Tuck the header away while reading down the page; bring it back on any upward scroll.
+      if (Math.abs(y - last) > 6) {
+        setHidden(y > last && y > 320);
+        last = y;
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -144,17 +167,13 @@ export function Header() {
 
   return (
     <>
-      {settings?.announcement && (
-        <div className="border-b border-border bg-ritual px-4 py-2 text-center">
-          <p className="font-sans text-[10px] font-light uppercase tracking-[0.2em] text-ivory/90">{settings.announcement}</p>
-        </div>
-      )}
+      <AnnouncementBar />
 
       <header
-        className={`sticky top-0 z-50 border-b border-border bg-ivory/95 backdrop-blur transition-shadow ${scrolled ? "shadow-[0_1px_0_rgba(31,58,95,0.06)]" : ""}`}
+        className={`sticky top-0 z-50 border-b border-border bg-ivory/95 backdrop-blur transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] ${hidden && !megaOpen && !menuOpen ? "-translate-y-full" : ""}`}
         onMouseLeave={closeMega}
       >
-        <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-4 sm:px-8 lg:pb-3 lg:pt-5">
+        <div className={`mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 transition-[padding] duration-500 sm:px-8 ${scrolled ? "py-2.5 lg:pb-1.5 lg:pt-3" : "py-3 lg:pb-2 lg:pt-4"}`}>
           {/* Left — mobile menu / desktop search */}
           <div className="flex items-center gap-4">
             <button className="p-1 text-ink lg:hidden" aria-label="Menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
@@ -171,7 +190,7 @@ export function Header() {
             </button>
           </div>
 
-          <Wordmark />
+          <Wordmark compact={scrolled} />
 
           <div className="flex items-center justify-end gap-5">
             <Link to={signedIn ? "/account" : "/auth"} aria-label={signedIn ? "Account" : "Sign in"} className="hidden text-ink/80 transition-colors hover:text-ritual sm:block">
@@ -195,7 +214,7 @@ export function Header() {
         </div>
 
         {/* Desktop primary navigation */}
-        <nav className="hidden justify-center gap-10 pb-4 lg:flex" aria-label="Primary">
+        <nav className={`hidden justify-center gap-10 transition-[padding] duration-500 lg:flex ${scrolled ? "pb-2.5" : "pb-3.5"}`} aria-label="Primary">
           <Link to="/new-arrivals" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
             New Arrivals
           </Link>
@@ -223,12 +242,12 @@ export function Header() {
         {/* Desktop mega panels */}
         {megaOpen && (
           <div
-            className="absolute inset-x-0 top-full hidden border-b border-border bg-ivory lg:block"
+            className="absolute inset-x-0 top-full hidden border-b border-border bg-ivory shadow-[0_24px_40px_-24px_rgba(15,34,51,0.18)] lg:block"
             onMouseEnter={() => openMega(megaOpen)}
             onMouseLeave={closeMega}
           >
             {megaOpen === "clothing" ? (
-              <div className="mx-auto grid max-w-7xl grid-cols-[220px_1fr] gap-12 px-8 py-10">
+              <div key="clothing" className="rise-in mx-auto grid max-w-7xl grid-cols-[220px_1fr] gap-12 px-8 py-10">
                 <div>
                   <p className="eyebrow mb-5">Shop by category</p>
                   <ul className="space-y-3">
@@ -258,7 +277,7 @@ export function Header() {
                 </div>
               </div>
             ) : (
-              <div className="mx-auto grid max-w-7xl grid-cols-[260px_1fr] gap-12 px-8 py-10">
+              <div key="collections" className="rise-in mx-auto grid max-w-7xl grid-cols-[260px_1fr] gap-12 px-8 py-10">
                 <div>
                   <p className="eyebrow mb-5">The stories</p>
                   <ul className="space-y-3">

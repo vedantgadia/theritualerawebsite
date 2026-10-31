@@ -212,3 +212,150 @@
 .hairline {
   border: 1px solid var(--color-border);
 }
+
+/* ---------- Logo fabric: the double-stitched diamond lattice behind the logo ---------- */
+.stitch-lattice {
+  background-color: var(--color-blush);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23fbf3ee' stroke-width='1.1' stroke-dasharray='3 3' opacity='.9'%3E%3Cpath d='M-10 10 L210 230 M-10 20 L200 230 M-10 30 L190 230'/%3E%3Cpath d='M230 10 L10 230 M230 20 L20 230 M230 30 L30 230'/%3E%3Cpath d='M100 -100 L320 120 M100 -90 L310 120 M100 -80 L300 120'/%3E%3Cpath d='M120 -100 L-100 120 M120 -90 L-90 120 M120 -80 L-80 120'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+.stitch-lattice-ink {
+  background-color: var(--color-ritual);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23f5efe8' stroke-width='1' stroke-dasharray='3 3' opacity='.12'%3E%3Cpath d='M-10 10 L210 230 M-10 20 L200 230 M-10 30 L190 230'/%3E%3Cpath d='M230 10 L10 230 M230 20 L20 230 M230 30 L30 230'/%3E%3Cpath d='M100 -100 L320 120 M100 -90 L310 120 M100 -80 L300 120'/%3E%3Cpath d='M120 -100 L-100 120 M120 -90 L-90 120 M120 -80 L-80 120'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+
+/* ---------- Motion ---------- */
+
+/* Infinite marquee: content is duplicated once, track slides by half its width */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.marquee:hover .marquee-track.pause-on-hover {
+  animation-play-state: paused;
+}
+
+/* Slow editorial zoom for hero slides */
+@keyframes kenburns {
+  from { transform: scale(1.12) translate3d(0, 1.5%, 0); }
+  to { transform: scale(1) translate3d(0, 0, 0); }
+}
+.kenburns {
+  animation: kenburns 7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* A running stitch that keeps sewing */
+@keyframes stitch-march {
+  to { stroke-dashoffset: -24; }
+}
+.stitch-march {
+  stroke-dasharray: 6 6;
+  animation: stitch-march 1.6s linear infinite;
+}
+
+/* Thread drawing in on load (SVG paths with pathLength=1) */
+@keyframes thread-in {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+.thread-in {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: thread-in 2.4s cubic-bezier(0.65, 0, 0.35, 1) 0.4s forwards;
+}
+
+/* Spool wobble as the thread pulls */
+@keyframes spool {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(5deg); }
+}
+.spool {
+  transform-origin: 50% 60%;
+  animation: spool 3.2s ease-in-out infinite;
+}
+
+/* Logo "stitched in": wipes in left to right */
+@keyframes stitch-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+.stitch-reveal {
+  animation: stitch-reveal 2.2s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both;
+}
+
+/* Images unveil upwards when they scroll into view. The clip sits on the children:
+   a fully clipped element never reports as intersecting, so the wrapper must stay unclipped. */
+.reveal-img > * {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.reveal-img.is-visible > * {
+  clip-path: inset(0 0 0 0);
+}
+.reveal-img img {
+  transform: scale(1.15);
+  transition: transform 1.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.reveal-img.is-visible img {
+  transform: scale(1);
+}
+
+/* Hotspot pulse */
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+/* Fade + rise for page content and rotating copy */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.rise-in {
+  animation: rise-in 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .kenburns,
+  .stitch-march,
+  .spool,
+  .pulse-ring,
+  .rise-in {
+    animation: none;
+  }
+  .thread-in,
+  .stitch-reveal {
+    animation-duration: 0.01s;
+    animation-delay: 0s;
+  }
+  .reveal-img > *,
+  .reveal-img img {
+    clip-path: none;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Soft page entrance on navigation */
+@keyframes page-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.page-in {
+  animation: page-in 0.6s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-in { animation: none; }
+}
+.img-zoom.reveal-img.is-visible:hover img {
+  transform: scale(1.045);
+}

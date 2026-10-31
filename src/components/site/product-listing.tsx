@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useMemo, useState, type ReactNode } from "react";
 import type { CatalogProduct } from "@/lib/shop.functions";
 import { ProductCard } from "@/components/site/product-card";
-import { ThreadDivider } from "@/components/site/bits";
+import { StitchDivider } from "@/components/site/motion";
 import { useReveal } from "@/hooks/use-reveal";
 
 type Sort = "featured" | "newest" | "price-asc" | "price-desc";
@@ -44,7 +44,7 @@ export function ProductListing({
   const [sort, setSort] = useState<Sort>(defaultSort);
   const [size, setSize] = useState<string | null>(null);
   const [band, setBand] = useState(0);
-  const ref = useReveal([products.length]);
+  const ref = useReveal([products.length, sort, size, band]);
 
   const shown = useMemo(() => {
     const { min, max } = PRICE_BANDS[band]!;
@@ -59,12 +59,13 @@ export function ProductListing({
 
   return (
     <div ref={ref as React.RefObject<HTMLDivElement>}>
-      <header className="mx-auto max-w-7xl px-4 pb-8 pt-12 sm:px-8 sm:pt-16">
+      <div className="stitch-lattice">
+      <header className="mx-auto max-w-7xl px-4 pb-10 pt-12 sm:px-8 sm:pb-12 sm:pt-16">
         <div className={aside ? "grid items-end gap-8 lg:grid-cols-[1fr_auto]" : ""}>
           <div className="max-w-2xl">
-            <p className="eyebrow mb-3">{eyebrow}</p>
-            <h1 className="font-display text-4xl leading-[1.05] text-ink sm:text-5xl">{title}</h1>
-            {intro && <div className="mt-4 max-w-xl text-sm font-light leading-relaxed text-washed">{intro}</div>}
+            <p className="eyebrow rise-in mb-3">{eyebrow}</p>
+            <h1 className="rise-in font-display text-5xl leading-[1.02] text-ritual sm:text-6xl" style={{ animationDelay: "0.12s" }}>{title}</h1>
+            {intro && <div className="rise-in mt-4 max-w-xl text-[15px] font-light leading-relaxed text-deep-denim" style={{ animationDelay: "0.24s" }}>{intro}</div>}
           </div>
           {aside}
         </div>
@@ -76,7 +77,7 @@ export function ProductListing({
                 key={t.label}
                 {...(t.category ? { to: "/shop/$category", params: { category: t.category } } : { to: "/shop" })}
                 className={`whitespace-nowrap rounded-[2px] border px-4 py-2 font-sans text-[10px] font-medium uppercase tracking-[0.18em] transition-colors ${
-                  t.active ? "border-ink bg-ink text-ivory" : "border-ink/15 text-ink/80 hover:border-ink/50"
+                  t.active ? "border-ritual bg-ritual text-ivory" : "border-ink/15 bg-ivory/70 text-ink/80 hover:border-ink/50 hover:bg-ivory"
                 }`}
               >
                 {t.label}
@@ -85,6 +86,7 @@ export function ProductListing({
           </nav>
         )}
       </header>
+      </div>
 
       <div className="border-y border-border bg-ivory">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 sm:px-8">
@@ -153,11 +155,13 @@ export function ProductListing({
         ) : (
           <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:gap-x-6 lg:grid-cols-4 lg:gap-y-14">
             {shown.map((p, i) => (
-              <ProductCard key={p.id} product={p} priority={i < 4} />
+              <div key={p.id} className="reveal" style={{ transitionDelay: `${(i % 4) * 80}ms` }}>
+                <ProductCard product={p} priority={i < 4} />
+              </div>
             ))}
           </div>
         )}
-        <ThreadDivider className="mx-auto mt-20 max-w-md" />
+        <StitchDivider className="mx-auto mt-20 max-w-md" />
       </section>
     </div>
   );

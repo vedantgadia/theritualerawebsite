@@ -32,9 +32,15 @@ export function ProductCard({ product, priority = false }: { product: CatalogPro
           {totalStock > 0 && totalStock <= 2 && <Badge tone="rust">Only {totalStock} left</Badge>}
           {totalStock === 0 && <Badge tone="ink">Sold out</Badge>}
         </div>
-        <span className="absolute inset-x-3 bottom-3 translate-y-2 bg-ivory/95 py-2.5 text-center font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-ink opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 max-lg:hidden">
-          View piece
-        </span>
+        {totalStock > 0 && (
+          <div className="absolute inset-x-3 bottom-3 flex translate-y-3 items-center justify-center gap-3 bg-ivory/95 py-2.5 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:translate-y-0 group-hover:opacity-100 max-lg:hidden">
+            {product.sizes.map((s) => (
+              <span key={s.size} className={`font-sans text-[10px] tracking-[0.12em] ${s.stock > 0 ? "text-ink" : "text-stone line-through"}`}>
+                {s.size}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
       <div className="pt-3.5">
         <div className="flex items-baseline justify-between gap-3">

@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ThreadDivider } from "@/components/site/bits";
+import { Logo, Parallax, ScrollWords, StitchDivider } from "@/components/site/motion";
 import { useReveal } from "@/hooks/use-reveal";
 
 export const Route = createFileRoute("/_site/about")({
@@ -31,24 +31,35 @@ function About() {
   const ref = useReveal();
   return (
     <div ref={ref as React.RefObject<HTMLDivElement>}>
-      {/* Manifesto — the lookbook's closing page, given room to breathe */}
-      <section className="sashiko-bg-ivory border-b border-border">
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
-          <p className="eyebrow">About Us</p>
-          <h1 className="mt-5 font-display text-5xl leading-[1.02] text-ritual sm:text-7xl">
-            Her Forever <em className="font-normal italic">Prêt</em>
-          </h1>
-          <ThreadDivider className="mx-auto mt-10 max-w-xs" />
-          <p className="mx-auto mt-10 max-w-2xl font-display text-xl leading-relaxed text-ink sm:text-2xl">
-            At The Ritual Era, we believe getting dressed is one of the first rituals of the day — a quiet moment that sets the tone for everything that follows.
+      {/* The logo, stitched in */}
+      <section className="stitch-lattice border-b border-border">
+        <div className="mx-auto flex max-w-4xl flex-col items-center px-6 py-20 text-center sm:py-28">
+          <p className="eyebrow rise-in">About Us</p>
+          <Logo animate className="mt-10 h-auto w-[78%] max-w-[520px]" />
+          <p className="rise-in mt-10 font-display text-2xl italic text-ritual sm:text-3xl" style={{ animationDelay: "1.6s" }}>
+            Her Forever Prêt
           </p>
         </div>
       </section>
 
+      <section className="mx-auto max-w-5xl px-6 py-24 text-center sm:py-32">
+        <ScrollWords
+          text="At The Ritual Era, we believe getting dressed is one of the first rituals of the day — a quiet moment that sets the tone for everything that follows."
+          className="font-display text-[1.75rem] leading-[1.3] text-ink sm:text-[2.6rem]"
+        />
+        <StitchDivider className="mx-auto mt-14 max-w-xs" />
+      </section>
+
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-8 sm:py-24 md:grid-cols-2 md:gap-20">
-        <div className="reveal grid grid-cols-2 gap-3 sm:gap-4">
-          <img src="/media/products/editorial-2.webp" alt="Teal linen wrap jacket and ivory trousers" loading="lazy" className="aspect-[3/4] w-full object-cover" />
-          <img src="/media/products/editorial-4.webp" alt="Teal floral silk wrap dress" loading="lazy" className="mt-12 aspect-[3/4] w-full object-cover" />
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="reveal-img">
+            <img src="/media/products/editorial-2.webp" alt="Teal linen wrap jacket and ivory trousers" loading="lazy" className="aspect-[3/4] w-full object-cover" />
+          </div>
+          <Parallax speed={0.08} className="mt-12">
+            <div className="reveal-img">
+              <img src="/media/products/editorial-4.webp" alt="Teal floral silk wrap dress" loading="lazy" className="aspect-[3/4] w-full object-cover" />
+            </div>
+          </Parallax>
         </div>
         <div className="reveal max-w-md space-y-5 text-[15px] font-light leading-relaxed text-deep-denim">
           <p className="eyebrow">Our philosophy</p>
@@ -66,10 +77,10 @@ function About() {
       </section>
 
       {/* Founder */}
-      <section className="sashiko-bg border-y border-border bg-blush/60">
+      <section className="stitch-lattice border-y border-border">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-8 sm:py-24 md:grid-cols-[1fr_1.1fr] md:gap-20">
           <div className="reveal mx-auto w-full max-w-sm">
-            <div className="aspect-[4/5] overflow-hidden rounded-t-[999px] bg-sand/40">
+            <div className="reveal-img aspect-[4/5] overflow-hidden rounded-t-[999px] bg-sand/40">
               <img src="/media/founder.jpg" alt="Priyanka Bhartia, founder of The Ritual Era" loading="lazy" className="h-full w-full object-cover" />
             </div>
           </div>
@@ -94,7 +105,7 @@ function About() {
       {/* Pillars */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-8 sm:py-24">
         <div className="grid gap-12 md:grid-cols-[1.1fr_1fr] md:gap-20">
-          <div className="reveal">
+          <div className="reveal-img">
             <img src="/media/craft.jpg" alt="Hands sashiko-stitching dark denim" loading="lazy" className="aspect-[5/4] w-full object-cover" />
           </div>
           <div className="space-y-10">

@@ -27,17 +27,17 @@ function CollectionPage() {
 
   return (
     <>
-      <section className="sashiko-bg border-b border-border bg-blush/60">
+      <section className="stitch-lattice border-b border-border">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-8 md:grid-cols-[1fr_1.1fr] md:py-16">
           <div className="order-2 md:order-1">
-            <Link to="/collections" className="eyebrow transition-colors hover:text-ritual">← Collections</Link>
-            <h1 className="mt-5 font-display text-4xl leading-[1.05] text-ink sm:text-6xl">{collection.name}</h1>
-            <p className="mt-3 font-display text-lg italic text-washed">{collection.tagline}</p>
-            <p className="mt-6 max-w-md text-sm font-light leading-relaxed text-deep-denim">{collection.story}</p>
+            <Link to="/collections" className="eyebrow rise-in inline-block transition-colors hover:text-ritual">← Collections</Link>
+            <h1 className="rise-in mt-5 font-display text-5xl leading-[1.02] text-ritual sm:text-7xl" style={{ animationDelay: "0.15s" }}>{collection.name}</h1>
+            <p className="rise-in mt-3 font-display text-xl italic text-washed" style={{ animationDelay: "0.3s" }}>{collection.tagline}</p>
+            <p className="rise-in mt-6 max-w-md text-[15px] font-light leading-relaxed text-deep-denim" style={{ animationDelay: "0.45s" }}>{collection.story}</p>
           </div>
           <div className="order-1 md:order-2">
-            <div className="mx-auto aspect-[4/5] max-w-md overflow-hidden rounded-t-[999px] bg-sand/40">
-              <img src={collection.coverImage} alt="" className="h-full w-full object-cover" />
+            <div className="mx-auto aspect-[4/5] max-w-md overflow-hidden rounded-t-[999px] bg-sand/40 shadow-[0_30px_60px_-30px_rgba(15,34,51,0.35)]">
+              <img key={collection.slug} src={collection.coverImage} alt="" className="kenburns h-full w-full object-cover" />
             </div>
           </div>
         </div>

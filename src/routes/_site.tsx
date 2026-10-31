@@ -1,4 +1,4 @@
-import { Outlet, createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
 import { BagProvider } from "@/lib/cart";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
@@ -10,11 +10,12 @@ export const Route = createFileRoute("/_site")({
 });
 
 function SiteLayout() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   return (
     <BagProvider>
       <div className="flex min-h-screen flex-col bg-ivory">
         <Header />
-        <main className="flex-1">
+        <main key={pathname} className="page-in flex-1">
           <Outlet />
         </main>
         <Footer />
