@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-/** The brand logo, used exactly as supplied (transparent cut-out of the uploaded artwork). */
+/** The brand logo: a vector trace of the supplied artwork, in its original ink colour, so it stays sharp at any size. */
 export function Logo({ className = "", animate = false }: { className?: string; animate?: boolean }) {
   return (
     <img
-      src="/brand/logo-800.png"
-      srcSet="/brand/logo-800.png 800w, /brand/logo.png 1492w"
-      sizes="(min-width: 1024px) 420px, 60vw"
+      src="/brand/logo.svg"
       alt="The Ritual Era"
-      width={1492}
-      height={765}
+      width={1520}
+      height={775}
       className={`${animate ? "stitch-reveal" : ""} ${className}`}
     />
   );
