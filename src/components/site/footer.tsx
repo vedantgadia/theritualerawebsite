@@ -86,6 +86,7 @@ export function Footer() {
             <li><Link to="/new-arrivals" className="text-sm font-light text-washed transition-colors hover:text-ritual">New arrivals</Link></li>
             <li><Link to="/bestsellers" className="text-sm font-light text-washed transition-colors hover:text-ritual">Bestsellers</Link></li>
             <li><Link to="/collections" className="text-sm font-light text-washed transition-colors hover:text-ritual">Collections</Link></li>
+            <li><Link to="/style-notes" className="text-sm font-light text-washed transition-colors hover:text-ritual">Style notes</Link></li>
             <li><Link to="/shop" className="text-sm font-light text-washed transition-colors hover:text-ritual">All clothing</Link></li>
             {(categories ?? []).map((c) => (
               <li key={c.id}>

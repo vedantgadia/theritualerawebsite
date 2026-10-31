@@ -164,6 +164,8 @@ function Home() {
         </div>
       </section>
 
+      <Difference />
+
       {/* Bestsellers */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-8 sm:py-28">
         <SectionHead eyebrow="Most loved" title="Bestsellers" link={<Link to="/bestsellers" className={textLink}>Shop all</Link>} />
@@ -208,16 +210,16 @@ function Home() {
         </Marquee>
       </section>
 
-      {/* Promises */}
+      {/* Service */}
       <section className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-4">
         {[
-          ["Made in Mumbai", "Designed and stitched in-house", "M4 20h16M6 20V9l6-5 6 5v11M10 20v-6h4v6"],
-          ["Limited editions", "Small runs, never mass-made", "M12 3l2.4 6.3L21 9.8l-5 4.4 1.5 6.8L12 17.6 6.5 21 8 14.2l-5-4.4 6.6-.5L12 3z"],
           ["Free shipping", "On orders above ₹5,000", "M3 7h11v9H3zM14 10h4l3 3v3h-7M7 19a2 2 0 1 0 0-.01M17 19a2 2 0 1 0 0-.01"],
           ["Easy exchanges", "Within 7 days of delivery", "M4 9h13l-3-3M20 15H7l3 3"],
+          ["Secure payments", "UPI, cards & netbanking", "M5 11h14v9H5zM8 11V8a4 4 0 0 1 8 0v3M12 15v2"],
+          ["Here to help", "WhatsApp us, 10am – 7pm", "M4 5h16v11H9l-5 4V5zM8 10h8M8 13h5"],
         ].map(([title, sub, d], i) => (
           <div key={title} className={`reveal flex flex-col items-center px-4 py-10 text-center ${i % 2 ? "" : "border-r"} border-dashed border-taupe/30 sm:border-r ${i === 3 ? "sm:border-r-0" : ""}`} style={{ transitionDelay: `${i * 90}ms` }}>
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1f3a5f" strokeWidth="1" strokeLinejoin="round" aria-hidden>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1f3a5f" strokeWidth="1" strokeLinejoin="round" strokeLinecap="round" aria-hidden>
               <path d={d} />
             </svg>
             <p className="mt-4 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-ink">{title}</p>
@@ -226,6 +228,93 @@ function Home() {
         ))}
       </section>
     </div>
+  );
+}
+
+/* ------------------------------------------------------------------ What makes it different */
+
+const DIFFERENCE = [
+  {
+    title: "Denim, at the heart",
+    body: "Every collection begins with denim — pieced, panelled and paired with Indian textiles you won't find on a high-street rail.",
+    icon: "M6 3h12l1 18h-5l-2-9-2 9H5L6 3zM6 7h12M9 3v4M15 3v4",
+  },
+  {
+    title: "Made in our Mumbai studio",
+    body: "Designed, cut and stitched in-house, so every seam passes through hands we know by name.",
+    icon: "M4 20V10l8-6 8 6v10H4zM9 20v-5h6v5M4 20h16",
+  },
+  {
+    title: "Limited by design",
+    body: "Small runs, never mass-produced. When a piece sells out it rarely returns — which is what makes it yours.",
+    icon: "M12 3v4M7 7h10l2 14H5L7 7zM10 12h4",
+  },
+  {
+    title: "Craft you notice up close",
+    body: "Hand embroidery, crochet panels, ajrakh blocks and sashiko-inspired running stitch — details made to be looked at twice.",
+    icon: "M12 12c-3-5-7-4-7-1s4 3 7 1zm0 0c3-5 7-4 7-1s-4 3-7 1zm0 0c-4 3-4 7-1 7s3-4 1-7zM12 12v9",
+  },
+  {
+    title: "Made to your measure",
+    body: "Between sizes, or want a longer hem? Message us and we'll cut the piece to your measurements.",
+    icon: "M3 9h18v6H3zM7 9v3M11 9v2M15 9v3M19 9v2",
+  },
+  {
+    title: "Designed beyond a season",
+    body: "Elevated essentials made to be worn, repeated and reimagined for years — never a passing trend.",
+    icon: "M12 3a9 9 0 1 0 9 9M12 7v5l3 3M21 3v6h-6",
+  },
+];
+
+function Difference() {
+  return (
+    <section className="relative overflow-hidden border-b border-border bg-ivory">
+      <div className="mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:px-8 sm:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        {/* Heading + craft image, held in place while the list scrolls */}
+        <div className="lg:sticky lg:top-24 lg:self-start">
+          <div className="reveal">
+            <p className="eyebrow mb-4">Why it feels different</p>
+            <h2 className="font-display text-[2.4rem] leading-[1.05] text-ink sm:text-6xl">
+              Made with <em className="font-normal italic text-ritual">intention</em>
+            </h2>
+            <p className="mt-5 max-w-sm text-[15px] font-light leading-relaxed text-deep-denim">
+              Six things we never compromise on — from the first sketch to the last running stitch.
+            </p>
+          </div>
+          <div className="relative mt-10 hidden max-w-md lg:block">
+            <div className="reveal-img">
+              <div className="aspect-[5/4] overflow-hidden">
+                <img src="/media/craft.jpg" alt="Hands sashiko-stitching dark denim" loading="lazy" className="h-full w-full object-cover" />
+              </div>
+            </div>
+            <Parallax speed={0.08} className="absolute -bottom-8 -right-8 w-32">
+              <div className="stitch-lattice flex aspect-square items-center justify-center rounded-full border border-ritual/20 text-center shadow-[0_16px_30px_-18px_rgba(15,34,51,0.4)]">
+                <p className="font-script text-3xl leading-none text-ritual">
+                  by hand
+                </p>
+              </div>
+            </Parallax>
+          </div>
+        </div>
+
+        <ol className="divide-y divide-dashed divide-taupe/30 border-y border-dashed border-taupe/30">
+          {DIFFERENCE.map((d, i) => (
+            <li key={d.title} className="reveal group grid grid-cols-[auto_1fr] gap-x-5 py-7 sm:grid-cols-[3.5rem_auto_1fr] sm:gap-x-6 sm:py-8" style={{ transitionDelay: `${(i % 3) * 80}ms` }}>
+              <span className="hidden pt-1 font-display text-2xl italic text-gold sm:block">{String(i + 1).padStart(2, "0")}</span>
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-ritual/25 text-ritual transition-colors duration-500 group-hover:border-ritual group-hover:bg-ritual group-hover:text-ivory">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" strokeLinecap="round" aria-hidden>
+                  <path d={d.icon} />
+                </svg>
+              </span>
+              <div className="col-start-2 sm:col-start-3">
+                <h3 className="font-display text-2xl text-ink transition-colors duration-500 group-hover:text-ritual">{d.title}</h3>
+                <p className="mt-2 max-w-md text-sm font-light leading-relaxed text-washed">{d.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
   );
 }
 

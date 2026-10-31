@@ -214,7 +214,7 @@ export function Header() {
         </div>
 
         {/* Desktop primary navigation */}
-        <nav className={`hidden justify-center gap-10 transition-[padding] duration-500 lg:flex ${scrolled ? "pb-2.5" : "pb-3.5"}`} aria-label="Primary">
+        <nav className={`hidden justify-center gap-8 transition-[padding] xl:gap-10 duration-500 lg:flex ${scrolled ? "pb-2.5" : "pb-3.5"}`} aria-label="Primary">
           <Link to="/new-arrivals" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
             New Arrivals
           </Link>
@@ -233,6 +233,9 @@ export function Header() {
           ))}
           <Link to="/bestsellers" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
             Bestsellers
+          </Link>
+          <Link to="/style-notes" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
+            Style Notes
           </Link>
           <Link to="/about" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
             About Us
@@ -365,6 +368,9 @@ export function Header() {
             ))}
             <Link to="/bestsellers" onClick={closeAll} className="block border-b border-border/60 py-4 font-display text-xl text-ink">
               Bestsellers
+            </Link>
+            <Link to="/style-notes" onClick={closeAll} className="block border-b border-border/60 py-4 font-display text-xl text-ink">
+              Style Notes
             </Link>
             <Link to="/about" onClick={closeAll} className="block border-b border-border/60 py-4 font-display text-xl text-ink">
               About Us

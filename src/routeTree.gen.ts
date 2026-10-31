@@ -24,6 +24,7 @@ import { Route as SitePopUpsRouteImport } from './routes/_site.pop-ups'
 import { Route as SitePrivacyPolicyRouteImport } from './routes/_site.privacy-policy'
 import { Route as SiteReturnsPolicyRouteImport } from './routes/_site.returns-policy'
 import { Route as SiteShippingPolicyRouteImport } from './routes/_site.shipping-policy'
+import { Route as SiteStyleNotesRouteImport } from './routes/_site.style-notes'
 import { Route as SiteTermsRouteImport } from './routes/_site.terms'
 import { Route as SiteTrackOrderRouteImport } from './routes/_site.track-order'
 import { Route as SiteCollectionsIndexRouteImport } from './routes/_site.collections.index'
@@ -107,6 +108,11 @@ const SiteShippingPolicyRoute = SiteShippingPolicyRouteImport.update({
   path: '/shipping-policy',
   getParentRoute: () => SiteRoute,
 } as any)
+const SiteStyleNotesRoute = SiteStyleNotesRouteImport.update({
+  id: '/style-notes',
+  path: '/style-notes',
+  getParentRoute: () => SiteRoute,
+} as any)
 const SiteTermsRoute = SiteTermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/privacy-policy': typeof SitePrivacyPolicyRoute
   '/returns-policy': typeof SiteReturnsPolicyRoute
   '/shipping-policy': typeof SiteShippingPolicyRoute
+  '/style-notes': typeof SiteStyleNotesRoute
   '/terms': typeof SiteTermsRoute
   '/track-order': typeof SiteTrackOrderRoute
   '/collections/$slug': typeof SiteCollectionsSlugRoute
@@ -186,6 +193,7 @@ export interface FileRoutesByTo {
   '/privacy-policy': typeof SitePrivacyPolicyRoute
   '/returns-policy': typeof SiteReturnsPolicyRoute
   '/shipping-policy': typeof SiteShippingPolicyRoute
+  '/style-notes': typeof SiteStyleNotesRoute
   '/terms': typeof SiteTermsRoute
   '/track-order': typeof SiteTrackOrderRoute
   '/': typeof SiteIndexRoute
@@ -212,6 +220,7 @@ export interface FileRoutesById {
   '/_site/privacy-policy': typeof SitePrivacyPolicyRoute
   '/_site/returns-policy': typeof SiteReturnsPolicyRoute
   '/_site/shipping-policy': typeof SiteShippingPolicyRoute
+  '/_site/style-notes': typeof SiteStyleNotesRoute
   '/_site/terms': typeof SiteTermsRoute
   '/_site/track-order': typeof SiteTrackOrderRoute
   '/_site/': typeof SiteIndexRoute
@@ -239,6 +248,7 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/returns-policy'
     | '/shipping-policy'
+    | '/style-notes'
     | '/terms'
     | '/track-order'
     | '/collections/$slug'
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/returns-policy'
     | '/shipping-policy'
+    | '/style-notes'
     | '/terms'
     | '/track-order'
     | '/'
@@ -287,6 +298,7 @@ export interface FileRouteTypes {
     | '/_site/privacy-policy'
     | '/_site/returns-policy'
     | '/_site/shipping-policy'
+    | '/_site/style-notes'
     | '/_site/terms'
     | '/_site/track-order'
     | '/_site/'
@@ -409,6 +421,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteShippingPolicyRouteImport
       parentRoute: typeof SiteRoute
     }
+    '/_site/style-notes': {
+      id: '/_site/style-notes'
+      path: '/style-notes'
+      fullPath: '/style-notes'
+      preLoaderRoute: typeof SiteStyleNotesRouteImport
+      parentRoute: typeof SiteRoute
+    }
     '/_site/terms': {
       id: '/_site/terms'
       path: '/terms'
@@ -494,6 +513,7 @@ interface SiteRouteChildren {
   SitePrivacyPolicyRoute: typeof SitePrivacyPolicyRoute
   SiteReturnsPolicyRoute: typeof SiteReturnsPolicyRoute
   SiteShippingPolicyRoute: typeof SiteShippingPolicyRoute
+  SiteStyleNotesRoute: typeof SiteStyleNotesRoute
   SiteTermsRoute: typeof SiteTermsRoute
   SiteTrackOrderRoute: typeof SiteTrackOrderRoute
   SiteIndexRoute: typeof SiteIndexRoute
@@ -518,6 +538,7 @@ const SiteRouteChildren: SiteRouteChildren = {
   SitePrivacyPolicyRoute: SitePrivacyPolicyRoute,
   SiteReturnsPolicyRoute: SiteReturnsPolicyRoute,
   SiteShippingPolicyRoute: SiteShippingPolicyRoute,
+  SiteStyleNotesRoute: SiteStyleNotesRoute,
   SiteTermsRoute: SiteTermsRoute,
   SiteTrackOrderRoute: SiteTrackOrderRoute,
   SiteIndexRoute: SiteIndexRoute,
