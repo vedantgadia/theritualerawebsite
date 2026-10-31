@@ -1,4 +1,4 @@
-import { Outlet } from "@tanstack/react-router";
+import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { BagProvider } from "@/lib/cart";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
