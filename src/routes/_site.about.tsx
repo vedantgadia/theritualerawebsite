@@ -81,7 +81,7 @@ function About() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-8 sm:py-24 md:grid-cols-[1fr_1.1fr] md:gap-20">
           <div className="reveal mx-auto w-full max-w-sm">
             <div className="reveal-img aspect-[4/5] overflow-hidden rounded-t-[999px] bg-sand/40">
-              <img src="/media/founder.jpg" alt="Priyanka Bhartia, founder of The Ritual Era" loading="lazy" className="h-full w-full object-cover" />
+              <img src="/media/founder-priyanka.webp" alt="Priyanka Bhartia, founder of The Ritual Era, at her desk in the studio" loading="lazy" className="h-full w-full object-cover" />
             </div>
           </div>
           <div className="reveal max-w-md">
