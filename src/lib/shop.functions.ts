@@ -106,6 +106,13 @@ export const getCatalog = createServerFn({ method: "GET" })
     return rows.map(mapProduct);
   });
 
+export interface ProductDetail extends CatalogProduct {
+  fabricNotes: string;
+  fitNotes: string;
+  careInstructions: string;
+  shippingReturns: string;
+}
+
 export const getProductBySlug = createServerFn({ method: "GET" })
   .inputValidator((d: { slug: string }) => z.object({ slug: z.string().min(1).max(120) }).parse(d))
   .handler(async ({ data }) => {
@@ -117,7 +124,15 @@ export const getProductBySlug = createServerFn({ method: "GET" })
       .eq("published", true)
       .maybeSingle();
     if (error || !row) return null;
-    return mapProduct(row) & { ...mapProduct(row) };
+    const base = mapProduct(row);
+    const detail: ProductDetail = {
+      ...base,
+      fabricNotes: (row.fabric_notes as string) ?? "",
+      fitNotes: (row.fit_notes as string) ?? "",
+      careInstructions: (row.care_instructions as string) ?? "",
+      shippingReturns: (row.shipping_returns as string) ?? "",
+    };
+    return detail;
   });
 
 export const getRelatedProducts = createServerFn({ method: "GET" })
