@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { BUILD_ID, VERSION_PATH } from "./lib/build-id";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -35,6 +36,22 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   });
 }
 
+// Pages must always be revalidated: stale HTML points at the previous deploy's JS/CSS.
+// Hashed /assets/* keep their long immutable cache (set in the generated _headers).
+function withHtmlCacheHeaders(response: Response): Response {
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!contentType.includes("text/html")) return response;
+  const headers = new Headers(response.headers);
+  headers.set("cache-control", "no-cache, must-revalidate");
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
+
+function versionResponse(): Response {
+  return new Response(JSON.stringify({ id: BUILD_ID }), {
+    headers: { "content-type": "application/json", "cache-control": "no-store" },
+  });
+}
+
 function isH3SwallowedErrorBody(body: string): boolean {
   try {
     const payload = JSON.parse(body) as { unhandled?: unknown; message?: unknown };
@@ -47,9 +64,10 @@ function isH3SwallowedErrorBody(body: string): boolean {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      if (new URL(request.url).pathname === VERSION_PATH) return versionResponse();
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return withHtmlCacheHeaders(await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {

@@ -6,7 +6,13 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// Stamped into both the server and client bundles so open tabs can tell when a newer deploy is live.
+const BUILD_ID = Date.now().toString(36);
+
 export default defineConfig({
+  vite: {
+    define: { __BUILD_ID__: JSON.stringify(BUILD_ID) },
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { supabase } from "@/integrations/supabase/client";
+import { useVersionCheck } from "@/hooks/use-version-check";
 
 function NotFoundComponent() {
   return (
@@ -118,6 +119,7 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
+  useVersionCheck();
 
   // Reflect signed-in state in the router once per identity transition.
   useEffect(() => {
