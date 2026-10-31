@@ -56,8 +56,10 @@ export function BagProvider({ children }: { children: ReactNode }) {
     setItems((prev) => {
       const idx = prev.findIndex((i) => i.productId === item.productId && i.size === item.size);
       if (idx >= 0) {
+        const current = prev[idx];
+        if (!current) return [...prev, { ...item, quantity: Math.min(item.quantity, 10) }];
         const next = [...prev];
-        next[idx] = { ...next[idx], quantity: Math.min(next[idx].quantity + item.quantity, 10) };
+        next[idx] = { ...current, quantity: Math.min(current.quantity + item.quantity, 10) };
         return next;
       }
       return [...prev, { ...item, quantity: Math.min(item.quantity, 10) }];
