@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { checkoutCompleted } from "@/lib/checkout.functions";
 
 export interface BagItem {
   productId: string;
@@ -25,6 +26,16 @@ interface BagContextValue {
 
 const BagContext = createContext<BagContextValue | null>(null);
 const STORAGE_KEY = "theritualera.bag.v1";
+/* Shopify cart id of the last checkout we sent the shopper to. */
+const PENDING_CHECKOUT_KEY = "theritualera.checkout.v1";
+
+export function rememberCheckout(cartId: string) {
+  try {
+    localStorage.setItem(PENDING_CHECKOUT_KEY, cartId);
+  } catch {
+    /* storage blocked: the bag just won't auto-empty after the order */
+  }
+}
 
 function readStored(): BagItem[] {
   try {
@@ -45,6 +56,26 @@ export function BagProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setItems(readStored());
     setHydrated(true);
+  }, []);
+
+  /* Back from a completed Shopify checkout: empty the bag so it doesn't offer the same pieces again. */
+  useEffect(() => {
+    let cartId: string | null = null;
+    try {
+      cartId = localStorage.getItem(PENDING_CHECKOUT_KEY);
+    } catch {
+      return;
+    }
+    if (!cartId) return;
+    checkoutCompleted({ data: { cartId } })
+      .then((done) => {
+        if (!done) return;
+        setItems([]);
+        localStorage.removeItem(PENDING_CHECKOUT_KEY);
+      })
+      .catch(() => {
+        /* try again on the next visit */
+      });
   }, []);
 
   useEffect(() => {

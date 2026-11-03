@@ -147,13 +147,48 @@ The owner chose **Shopify as the shop's back office, with the existing custom si
 `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_STOREFRONT_PRIVATE_TOKEN` (Headless channel), `SHOPIFY_CLIENT_ID` + `SHOPIFY_CLIENT_SECRET` (Dev Dashboard app; exchanged for 24-hour Admin API tokens via the client-credentials grant — Shopify stopped issuing copyable admin tokens for new custom apps on 1 Jan 2026). The cloud environment must allow `*.myshopify.com` under network access.
 
 **Migration steps:**
-1. Owner sets up the Shopify store, Headless channel and Dev Dashboard app (step-by-step given in chat, 3 Nov 2026).
-2. Load the 68 mock products into Shopify by script (sizes as variants with stock; fabric/colour/fit/care as metafields; New/Bestseller/Limited as tags; categories and collections as Shopify collections).
-3. Switch `src/lib/shop.functions.ts` to the Storefront API; the bag becomes a Shopify cart; Checkout sends shoppers to Shopify checkout.
+1. Owner sets up the Shopify store, Headless channel and Dev Dashboard app (step-by-step given in chat, 3 Nov 2026). ⏳ *waiting on owner*
+2. Load the 68 mock products into Shopify by script. ✅ *script written* (`scripts/shopify-import.ts`), ⏳ *not yet run* — needs the store keys.
+3. Site reads from Shopify; Checkout sends shoppers to Shopify checkout. ✅ *built* — switches on automatically when the keys are set.
 4. Build Lookbook, Pop-ups, Track Order, Account, Contact and policy pages on Shopify data.
 5. Connect Razorpay (test mode) and place end-to-end test orders, including a failed payment and a refund.
 6. Deploy to Cloudflare, move the domain's DNS from GoDaddy to Cloudflare, add the checkout subdomain.
 7. Go live: real products and photos, Razorpay live mode, Basic plan; remove Lovable and Supabase code.
+
+### 3.2 Shopify connection (built 3 November 2026, not yet connected to a real store)
+
+**How it switches on:** `src/lib/shop.functions.ts` serves products from Shopify when `SHOPIFY_STORE_DOMAIN` and `SHOPIFY_STOREFRONT_PRIVATE_TOKEN` are set, otherwise from the mock catalogue. Nothing else needs changing. This replaces the old `USE_MOCK_CATALOG` switch, and the unused Supabase product queries are gone. Lookbook and pop-ups still read Supabase until they move to Shopify metaobjects.
+
+**Files:**
+- `src/lib/catalog.ts`: shared product types, listing filter/sort, and bag shipping numbers (`SHIPPING_FEE`, `FREE_SHIPPING_THRESHOLD`). Keep these in step with Shopify's shipping settings, which decide what checkout actually charges.
+- `src/lib/shopify/schema.ts`: **how products are stored in Shopify** (read this before editing products by hand).
+- `src/lib/shopify/map.ts`: Storefront API queries and the Shopify → site mapping.
+- `src/lib/shopify/storefront.server.ts`: server-only client (private token). The whole catalogue is cached for 60 seconds; if Shopify fails, the last good copy is served.
+- `src/lib/checkout.ts` + `src/lib/checkout.functions.ts` + `src/components/site/checkout-button.tsx`: Checkout sends product + size + quantity to the server. The server re-reads stock and variants from Shopify, creates a Shopify cart and redirects to Shopify checkout. The bag empties itself on the next visit once Shopify reports that cart as completed. While Shopify isn't connected, Checkout goes to the placeholder `/checkout` page.
+- `src/lib/shopify/import-payload.ts` + `scripts/shopify-import.ts`: one-off loader for the 68 pieces and 11 collections.
+- `src/test/shopify.test.ts`: round-trip test (mock product → Shopify input → Storefront response → site product, for all 68 pieces), listing parity, checkout line checks, and the client with simulated Shopify responses.
+
+**How the owner edits products in Shopify** (conventions from `schema.ts`):
+| On the site | In the Shopify product |
+|---|---|
+| Name, description, photos | Title, Description, Media |
+| Price / strike-through price | Variant price / Compare-at price |
+| Sizes and stock | Option "Size" (XS–XL); stock per variant |
+| Primary category (breadcrumb) | Product type, e.g. `Tops & Shirts` |
+| Listed under a category | Tag `category:<slug>`, e.g. `category:denim` |
+| In a story collection | Tag `collection:<slug>`, e.g. `collection:ajrakh-stories` |
+| New / Limited edition / Featured badges | Tags `new`, `limited-edition`, `featured` |
+| Bestsellers page order | Metafield "Bestseller rank" (1 = top; empty = not listed) |
+| Fabric, Colour, Fabric & craft, Fit notes, Care | Metafields with those names |
+
+Categories and story collections are automated Shopify collections (rule: product tag equals `category:<slug>` / `collection:<slug>`). The handle is the URL slug. Metafields: "Kind" (`category` or `story`), "Tagline", "Menu position".
+
+**Running the import** (from a session whose environment has the keys and allows `*.myshopify.com`):
+`bun scripts/shopify-import.ts --dry-run`, then `bun scripts/shopify-import.ts`. It is safe to re-run, because it skips what already exists. **Never use `--force` once real stock or products exist**: it resets them to the mock values. Shopify downloads the photos from `IMAGE_BASE_URL` (default: the live Lovable site), so that site must stay up until the import has run.
+
+**Not verified yet:** nothing has run against a real Shopify store. Expect small fixes on the first run (exact API field names, permissions). Check in particular:
+- Storefront `quantityAvailable` needs the Headless channel's inventory permission. Without it, sizes show only in stock / sold out.
+- Whether a completed checkout's cart really disappears, which is what empties the bag.
 
 ---
 
@@ -239,7 +274,7 @@ In order:
 **The site currently shows a mock catalogue built from the lookbook (`FINAL LOOK BOOK.pdf`)**, not the database. This was requested so the owner could see the feel of the site.
 
 - File: **`src/lib/mock-catalog.ts`** — all products, categories and collections.
-- Switch: **`USE_MOCK_CATALOG = true`** at the top of `src/lib/shop.functions.ts`. Set to `false` to read from Supabase once real products are loaded (the original Supabase queries are intact below each mock branch).
+- Switch: the site uses Shopify automatically once its keys are set (see 3.2); otherwise this mock catalogue.
 - **68 products** — every garment in the lookbook, with its real name and fabric from the lookbook labels (two typos corrected: "Air Bollon" → Air Balloon Dress, "Denim Flower Dreaa" → Denim Flower Dress).
   - By type: Tops & Shirts 38 · Dresses 19 · Jackets 6 · Co-ord Sets 5. **Denim** is both a category and a fabric: the 26 denim pieces also appear under their garment type.
 - **Invented for the mock (must be replaced with real data):** prices (₹3,290–₹7,490), descriptions, detail bullet points, fit notes, stock per size, "new" (16), bestseller ranks (18), "limited edition" (7) flags, colour names. Care text is generated per fabric.
@@ -257,13 +292,13 @@ In order:
 **How to edit common things**
 | To change… | Edit |
 |---|---|
-| A product's price, name, description, flags | `src/lib/mock-catalog.ts` (while on mock data) |
+| A product's price, name, description, flags | Shopify admin once connected (see 3.2); `src/lib/mock-catalog.ts` while on mock data |
 | Collection names / stories | `COLLECTIONS` in `mock-catalog.ts` |
 | Hero slideshow looks | `HERO_LOOKS` in `src/routes/_site.index.tsx` |
 | "Made with intention" points | `DIFFERENCE` in `_site.index.tsx` |
 | Style Notes stories and care notes | `src/lib/style-notes.ts` |
 | Announcement bar messages | `ANNOUNCEMENTS` in `src/components/site/header.tsx` |
-| Shipping fee / free threshold (mock) | `getSettings` in `src/lib/shop.functions.ts` |
+| Shipping fee / free threshold shown in the bag | `SHIPPING_FEE` / `FREE_SHIPPING_THRESHOLD` in `src/lib/catalog.ts` (checkout charges what's in Shopify's shipping settings) |
 | Fonts | `src/routes/__root.tsx` (Google Fonts link) + tokens in `src/styles.css` |
 | Colours, textures, animations | `src/styles.css` |
 
@@ -311,7 +346,7 @@ What was done (`src/server.ts`, `src/lib/build-id.ts`, `src/hooks/use-version-ch
 ## 9. Still to do (roadmap)
 
 **Content and data**
-- [ ] Replace mock data with real products: prices, descriptions, fit/fabric notes, sizes and stock, real "new"/bestseller/limited flags. Load them into Supabase and set `USE_MOCK_CATALOG = false` (or keep editing the mock file until the admin exists).
+- [ ] Replace mock data with real products: prices, descriptions, fit/fabric notes, sizes and stock, real "new"/bestseller/limited flags — in the Shopify admin once the store is connected (see 3.2).
 - [ ] Real product photography: ideally 3–5 images per product (front, back, detail, on-model), replacing the lookbook crops.
 - [ ] Confirm collection names/stories (they were invented from the lookbook themes).
 - [ ] Confirm the correct phone number (see section 1).

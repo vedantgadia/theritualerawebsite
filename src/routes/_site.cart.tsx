@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useBag } from "@/lib/cart";
 import { formatINR } from "@/lib/format";
 import { getSettings } from "@/lib/shop.functions";
+import { CheckoutButton } from "@/components/site/checkout-button";
 
 export const Route = createFileRoute("/_site/cart")({
   head: () => ({ meta: [{ title: "Your Bag — The Ritual Era" }] }),
@@ -73,9 +74,7 @@ function CartPage() {
           {shipping > 0 && (
             <p className="mt-3 text-xs font-light text-taupe">Add {formatINR(freeThreshold - bag.subtotal)} more for free shipping.</p>
           )}
-          <Link to="/checkout" className="mt-6 flex h-12 w-full items-center justify-center rounded-[2px] bg-primary font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground hover:bg-[#2a4a76]">
-            Checkout
-          </Link>
+          <CheckoutButton className="mt-6 flex h-12 w-full items-center justify-center rounded-[2px] bg-primary font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground hover:bg-[#2a4a76]" />
           <Link to="/shop" className="mt-3 block text-center font-sans text-[10px] uppercase tracking-[0.18em] text-ink underline underline-offset-4">
             Continue shopping
           </Link>

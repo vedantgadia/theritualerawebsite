@@ -1,8 +1,10 @@
 /*
  * Mock catalogue drawn from The Ritual Era lookbook.
- * Used while the real catalogue is being loaded into the database — flip
- * USE_MOCK_CATALOG in shop.functions.ts to switch back to Supabase.
+ * The site shows it whenever Shopify isn't connected (no SHOPIFY_* keys), and
+ * scripts/shopify-import.ts loads it into Shopify as the starting catalogue.
  */
+
+import { SHIPPING_RETURNS, SIZES, type ProductDetail } from "./catalog";
 
 export interface MockCategory {
   slug: string;
@@ -628,3 +630,32 @@ export function createdAtFor(p: MockProduct, index: number): string {
   const month = p.isNew ? 10 : 1 + (index % 8);
   return new Date(Date.UTC(2026, month - 1, day)).toISOString();
 }
+
+const categoryName = (slug: string) => CATEGORIES.find((c) => c.slug === slug)?.name ?? null;
+
+/* The mock catalogue in the site's product shape — also the source for the Shopify import script. */
+export const MOCK_PRODUCTS: ProductDetail[] = PRODUCTS.map((p, i) => ({
+  id: `mock-${i + 1}`,
+  name: p.name,
+  slug: p.slug,
+  description: p.description,
+  price: p.price,
+  compareAtPrice: p.compareAtPrice ?? null,
+  images: imagesFor(p),
+  limitedEdition: !!p.limited,
+  featured: !!p.featured,
+  categoryName: categoryName(p.category),
+  categorySlug: p.category,
+  sizes: stockFor(p, i).map((stock, s) => ({ size: SIZES[s]!, stock })),
+  createdAt: createdAtFor(p, i),
+  fabric: p.fabric,
+  colour: p.colour,
+  categorySlugs: categoriesFor(p),
+  collections: p.collections,
+  isNew: !!p.isNew,
+  bestsellerRank: p.bestseller ?? null,
+  fabricNotes: `${p.fabric}. ${p.details.join(". ")}. Designed and made in-house in Mumbai in small, limited runs.`,
+  fitNotes: `${p.fit} Our model is 5'7" and wears size S.`,
+  careInstructions: careFor(p),
+  shippingReturns: SHIPPING_RETURNS,
+}));
