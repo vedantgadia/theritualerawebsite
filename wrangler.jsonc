@@ -1,0 +1,6 @@
+// Cloudflare Workers settings. The build (nitro, via @lovable.dev/vite-tanstack-config)
+// merges this into the generated .output/server/wrangler.json that `npx wrangler deploy` uses.
+// The name must match the Worker's name in the Cloudflare dashboard, or Workers Builds fails.
+{
+  "name": "the-ritual-era"
+}
