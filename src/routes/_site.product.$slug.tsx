@@ -6,6 +6,7 @@ import { useBag } from "@/lib/cart";
 import { Accordion, Badge, Button, Sheet } from "@/components/ui/brand";
 import { ProductCard } from "@/components/site/product-card";
 import { StitchDivider } from "@/components/site/motion";
+import { jsonLdScript, productJsonLd, seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/product/$slug")({
   loader: async ({ params }) => {
@@ -19,12 +20,14 @@ export const Route = createFileRoute("/_site/product/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: loaderData
-      ? [
-          { title: `${loaderData.product.name} — The Ritual Era` },
-          { name: "description", content: loaderData.product.description },
-          { property: "og:image", content: loaderData.product.images[0] ?? "" },
-        ]
+      ? seo({
+          title: loaderData.product.name,
+          description: loaderData.product.description,
+          image: loaderData.product.images[0],
+          type: "product",
+        })
       : [],
+    scripts: loaderData ? [jsonLdScript(productJsonLd(loaderData.product))] : [],
   }),
   component: ProductPage,
 });

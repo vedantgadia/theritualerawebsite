@@ -381,7 +381,7 @@ What was done (`src/server.ts`, `src/lib/build-id.ts`, `src/hooks/use-version-ch
 - [ ] Emails: order confirmation, admin new-order alert, status updates.
 - [ ] Made-to-measure request form (currently a WhatsApp link) saved to the database with statuses New / Contacted / Confirmed / Closed.
 - [ ] **Admin dashboard** (`/admin`): products (images, sizes/stock, flags, drafts), categories & collections, orders with status flow, customers, made-to-measure requests, lookbook & pop-ups, settings (shipping, announcement), sales overview and low-stock alerts.
-- [ ] SEO: product structured data, Open Graph images per page (basic titles/descriptions exist).
+- [x] SEO (21 Nov 2026): `src/lib/seo.ts`. Every page gets matching title/description/Open Graph/Twitter tags with an absolute share image (its own, or the brand cover), and product pages carry schema.org Product data (price in INR, in stock or sold out).
 
 **Technical housekeeping**
 - [ ] `npm run lint` reports many Prettier formatting errors across the codebase (pre-existing style); type checks and the build are clean.

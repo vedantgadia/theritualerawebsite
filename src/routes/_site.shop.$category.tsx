@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { getCatalog, getCategories } from "@/lib/shop.functions";
 import { ProductListing } from "@/components/site/product-listing";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/shop/$category")({
   loader: async ({ params }) => {
@@ -11,10 +12,11 @@ export const Route = createFileRoute("/_site/shop/$category")({
   },
   head: ({ loaderData }) => ({
     meta: loaderData
-      ? [
-          { title: `${loaderData.category.name} — The Ritual Era` },
-          { name: "description", content: loaderData.category.blurb },
-        ]
+      ? seo({
+          title: loaderData.category.name,
+          description: loaderData.category.blurb,
+          image: loaderData.category.image,
+        })
       : [],
   }),
   component: CategoryPage,

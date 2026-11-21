@@ -1,6 +1,7 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { getCatalog, getCollections } from "@/lib/shop.functions";
 import { ProductListing } from "@/components/site/product-listing";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/collections/$slug")({
   loader: async ({ params }) => {
@@ -11,11 +12,11 @@ export const Route = createFileRoute("/_site/collections/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: loaderData
-      ? [
-          { title: `${loaderData.collection.name} — The Ritual Era` },
-          { name: "description", content: loaderData.collection.tagline },
-          { property: "og:image", content: loaderData.collection.coverImage },
-        ]
+      ? seo({
+          title: loaderData.collection.name,
+          description: loaderData.collection.tagline,
+          image: loaderData.collection.coverImage,
+        })
       : [],
   }),
   component: CollectionPage,

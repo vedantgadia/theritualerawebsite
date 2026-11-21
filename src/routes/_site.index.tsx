@@ -5,17 +5,11 @@ import { formatINR } from "@/lib/format";
 import { ProductCard } from "@/components/site/product-card";
 import { Marquee, Parallax, ScrollWords, Spool, StitchDivider, useCycle } from "@/components/site/motion";
 import { useReveal } from "@/hooks/use-reveal";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/")({
   head: () => ({
-    meta: [
-      { title: "The Ritual Era — Her Forever Prêt" },
-      {
-        name: "description",
-        content: "Elevated everyday womenswear, designed and made in-house in Mumbai. Denim reimagined through Indian textiles, crochet, ajrakh and chanderi.",
-      },
-      { property: "og:image", content: "/media/products/hero-cover.webp" },
-    ],
+    meta: seo({ description: "Elevated everyday womenswear, designed and made in-house in Mumbai. Denim reimagined through Indian textiles, crochet, ajrakh and chanderi.", image: "/media/products/hero-cover.webp" }),
   }),
   loader: async () => {
     const [all, categories, collections] = await Promise.all([getCatalog({ data: {} }), getCategories(), getCollections()]);

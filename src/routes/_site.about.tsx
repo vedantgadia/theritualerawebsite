@@ -1,13 +1,11 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { Logo, Parallax, ScrollWords, StitchDivider } from "@/components/site/motion";
 import { useReveal } from "@/hooks/use-reveal";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/about")({
   head: () => ({
-    meta: [
-      { title: "About Us — The Ritual Era" },
-      { name: "description", content: "The Ritual Era designs timeless everyday wear for the modern woman — made in-house in Mumbai, in limited editions." },
-    ],
+    meta: seo({ title: "About Us", description: "The Ritual Era designs timeless everyday wear for the modern woman — made in-house in Mumbai, in limited editions.", image: "/media/founder-priyanka.webp" }),
   }),
   component: About,
 });

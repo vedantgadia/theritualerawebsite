@@ -2,13 +2,11 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { getCollections } from "@/lib/shop.functions";
 import { StitchDivider } from "@/components/site/motion";
 import { useReveal } from "@/hooks/use-reveal";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/collections/")({
   head: () => ({
-    meta: [
-      { title: "Collections — The Ritual Era" },
-      { name: "description", content: "Stories in cloth: Denim Reimagined, Ajrakh Stories, The Crochet Edit, Little Blooms, Linen Days and Chanderi Hours." },
-    ],
+    meta: seo({ title: "Collections", description: "Stories in cloth: Denim Reimagined, Ajrakh Stories, The Crochet Edit, Little Blooms, Linen Days and Chanderi Hours.", image: "/media/products/editorial-2.webp" }),
   }),
   loader: () => getCollections(),
   component: Collections,

@@ -4,17 +4,11 @@ import { CARE_NOTES, STYLE_NOTES, type StyleNote } from "@/lib/style-notes";
 import { formatINR } from "@/lib/format";
 import { Parallax, StitchDivider } from "@/components/site/motion";
 import { useReveal } from "@/hooks/use-reveal";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/style-notes")({
   head: () => ({
-    meta: [
-      { title: "Style Notes — The Ritual Era" },
-      {
-        name: "description",
-        content: "Styling tips from The Ritual Era: how to wear denim, crochet, ajrakh, linen and co-ords, plus care notes for every fabric.",
-      },
-      { property: "og:image", content: "/media/products/editorial-3.webp" },
-    ],
+    meta: seo({ title: "Style Notes", description: "Styling tips from The Ritual Era: how to wear denim, crochet, ajrakh, linen and co-ords, plus care notes for every fabric.", image: "/media/products/editorial-3.webp" }),
   }),
   loader: () => getCatalog({ data: {} }),
   component: StyleNotes,

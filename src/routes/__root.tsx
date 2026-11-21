@@ -12,6 +12,7 @@ import type { ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { useVersionCheck } from "@/hooks/use-version-check";
+import { absoluteUrl, DEFAULT_SHARE_IMAGE } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -75,6 +76,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "The Ritual Era" },
+      { property: "og:locale", content: "en_IN" },
+      { property: "og:image", content: absoluteUrl(DEFAULT_SHARE_IMAGE) },
+      { name: "twitter:image", content: absoluteUrl(DEFAULT_SHARE_IMAGE) },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [

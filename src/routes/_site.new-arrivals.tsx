@@ -1,13 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getCatalog } from "@/lib/shop.functions";
 import { ProductListing } from "@/components/site/product-listing";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/new-arrivals")({
   head: () => ({
-    meta: [
-      { title: "New Arrivals — The Ritual Era" },
-      { name: "description", content: "The newest pieces from The Ritual Era: denim, crochet, ajrakh and chanderi, designed and made in Mumbai." },
-    ],
+    meta: seo({ title: "New Arrivals", description: "The newest pieces from The Ritual Era: denim, crochet, ajrakh and chanderi, designed and made in Mumbai." }),
   }),
   loader: () => getCatalog({ data: { isNew: true } }),
   component: NewArrivals,
