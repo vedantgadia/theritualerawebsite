@@ -1,6 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { PagePlaceholder } from "@/components/site/page-placeholder";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
+/* Old sign-in address; accounts are now Shopify's, reached through /account. */
 export const Route = createFileRoute("/_site/auth")({
-  component: () => <PagePlaceholder title="Sign in" />,
+  beforeLoad: () => {
+    throw redirect({ href: "/account" });
+  },
 });

@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCatalog, getCategories, getCollections, type CatalogProduct } from "@/lib/shop.functions";
 import { useBag } from "@/lib/cart";
-import { supabase } from "@/integrations/supabase/client";
 import { formatINR } from "@/lib/format";
 import { Logo, useCycle } from "@/components/site/motion";
 
@@ -113,21 +112,12 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<MenuKey>(null);
   const [megaOpen, setMegaOpen] = useState<MenuKey>(null);
-  const [signedIn, setSignedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { data: categories = [] } = useQuery({ queryKey: ["categories"], queryFn: () => getCategories() });
   const { data: collections = [] } = useQuery({ queryKey: ["collections"], queryFn: () => getCollections() });
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSignedIn(!!data.session));
-    const { data: sub } = supabase.auth.onAuthStateChange((e) => {
-      if (e === "SIGNED_IN" || e === "SIGNED_OUT") setSignedIn(e === "SIGNED_IN");
-    });
-    return () => sub.subscription.unsubscribe();
-  }, []);
 
   useEffect(() => {
     let last = window.scrollY;
@@ -193,12 +183,12 @@ export function Header() {
           <Wordmark compact={scrolled} />
 
           <div className="flex items-center justify-end gap-5">
-            <Link to={signedIn ? "/account" : "/auth"} aria-label={signedIn ? "Account" : "Sign in"} className="hidden text-ink/80 transition-colors hover:text-ritual sm:block">
+            <a href="/account" aria-label="Account" className="hidden text-ink/80 transition-colors hover:text-ritual sm:block">
               <svg width="18" height="18" viewBox="0 0 18 18" stroke="currentColor" strokeWidth="1.1" fill="none">
                 <circle cx="9" cy="5.5" r="3.5" />
                 <path d="M2 16.5c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" />
               </svg>
-            </Link>
+            </a>
             <button aria-label={`Bag, ${bag.count} items`} className="relative text-ink/80 transition-colors hover:text-ritual" onClick={bag.openBag}>
               <svg width="18" height="18" viewBox="0 0 18 18" stroke="currentColor" strokeWidth="1.1" fill="none">
                 <path d="M3 5.5h12l-1 11H4l-1-11Z" />
@@ -377,9 +367,9 @@ export function Header() {
             </Link>
           </div>
           <div className="mt-auto space-y-3 border-t border-border px-6 py-6">
-            <Link to={signedIn ? "/account" : "/auth"} onClick={closeAll} className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink">
-              {signedIn ? "My account" : "Sign in"}
-            </Link>
+            <a href="/account" onClick={closeAll} className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink">
+              My account
+            </a>
             <Link to="/contact" onClick={closeAll} className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink">
               Contact
             </Link>

@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { createClient } from "@supabase/supabase-js";
-import type { Database } from "@/integrations/supabase/types";
+import { createPublicClient } from "@/integrations/supabase/client";
 import {
   FREE_SHIPPING_THRESHOLD,
   SHIPPING_FEE,
@@ -43,22 +42,9 @@ async function catalogSource(): Promise<{ products: ProductDetail[]; categories:
 /* Listing cards don't need the long accordion texts. */
 const toCard = ({ fabricNotes: _f, fitNotes: _n, careInstructions: _c, shippingReturns: _s, ...card }: ProductDetail): CatalogProduct => card;
 
-/* Publishable-key client for anonymous reads of lookbook and pop-up content (SSR-safe). */
-function publicClient() {
-  const url = process.env["SUPABASE_URL"]!;
-  const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
-  return createClient<Database>(url, key, {
-    auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
-    global: {
-      fetch: (input, init) => {
-        const h = new Headers(init?.headers);
-        if (key.startsWith("sb_") && h.get("Authorization") === `Bearer ${key}`) h.delete("Authorization");
-        h.set("apikey", key);
-        return fetch(input, { ...init, headers: h });
-      },
-    },
-  });
-}
+/* Publishable-key client for anonymous reads of lookbook and pop-up content (server side). */
+const publicClient = () =>
+  createPublicClient(process.env["SUPABASE_URL"]!, process.env["SUPABASE_PUBLISHABLE_KEY"]!);
 
 const catalogInput = z.object({
   category: z.string().max(80).optional(),
