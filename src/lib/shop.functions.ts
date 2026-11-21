@@ -157,9 +157,12 @@ export const getLookbookCampaign = createServerFn({ method: "GET" })
     if (!c) return null;
     const { data: imgs } = await db
       .from("lookbook_images")
-      .select("id, image_url, caption, sort_order, product:products(slug, name, price)")
+      .select("id, image_url, caption, sort_order, product_slug")
       .eq("campaign_id", c.id)
       .order("sort_order", { ascending: true });
+    // Images link to a product by its slug (the Shopify handle); name and price come from the catalogue.
+    const { products } = await catalogSource();
+    const bySlug = new Map(products.map((p) => [p.slug, p]));
     return {
       campaign: {
         id: c.id,
@@ -170,14 +173,14 @@ export const getLookbookCampaign = createServerFn({ method: "GET" })
         createdAt: c.created_at,
       },
       images: (imgs ?? []).map((i) => {
-        const p = i.product as { slug: string; name: string; price: number } | null;
+        const p = i.product_slug ? bySlug.get(i.product_slug) : undefined;
         return {
           id: i.id,
-          imageUrl: (i.image_url as string) ?? "",
-          caption: (i.caption as string) ?? "",
+          imageUrl: i.image_url ?? "",
+          caption: i.caption ?? "",
           productSlug: p?.slug ?? null,
           productName: p?.name ?? null,
-          productPrice: p ? Number(p.price) : null,
+          productPrice: p?.price ?? null,
         };
       }),
     };

@@ -14,80 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      addresses: {
-        Row: {
-          address_line: string
-          city: string
-          created_at: string
-          full_name: string
-          id: string
-          is_default: boolean
-          label: string
-          phone: string
-          pincode: string
-          state: string
-          user_id: string
-        }
-        Insert: {
-          address_line: string
-          city: string
-          created_at?: string
-          full_name: string
-          id?: string
-          is_default?: boolean
-          label?: string
-          phone: string
-          pincode: string
-          state: string
-          user_id: string
-        }
-        Update: {
-          address_line?: string
-          city?: string
-          created_at?: string
-          full_name?: string
-          id?: string
-          is_default?: boolean
-          label?: string
-          phone?: string
-          pincode?: string
-          state?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "addresses_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      categories: {
-        Row: {
-          created_at: string
-          id: string
-          name: string
-          slug: string
-          sort_order: number
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          name: string
-          slug: string
-          sort_order?: number
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          name?: string
-          slug?: string
-          sort_order?: number
-        }
-        Relationships: []
-      }
       contact_messages: {
         Row: {
           created_at: string
@@ -154,7 +80,7 @@ export type Database = {
           caption: string
           id: string
           image_url: string
-          product_id: string | null
+          product_slug: string | null
           sort_order: number
         }
         Insert: {
@@ -162,7 +88,7 @@ export type Database = {
           caption?: string
           id?: string
           image_url: string
-          product_id?: string | null
+          product_slug?: string | null
           sort_order?: number
         }
         Update: {
@@ -170,7 +96,7 @@ export type Database = {
           caption?: string
           id?: string
           image_url?: string
-          product_id?: string | null
+          product_slug?: string | null
           sort_order?: number
         }
         Relationships: [
@@ -179,13 +105,6 @@ export type Database = {
             columns: ["campaign_id"]
             isOneToOne: false
             referencedRelation: "lookbook_campaigns"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "lookbook_images_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "products"
             referencedColumns: ["id"]
           },
         ]
@@ -203,7 +122,7 @@ export type Database = {
           name: string
           notes: string
           phone: string
-          product_id: string | null
+          product_slug: string | null
           shoulder: string
           status: string
           waist: string
@@ -220,7 +139,7 @@ export type Database = {
           name: string
           notes?: string
           phone: string
-          product_id?: string | null
+          product_slug?: string | null
           shoulder?: string
           status?: string
           waist?: string
@@ -237,20 +156,12 @@ export type Database = {
           name?: string
           notes?: string
           phone?: string
-          product_id?: string | null
+          product_slug?: string | null
           shoulder?: string
           status?: string
           waist?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "mtm_requests_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "products"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       newsletter_subscribers: {
         Row: {
@@ -269,134 +180,6 @@ export type Database = {
           id?: string
         }
         Relationships: []
-      }
-      order_items: {
-        Row: {
-          id: string
-          image_url: string | null
-          order_id: string
-          product_id: string | null
-          product_name: string
-          quantity: number
-          size: string
-          unit_price: number
-        }
-        Insert: {
-          id?: string
-          image_url?: string | null
-          order_id: string
-          product_id?: string | null
-          product_name: string
-          quantity?: number
-          size: string
-          unit_price: number
-        }
-        Update: {
-          id?: string
-          image_url?: string | null
-          order_id?: string
-          product_id?: string | null
-          product_name?: string
-          quantity?: number
-          size?: string
-          unit_price?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "order_items_order_id_fkey"
-            columns: ["order_id"]
-            isOneToOne: false
-            referencedRelation: "orders"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "order_items_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "products"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      orders: {
-        Row: {
-          address_line: string
-          city: string
-          courier_name: string | null
-          created_at: string
-          email: string
-          full_name: string
-          id: string
-          is_guest: boolean
-          order_number: string
-          phone: string
-          pincode: string
-          razorpay_order_id: string | null
-          razorpay_payment_id: string | null
-          shipping_fee: number
-          state: string
-          status: string
-          subtotal: number
-          total: number
-          tracking_number: string | null
-          updated_at: string
-          user_id: string | null
-        }
-        Insert: {
-          address_line: string
-          city: string
-          courier_name?: string | null
-          created_at?: string
-          email: string
-          full_name: string
-          id?: string
-          is_guest?: boolean
-          order_number: string
-          phone: string
-          pincode: string
-          razorpay_order_id?: string | null
-          razorpay_payment_id?: string | null
-          shipping_fee?: number
-          state: string
-          status?: string
-          subtotal?: number
-          total?: number
-          tracking_number?: string | null
-          updated_at?: string
-          user_id?: string | null
-        }
-        Update: {
-          address_line?: string
-          city?: string
-          courier_name?: string | null
-          created_at?: string
-          email?: string
-          full_name?: string
-          id?: string
-          is_guest?: boolean
-          order_number?: string
-          phone?: string
-          pincode?: string
-          razorpay_order_id?: string | null
-          razorpay_payment_id?: string | null
-          shipping_fee?: number
-          state?: string
-          status?: string
-          subtotal?: number
-          total?: number
-          tracking_number?: string | null
-          updated_at?: string
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "orders_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       popup_events: {
         Row: {
@@ -437,181 +220,15 @@ export type Database = {
         }
         Relationships: []
       }
-      product_sizes: {
-        Row: {
-          id: string
-          product_id: string
-          size: string
-          stock: number
-        }
-        Insert: {
-          id?: string
-          product_id: string
-          size: string
-          stock?: number
-        }
-        Update: {
-          id?: string
-          product_id?: string
-          size?: string
-          stock?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "product_sizes_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "products"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      products: {
-        Row: {
-          care_instructions: string
-          category_id: string | null
-          compare_at_price: number | null
-          created_at: string
-          description: string
-          fabric_notes: string
-          featured: boolean
-          fit_notes: string
-          id: string
-          images: Json
-          limited_edition: boolean
-          name: string
-          price: number
-          published: boolean
-          shipping_returns: string
-          slug: string
-        }
-        Insert: {
-          care_instructions?: string
-          category_id?: string | null
-          compare_at_price?: number | null
-          created_at?: string
-          description?: string
-          fabric_notes?: string
-          featured?: boolean
-          fit_notes?: string
-          id?: string
-          images?: Json
-          limited_edition?: boolean
-          name: string
-          price: number
-          published?: boolean
-          shipping_returns?: string
-          slug: string
-        }
-        Update: {
-          care_instructions?: string
-          category_id?: string | null
-          compare_at_price?: number | null
-          created_at?: string
-          description?: string
-          fabric_notes?: string
-          featured?: boolean
-          fit_notes?: string
-          id?: string
-          images?: Json
-          limited_edition?: boolean
-          name?: string
-          price?: number
-          published?: boolean
-          shipping_returns?: string
-          slug?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "products_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categories"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      profiles: {
-        Row: {
-          created_at: string
-          email: string | null
-          full_name: string
-          id: string
-          phone: string
-        }
-        Insert: {
-          created_at?: string
-          email?: string | null
-          full_name?: string
-          id: string
-          phone?: string
-        }
-        Update: {
-          created_at?: string
-          email?: string | null
-          full_name?: string
-          id?: string
-          phone?: string
-        }
-        Relationships: []
-      }
-      site_settings: {
-        Row: {
-          announcement: string
-          free_shipping_threshold: number
-          id: number
-          shipping_fee: number
-          updated_at: string
-        }
-        Insert: {
-          announcement?: string
-          free_shipping_threshold?: number
-          id?: number
-          shipping_fee?: number
-          updated_at?: string
-        }
-        Update: {
-          announcement?: string
-          free_shipping_threshold?: number
-          id?: number
-          shipping_fee?: number
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      user_roles: {
-        Row: {
-          id: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Insert: {
-          id?: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Update: {
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
+      [_ in never]: never
     }
     Enums: {
-      app_role: "admin"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -738,8 +355,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      app_role: ["admin"],
-    },
+    Enums: {},
   },
 } as const

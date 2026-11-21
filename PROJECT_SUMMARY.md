@@ -163,6 +163,12 @@ The owner chose **Shopify as the shop's back office, with the existing custom si
 - **Script note**: `scripts/shopify-import.ts` uses `collectionCreate(input: …ruleSet)`, which is deprecated in Admin API 2026-10 (use `collection: { sources: [...] }`). The collections were created with the new form. Fix this before re-using the script on a newer API version.
 - Store email is **info@theritualera.com**; the site footer uses theritualera.official@gmail.com. Decide which customers should see.
 
+### 3.1b Cloudflare hosting and own Supabase (21 November 2026)
+
+- **Cloudflare**: Worker `the-ritual-era` (account of theritualera1@gmail.com), Workers Builds connected to GitHub `main` (`bun run build`, `npx wrangler deploy`), live at https://the-ritual-era.theritualera1.workers.dev. The name is pinned in `wrangler.jsonc`. Worker secrets: `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_STOREFRONT_PRIVATE_TOKEN`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`. Use secrets, not plain variables: `wrangler deploy` wipes plain variables set in the dashboard. Domain not moved yet.
+- **Supabase**: own project `the-ritual-era` (ref `ptucruamzupfitpxocxa`, Mumbai), replacing Lovable Cloud's project. Schema in `supabase/migrations/20261121091520_ritual_era_content_tables.sql`: only `lookbook_campaigns`, `lookbook_images`, `popup_events`, `newsletter_subscribers`, `mtm_requests`, `contact_messages`. Products, orders and customers are in Shopify; lookbook images link to products by `product_slug` (the Shopify handle). Visitors can read published content and insert form rows, nothing else. Campaigns and events start **unpublished** (`published = false`). The tables are empty: the old seed rows were invented placeholders. The build-time keys are in the committed `.env` (public keys).
+- Shopify checkout currently lands on the store's password page, because the store is still password-protected. Remove the password only when payments and real products are in place.
+
 ### 3.2 Shopify connection (built 3 November 2026, not yet connected to a real store)
 
 **How it switches on:** `src/lib/shop.functions.ts` serves products from Shopify when `SHOPIFY_STORE_DOMAIN` and `SHOPIFY_STOREFRONT_PRIVATE_TOKEN` are set, otherwise from the mock catalogue. Nothing else needs changing. This replaces the old `USE_MOCK_CATALOG` switch, and the unused Supabase product queries are gone. Lookbook and pop-ups still read Supabase until they move to Shopify metaobjects.
