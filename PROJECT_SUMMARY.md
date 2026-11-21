@@ -147,13 +147,21 @@ The owner chose **Shopify as the shop's back office, with the existing custom si
 `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_STOREFRONT_PRIVATE_TOKEN` (Headless channel), `SHOPIFY_CLIENT_ID` + `SHOPIFY_CLIENT_SECRET` (Dev Dashboard app; exchanged for 24-hour Admin API tokens via the client-credentials grant — Shopify stopped issuing copyable admin tokens for new custom apps on 1 Jan 2026). The cloud environment must allow `*.myshopify.com` under network access.
 
 **Migration steps:**
-1. Owner sets up the Shopify store, Headless channel and Dev Dashboard app (step-by-step given in chat, 3 Nov 2026). ⏳ *waiting on owner*
-2. Load the 68 mock products into Shopify by script. ✅ *script written* (`scripts/shopify-import.ts`), ⏳ *not yet run* — needs the store keys.
+1. Owner sets up the Shopify store, Headless channel and Dev Dashboard app (step-by-step given in chat, 3 Nov 2026). ✅ *store `cuzujw-1p.myshopify.com` (Basic, INR, prices include GST) with the Headless channel; the Storefront keys are set in the cloud environment.* The Dev Dashboard app keys (`SHOPIFY_CLIENT_ID`/`SECRET`) are not set.
+2. Load the 68 mock products into Shopify. ✅ *done 21 Nov 2026* through the Shopify connector, using the payload from `import-payload.ts`, not the script: 9 metafield definitions (storefront-readable), 68 products with 2 photos each and stock per size at the Mumbai location, and 11 automated collections. All are published to the Headless channel only, not the Online Store or POS. Checked: the site's own `shopifySnapshot()` returns the same catalogue as `mock-catalog.ts` (0 differences), `quantityAvailable` works, and a test cart gives a checkout link in INR.
 3. Site reads from Shopify; Checkout sends shoppers to Shopify checkout. ✅ *built* — switches on automatically when the keys are set.
 4. Build Lookbook, Pop-ups, Track Order, Account, Contact and policy pages on Shopify data.
 5. Connect Razorpay (test mode) and place end-to-end test orders, including a failed payment and a refund.
 6. Deploy to Cloudflare, move the domain's DNS from GoDaddy to Cloudflare, add the checkout subdomain.
 7. Go live: real products and photos, Razorpay live mode, Basic plan; remove Lovable and Supabase code.
+
+### 3.1a Shopify store status (21 November 2026)
+
+- **Shipping** (Settings → Shipping, General profile, zone "Domestic" = India): **Standard shipping ₹150** for orders up to ₹4,999.99, and **Free shipping** from ₹5,000. This replaced a single ₹379 rate named "मानक" with no free tier. It matches `SHIPPING_FEE` / `FREE_SHIPPING_THRESHOLD` in `src/lib/catalog.ts`.
+- **Policies**: Privacy exists (Shopify's template). Drafts for **Refund & Exchange, Shipping, Terms of Service and Contact information** are in **`docs/shopify-policies.md`**, with a list of the assumptions to confirm. They are **not in Shopify yet**: the connector lacks the `write_legal_policies` permission, so the owner pastes them in Settings → Policies. The Contact policy has `[TO CONFIRM]` fields (legal name, address, GSTIN, grievance officer). After that, the site's placeholder policy pages can read them from the Storefront API (`shop { refundPolicy shippingPolicy termsOfService privacyPolicy }`).
+- **Products are still mock data** (invented prices, stock, descriptions and flags; see section 5). The owner edits them in Shopify admin. Do **not** re-run `scripts/shopify-import.ts --force`.
+- **Script note**: `scripts/shopify-import.ts` uses `collectionCreate(input: …ruleSet)`, which is deprecated in Admin API 2026-10 (use `collection: { sources: [...] }`). The collections were created with the new form. Fix this before re-using the script on a newer API version.
+- Store email is **info@theritualera.com**; the site footer uses theritualera.official@gmail.com. Decide which customers should see.
 
 ### 3.2 Shopify connection (built 3 November 2026, not yet connected to a real store)
 
@@ -352,7 +360,7 @@ What was done (`src/server.ts`, `src/lib/build-id.ts`, `src/hooks/use-version-ch
 - [ ] Confirm the correct phone number (see section 1).
 - [ ] Original vector logo file from the designer.
 - [ ] Optional: licensed Canela / Maison Neue / Quentin web fonts.
-- [ ] Policy texts (Shipping, Returns & Exchange, Privacy, Terms) — pages exist with placeholder text; needed for Razorpay approval.
+- [ ] Policy texts: drafts in `docs/shopify-policies.md`. Confirm the assumptions, paste them into Shopify (Settings → Policies), then show them on the site's policy pages (which still have placeholder text). Needed for Razorpay approval.
 
 **Pages still placeholders** (they render "This page is being dressed"):
 - [ ] Checkout (guest checkout default + login option, address form, Razorpay)
