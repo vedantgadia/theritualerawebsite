@@ -26,7 +26,9 @@ export function SectionHeading({
     <div className={`reveal ${align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}`}>
       {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
       <h2 className="font-display text-3xl leading-tight text-ink sm:text-4xl">{title}</h2>
-      {children && <div className="mt-4 text-sm font-light leading-relaxed text-washed">{children}</div>}
+      {children && (
+        <div className="mt-4 text-sm font-light leading-relaxed text-washed">{children}</div>
+      )}
     </div>
   );
 }

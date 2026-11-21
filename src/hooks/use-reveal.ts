@@ -6,7 +6,9 @@ export function useReveal(deps: unknown[] = []) {
 
   useEffect(() => {
     const root = ref.current ?? document.body;
-    const targets = Array.from(root.querySelectorAll<HTMLElement>(".reveal, .reveal-img, .thread-draw"));
+    const targets = Array.from(
+      root.querySelectorAll<HTMLElement>(".reveal, .reveal-img, .thread-draw"),
+    );
     if (targets.length === 0) return;
 
     const observer = new IntersectionObserver(

@@ -27,11 +27,11 @@ _Handover brief, written 2 November 2026. Paste this into a new Claude conversat
 | **Design language** | Denim at the heart, reimagined through Indian textiles (ajrakh, hakoba, chanderi, crochet, hand embroidery); sashiko-inspired stitching; limited editions made in-house |
 | **Instagram** | @theritualera |
 | **Facebook** | facebook.com/theritualera.official |
-| **Email** | theritualera.official@gmail.com |
+| **Email** | info@theritualera.com (confirmed 21 Nov 2026; also the Shopify store email) |
 | **WhatsApp (used on site)** | +91 97697 28791 → https://wa.me/919769728791 |
 | **Hours** | 10am–7pm, closed on public holidays |
 
-> ⚠️ **Phone number mismatch to confirm:** the website uses **+91 97697 28791** (from the original project brief), but the business card in the brand deck shows **+91 74100 84301**. Confirm which is correct; the number is in `src/components/site/bits.tsx` (WhatsApp button), `footer.tsx`, `_site.product.$slug.tsx` and `_site.style-notes.tsx`.
+> **Phone confirmed (21 Nov 2026):** +91 97697 28791 is the customer number (WhatsApp and policies). The +91 74100 84301 on the brand deck's business card is not used.
 
 **The feel the owner asked for** (with reference sites Nicobar, The Summer House "Indigo Stripe" page, and Aleia):
 - Minimal but not boring
@@ -132,7 +132,7 @@ The owner chose **Shopify as the shop's back office, with the existing custom si
 | Products, prices, sizes, stock | **Shopify admin** | Owner |
 | Bag, guest checkout, payments (**Razorpay**, via Shopify payment settings) | **Shopify** (Storefront API cart → Shopify checkout) | Shopify |
 | Order emails, order status/tracking, customer accounts (email code) | **Shopify** | Shopify |
-| Shipping (₹150, free ≥ ₹5,000), GST (prices include tax), policies | Shopify settings | Owner |
+| Shipping (₹150, free ≥ ₹5,000), tax (none: not GST-registered, so Shopify adds no tax), policies | Shopify settings | Owner |
 | Lookbook, Pop-ups, made-to-measure requests | Shopify metaobjects | Owner |
 | Newsletter | Shopify customers with marketing consent | Owner |
 | Supabase / Lovable Cloud, Lovable hosting | **To be removed** once the above works | — |
@@ -158,10 +158,10 @@ The owner chose **Shopify as the shop's back office, with the existing custom si
 ### 3.1a Shopify store status (21 November 2026)
 
 - **Shipping** (Settings → Shipping, General profile, zone "Domestic" = India): **Standard shipping ₹150** for orders up to ₹4,999.99, and **Free shipping** from ₹5,000. This replaced a single ₹379 rate named "मानक" with no free tier. It matches `SHIPPING_FEE` / `FREE_SHIPPING_THRESHOLD` in `src/lib/catalog.ts`.
-- **Policies**: Privacy exists (Shopify's template). Drafts for **Refund & Exchange, Shipping, Terms of Service and Contact information** are in **`docs/shopify-policies.md`**, with a list of the assumptions to confirm. They are **not in Shopify yet**: the connector lacks the `write_legal_policies` permission, so the owner pastes them in Settings → Policies. The Contact policy has `[TO CONFIRM]` fields (legal name, address, GSTIN, grievance officer). **The site's policy pages read them from Shopify** (built 21 Nov 2026): `/shipping-policy`, `/returns-policy`, `/privacy-policy` and `/terms` show the Shipping, Refund, Privacy and Terms of Service policies from Shopify admin, cached for 5 minutes. A policy that is still empty shows a short "finishing touches" note with a WhatsApp link. Code: `src/lib/policies.ts` (query, mapping, HTML sanitiser that keeps only simple formatting and safe links), `policies.functions.ts` (`getPolicy`), `shopifyPolicies()` in `storefront.server.ts`, `.policy-body` styles in `styles.css`, and tests in `src/test/policies.test.ts`. The Contact information policy is not available through the Storefront API, so it has no page on the site.
+- **Policies**: Privacy exists (Shopify's template). Drafts for **Refund & Exchange, Shipping, Terms of Service and Contact information** are in **`docs/shopify-policies.md`**, with a list of the assumptions to confirm. They are **not in Shopify yet**: the connector lacks the `write_legal_policies` permission, so the owner pastes them in Settings → Policies. The business is not legally registered and has no GSTIN; proprietor and grievance officer is Priyanka Bhartia. The Contact policy's only `[TO CONFIRM]` is the studio address. **The site's policy pages read them from Shopify** (built 21 Nov 2026): `/shipping-policy`, `/returns-policy`, `/privacy-policy` and `/terms` show the Shipping, Refund, Privacy and Terms of Service policies from Shopify admin, cached for 5 minutes. A policy that is still empty shows a short "finishing touches" note with a WhatsApp link. Code: `src/lib/policies.ts` (query, mapping, HTML sanitiser that keeps only simple formatting and safe links), `policies.functions.ts` (`getPolicy`), `shopifyPolicies()` in `storefront.server.ts`, `.policy-body` styles in `styles.css`, and tests in `src/test/policies.test.ts`. The Contact information policy is not available through the Storefront API, so it has no page on the site.
 - **Products are still mock data** (invented prices, stock, descriptions and flags; see section 5). The owner edits them in Shopify admin. Do **not** re-run `scripts/shopify-import.ts --force`.
-- **Script note**: `scripts/shopify-import.ts` uses `collectionCreate(input: …ruleSet)`, which is deprecated in Admin API 2026-10 (use `collection: { sources: [...] }`). The collections were created with the new form. Fix this before re-using the script on a newer API version.
-- Store email is **info@theritualera.com**; the site footer uses theritualera.official@gmail.com. Decide which customers should see.
+- **Import script** (updated 21 Nov 2026): uses Admin API 2026-10 (`collectionCreate(collection: { sources })`, `Publication.catalog.title`), publishes to the Headless channel only, and downloads photos from the Cloudflare site by default.
+- Customer-facing email is **info@theritualera.com** and phone **+91 97697 28791** (both confirmed 21 Nov 2026).
 
 ### 3.1b Cloudflare hosting and own Supabase (21 November 2026)
 
@@ -362,8 +362,8 @@ What was done (`src/server.ts`, `src/lib/build-id.ts`, `src/hooks/use-version-ch
 **Content and data**
 - [ ] Replace mock data with real products: prices, descriptions, fit/fabric notes, sizes and stock, real "new"/bestseller/limited flags — in the Shopify admin once the store is connected (see 3.2).
 - [ ] Real product photography: ideally 3–5 images per product (front, back, detail, on-model), replacing the lookbook crops.
-- [ ] Confirm collection names/stories (they were invented from the lookbook themes).
-- [ ] Confirm the correct phone number (see section 1).
+- [x] Collection names and stories confirmed by the owner (21 Nov 2026).
+- [x] Phone number confirmed: +91 97697 28791.
 - [ ] Original vector logo file from the designer.
 - [ ] Optional: licensed Canela / Maison Neue / Quentin web fonts.
 - [ ] Policy texts: drafts in `docs/shopify-policies.md`. Confirm the assumptions, paste them into Shopify (Settings → Policies). The site's policy pages then show them within 5 minutes. Needed for Razorpay approval.
@@ -381,11 +381,11 @@ What was done (`src/server.ts`, `src/lib/build-id.ts`, `src/hooks/use-version-ch
 - [ ] Emails: order confirmation, admin new-order alert, status updates.
 - [ ] Made-to-measure request form (currently a WhatsApp link) saved to the database with statuses New / Contacted / Confirmed / Closed.
 - [ ] **Admin dashboard** (`/admin`): products (images, sizes/stock, flags, drafts), categories & collections, orders with status flow, customers, made-to-measure requests, lookbook & pop-ups, settings (shipping, announcement), sales overview and low-stock alerts.
-- [ ] SEO: product structured data, Open Graph images per page (basic titles/descriptions exist).
+- [x] SEO (21 Nov 2026): `src/lib/seo.ts`. Every page gets matching title/description/Open Graph/Twitter tags with an absolute share image (its own, or the brand cover), and product pages carry schema.org Product data (price in INR, in stock or sold out).
 
 **Technical housekeeping**
-- [ ] `npm run lint` reports many Prettier formatting errors across the codebase (pre-existing style); type checks and the build are clean.
-- [ ] Unused placeholder images in `public/media/` can be removed once the Supabase seed is replaced.
+- [x] Code formatted with Prettier (21 Nov 2026); `npm run lint` has 0 errors. The 9 remaining warnings are `react-refresh/only-export-components` (dev hot-reload only) in the shadcn `ui/` components, `motion.tsx` and `cart.tsx`.
+- [x] Old placeholder images and the Lovable Cloud schema removed (21 Nov 2026). `public/media/product-1.jpg` stays as the fallback for a product without photos.
 
 ---
 

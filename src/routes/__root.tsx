@@ -8,12 +8,11 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
-import { supabase } from "@/integrations/supabase/client";
 import { useVersionCheck } from "@/hooks/use-version-check";
+import { absoluteUrl, DEFAULT_SHARE_IMAGE } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -40,9 +39,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -80,6 +76,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "The Ritual Era" },
+      { property: "og:locale", content: "en_IN" },
+      { property: "og:image", content: absoluteUrl(DEFAULT_SHARE_IMAGE) },
+      { name: "twitter:image", content: absoluteUrl(DEFAULT_SHARE_IMAGE) },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
@@ -118,17 +118,12 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const router = useRouter();
   useVersionCheck();
 
-  // Reflect signed-in state in the router once per identity transition.
-  useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((event) => {
-      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
-      router.invalidate();
-    });
-    return () => data.subscription.unsubscribe();
-  }, [router]);
-
-  return <QueryClientProvider client={queryClient}>{/* All routes render here. */}<Outlet /></QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      {/* All routes render here. */}
+      <Outlet />
+    </QueryClientProvider>
+  );
 }

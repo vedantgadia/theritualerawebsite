@@ -1,13 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getCatalog, getCategories } from "@/lib/shop.functions";
 import { ProductListing } from "@/components/site/product-listing";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/shop/")({
   head: () => ({
-    meta: [
-      { title: "Clothing — The Ritual Era" },
-      { name: "description", content: "Shop tops & shirts, dresses, co-ord sets, denim and jackets from The Ritual Era." },
-    ],
+    meta: seo({
+      title: "Clothing",
+      description:
+        "Shop tops & shirts, dresses, co-ord sets, denim and jackets from The Ritual Era.",
+    }),
   }),
   loader: async () => {
     const [products, categories] = await Promise.all([getCatalog({ data: {} }), getCategories()]);

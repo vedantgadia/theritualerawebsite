@@ -37,7 +37,10 @@ function NewsletterForm() {
         aria-label="Email address"
         className="h-11 w-full rounded-none border border-ink/20 border-r-0 bg-ivory/80 px-3 text-sm font-light text-ink placeholder:text-taupe/60 focus:border-ritual focus:outline-none"
       />
-      <button type="submit" className="h-11 whitespace-nowrap rounded-none bg-ritual px-5 font-sans text-[10px] font-medium uppercase tracking-[0.18em] text-ivory transition-colors hover:bg-[#2a4a76]">
+      <button
+        type="submit"
+        className="h-11 whitespace-nowrap rounded-none bg-ritual px-5 font-sans text-[10px] font-medium uppercase tracking-[0.18em] text-ivory transition-colors hover:bg-[#2a4a76]"
+      >
         Subscribe
       </button>
       {state === "error" && <p className="sr-only">Please enter a valid email.</p>}
@@ -46,7 +49,10 @@ function NewsletterForm() {
 }
 
 export function Footer() {
-  const { data: categories } = useQuery({ queryKey: ["footer-categories"], queryFn: () => getCategories() });
+  const { data: categories } = useQuery({
+    queryKey: ["footer-categories"],
+    queryFn: () => getCategories(),
+  });
 
   return (
     <footer className="border-t border-border">
@@ -60,7 +66,8 @@ export function Footer() {
               Letters from the <em className="font-normal italic text-ritual">studio</em>
             </p>
             <p className="mt-2 text-sm font-light leading-relaxed text-deep-denim">
-              New collections, pop-ups and the occasional story behind a stitch. No noise, we promise.
+              New collections, pop-ups and the occasional story behind a stitch. No noise, we
+              promise.
             </p>
             <div className="mt-5">
               <NewsletterForm />
@@ -73,9 +80,15 @@ export function Footer() {
         <div>
           <p className="eyebrow mb-4">The Ritual Era</p>
           <p className="max-w-xs text-sm font-light leading-relaxed text-washed">
-            Elevated everyday silhouettes, designed and made in-house in Mumbai. Denim, reimagined through Indian textiles.
+            Elevated everyday silhouettes, designed and made in-house in Mumbai. Denim, reimagined
+            through Indian textiles.
           </p>
-          <a href="https://wa.me/919769728791" target="_blank" rel="noreferrer" className="mt-5 inline-block text-sm text-ritual underline underline-offset-4">
+          <a
+            href="https://wa.me/919769728791"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-5 inline-block text-sm text-ritual underline underline-offset-4"
+          >
             WhatsApp +91 97697 28791
           </a>
         </div>
@@ -83,14 +96,53 @@ export function Footer() {
         <div>
           <p className="eyebrow mb-4">Shop</p>
           <ul className="space-y-2.5">
-            <li><Link to="/new-arrivals" className="text-sm font-light text-washed transition-colors hover:text-ritual">New arrivals</Link></li>
-            <li><Link to="/bestsellers" className="text-sm font-light text-washed transition-colors hover:text-ritual">Bestsellers</Link></li>
-            <li><Link to="/collections" className="text-sm font-light text-washed transition-colors hover:text-ritual">Collections</Link></li>
-            <li><Link to="/style-notes" className="text-sm font-light text-washed transition-colors hover:text-ritual">Style notes</Link></li>
-            <li><Link to="/shop" className="text-sm font-light text-washed transition-colors hover:text-ritual">All clothing</Link></li>
+            <li>
+              <Link
+                to="/new-arrivals"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                New arrivals
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/bestsellers"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Bestsellers
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/collections"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Collections
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/style-notes"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Style notes
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/shop"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                All clothing
+              </Link>
+            </li>
             {(categories ?? []).map((c) => (
               <li key={c.id}>
-                <Link to="/shop/$category" params={{ category: c.slug }} className="text-sm font-light text-washed transition-colors hover:text-ritual">
+                <Link
+                  to="/shop/$category"
+                  params={{ category: c.slug }}
+                  className="text-sm font-light text-washed transition-colors hover:text-ritual"
+                >
                   {c.name}
                 </Link>
               </li>
@@ -101,25 +153,95 @@ export function Footer() {
         <div>
           <p className="eyebrow mb-4">Care</p>
           <ul className="space-y-2.5">
-            <li><Link to="/track-order" className="text-sm font-light text-washed transition-colors hover:text-ritual">Track your order</Link></li>
-            <li><Link to="/contact" className="text-sm font-light text-washed transition-colors hover:text-ritual">Contact us</Link></li>
-            <li><Link to="/about" className="text-sm font-light text-washed transition-colors hover:text-ritual">About the label</Link></li>
-            <li><Link to="/pop-ups" className="text-sm font-light text-washed transition-colors hover:text-ritual">Pop-ups & events</Link></li>
+            <li>
+              <Link
+                to="/track-order"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Track your order
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/contact"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Contact us
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/about"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                About the label
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/pop-ups"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Pop-ups & events
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
           <p className="eyebrow mb-4">The fine print</p>
           <ul className="space-y-2.5">
-            <li><Link to="/shipping-policy" className="text-sm font-light text-washed transition-colors hover:text-ritual">Shipping policy</Link></li>
-            <li><Link to="/returns-policy" className="text-sm font-light text-washed transition-colors hover:text-ritual">Returns & exchange</Link></li>
-            <li><Link to="/privacy-policy" className="text-sm font-light text-washed transition-colors hover:text-ritual">Privacy policy</Link></li>
-            <li><Link to="/terms" className="text-sm font-light text-washed transition-colors hover:text-ritual">Terms & conditions</Link></li>
-            <li className="pt-2">
-              <a href="https://instagram.com/theritualera" target="_blank" rel="noreferrer" className="text-sm font-light text-washed transition-colors hover:text-ritual">Instagram — @theritualera</a>
+            <li>
+              <Link
+                to="/shipping-policy"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Shipping policy
+              </Link>
             </li>
             <li>
-              <a href="https://facebook.com/theritualera.official" target="_blank" rel="noreferrer" className="text-sm font-light text-washed transition-colors hover:text-ritual">Facebook</a>
+              <Link
+                to="/returns-policy"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Returns & exchange
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/privacy-policy"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Privacy policy
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/terms"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Terms & conditions
+              </Link>
+            </li>
+            <li className="pt-2">
+              <a
+                href="https://instagram.com/theritualera"
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Instagram — @theritualera
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://facebook.com/theritualera.official"
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Facebook
+              </a>
             </li>
           </ul>
         </div>
@@ -127,8 +249,12 @@ export function Footer() {
 
       <div className="border-t border-border/60 bg-ivory">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-5 text-center sm:flex-row sm:px-8 sm:text-left">
-          <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-taupe">© The Ritual Era · Mumbai, India</p>
-          <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-taupe">We don't design for a season. We design beyond it.</p>
+          <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-taupe">
+            © The Ritual Era · Mumbai, India
+          </p>
+          <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-taupe">
+            We don't design for a season. We design beyond it.
+          </p>
         </div>
       </div>
     </footer>

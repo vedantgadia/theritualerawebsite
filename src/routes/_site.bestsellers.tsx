@@ -1,13 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getCatalog } from "@/lib/shop.functions";
 import { ProductListing } from "@/components/site/product-listing";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/bestsellers")({
   head: () => ({
-    meta: [
-      { title: "Bestsellers — The Ritual Era" },
-      { name: "description", content: "The pieces our community returns to again and again." },
-    ],
+    meta: seo({
+      title: "Bestsellers",
+      description: "The pieces our community returns to again and again.",
+    }),
   }),
   loader: () => getCatalog({ data: { bestseller: true } }),
   component: Bestsellers,

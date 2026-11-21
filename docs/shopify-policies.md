@@ -6,9 +6,10 @@ Drafted 21 November 2026 for The Ritual Era (store `cuzujw-1p`). The Privacy Pol
 
 **Before publishing, check these points.** They are reasonable defaults, not facts from the brand:
 
-- **Contact information**: fill in every `[TO CONFIRM]` (legal business name, studio address, GSTIN, grievance officer). Indian e-commerce rules expect these to be shown.
-- **Phone number**: +91 97697 28791 is used because the website uses it. The brand deck shows +91 74100 84301. Use whichever is correct.
-- **Email**: info@theritualera.com (the store's email). The website footer uses theritualera.official@gmail.com.
+- **Contact information**: fill in the studio address (the one remaining `[TO CONFIRM]`). The business is not GST-registered, so no GSTIN is shown. Grievance officer: Priyanka Bhartia.
+- **Tax**: the business is not GST-registered, so the policies say no tax is added at checkout (checked 21 Nov 2026: Shopify adds no tax to orders). Update this wording if the business registers for GST.
+- **Phone number**: +91 97697 28791 (confirmed).
+- **Email**: info@theritualera.com (confirmed).
 - **Refunds**: exchanges only (no refunds for change of mind). Refunds only for damaged, defective or wrong items, or cancellation before dispatch. Store credit is valid for 12 months. Sale items cannot be exchanged.
 - **Timings**: 48 hours to report damage. Dispatch in 3–5 working days (as on the product pages). Delivery in 2–4 working days to metros and 4–7 elsewhere. Refunds processed in 5–7 working days.
 - **Return shipping**: the customer pays to send back a size or style exchange, and the brand pays to send the replacement.
@@ -67,7 +68,7 @@ We currently ship to addresses within India. For orders outside India, please wr
 - **Free shipping** on orders of ₹5,000 and above.
 - A flat **₹150** on orders below ₹5,000.
 
-The shipping charge is shown at checkout before you pay. All prices on our site include GST.
+The shipping charge is shown at checkout before you pay. The price you see is the final price: no tax is added at checkout.
 
 ### Dispatch and delivery times
 
@@ -109,7 +110,7 @@ You must be at least 18 years old, or using the site with the involvement of a p
 
 ### 3. Prices and payment
 
-- All prices are in Indian Rupees (₹) and include GST. Shipping charges are shown at checkout.
+- All prices are in Indian Rupees (₹). The price shown is the final price; no tax is added at checkout. Shipping charges are shown at checkout.
 - We may change prices at any time. The price you pay is the one shown at checkout when you place your order.
 - Payments are processed securely by our payment partners. We do not store your card or bank details.
 - If a piece is listed at an obviously wrong price because of an error, we may cancel the order and refund you in full.
@@ -154,11 +155,9 @@ For any question or complaint, email info@theritualera.com or WhatsApp +91 97697
 
 **Trade name:** The Ritual Era
 
-**Legal business name:** [TO CONFIRM — registered name of the business]
+**Proprietor:** Priyanka Bhartia
 
 **Address:** [TO CONFIRM — studio address], Mumbai, Maharashtra, India
-
-**GSTIN:** [TO CONFIRM]
 
 **Email:** info@theritualera.com
 
@@ -166,5 +165,5 @@ For any question or complaint, email info@theritualera.com or WhatsApp +91 97697
 
 **Hours:** 10am–7pm (closed on public holidays)
 
-**Grievance officer:** [TO CONFIRM — name], reachable at info@theritualera.com
+**Grievance officer:** Priyanka Bhartia, reachable at info@theritualera.com
 

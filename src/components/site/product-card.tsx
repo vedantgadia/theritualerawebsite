@@ -3,7 +3,13 @@ import type { CatalogProduct } from "@/lib/shop.functions";
 import { formatINR } from "@/lib/format";
 import { Badge } from "@/components/ui/brand";
 
-export function ProductCard({ product, priority = false }: { product: CatalogProduct; priority?: boolean }) {
+export function ProductCard({
+  product,
+  priority = false,
+}: {
+  product: CatalogProduct;
+  priority?: boolean;
+}) {
   const totalStock = product.sizes.reduce((s, sz) => s + sz.stock, 0);
   const imgs = product.images.length > 0 ? product.images : ["/media/product-1.jpg"];
 
@@ -35,7 +41,10 @@ export function ProductCard({ product, priority = false }: { product: CatalogPro
         {totalStock > 0 && (
           <div className="absolute inset-x-3 bottom-3 flex translate-y-3 items-center justify-center gap-3 bg-ivory/95 py-2.5 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:translate-y-0 group-hover:opacity-100 max-lg:hidden">
             {product.sizes.map((s) => (
-              <span key={s.size} className={`font-sans text-[10px] tracking-[0.12em] ${s.stock > 0 ? "text-ink" : "text-stone line-through"}`}>
+              <span
+                key={s.size}
+                className={`font-sans text-[10px] tracking-[0.12em] ${s.stock > 0 ? "text-ink" : "text-stone line-through"}`}
+              >
                 {s.size}
               </span>
             ))}
@@ -49,13 +58,17 @@ export function ProductCard({ product, priority = false }: { product: CatalogPro
           </h3>
           <div className="flex items-baseline gap-2 whitespace-nowrap">
             {product.compareAtPrice != null && (
-              <span className="text-xs font-light text-stone line-through">{formatINR(product.compareAtPrice)}</span>
+              <span className="text-xs font-light text-stone line-through">
+                {formatINR(product.compareAtPrice)}
+              </span>
             )}
             <span className="text-[13px] text-ink sm:text-sm">{formatINR(product.price)}</span>
           </div>
         </div>
         {(product.fabric || product.categoryName) && (
-          <p className="mt-1 font-sans text-[10px] uppercase tracking-[0.18em] text-taupe">{product.fabric || product.categoryName}</p>
+          <p className="mt-1 font-sans text-[10px] uppercase tracking-[0.18em] text-taupe">
+            {product.fabric || product.categoryName}
+          </p>
         )}
       </div>
     </Link>

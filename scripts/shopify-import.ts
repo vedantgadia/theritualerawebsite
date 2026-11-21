@@ -16,7 +16,7 @@
  *                                            (scopes: products, inventory, publications,
  *                                            metaobjects, files; read locations)
  *   IMAGE_BASE_URL                           where Shopify downloads the photos from
- *                                            (default: the current live site)
+ *                                            (default: the Cloudflare site)
  *   SHOPIFY_API_VERSION                      optional
  */
 import { CATEGORIES, COLLECTIONS, MOCK_PRODUCTS } from "../src/lib/mock-catalog";
@@ -40,9 +40,9 @@ const DOMAIN = (process.env["SHOPIFY_STORE_DOMAIN"] ?? "")
   .trim()
   .replace(/^https?:\/\//, "")
   .replace(/\/+$/, "");
-const VERSION = process.env["SHOPIFY_API_VERSION"]?.trim() || "2026-07";
+const VERSION = process.env["SHOPIFY_API_VERSION"]?.trim() || "2026-10";
 const IMAGE_BASE =
-  process.env["IMAGE_BASE_URL"]?.trim() || "https://theritualerawebsite.lovable.app";
+  process.env["IMAGE_BASE_URL"]?.trim() || "https://the-ritual-era.theritualera1.workers.dev";
 
 // Oldest first, so Shopify's "created" order matches the site's newest-first listings.
 const products = [...MOCK_PRODUCTS]
@@ -150,18 +150,23 @@ async function firstLocationId(): Promise<string> {
   return loc.id;
 }
 
+/*
+ * The site reads through the Headless channel only, so products are published
+ * there and not to the Online Store or POS (mock items stay off Shopify's own pages).
+ * Publication.name is deprecated in Admin API 2026-10; the channel's title is on its catalog.
+ */
 async function publicationIds(): Promise<string[]> {
-  const data = await admin<{ publications: { nodes: { id: string; name: string }[] } }>(
-    `{ publications(first: 30) { nodes { id name } } }`,
-  );
-  const pubs = data.publications.nodes;
-  if (!pubs.some((p) => /headless/i.test(p.name))) {
-    console.warn(
-      "! No Headless publication found — install the Headless channel, or products won't show on the site.",
+  const data = await admin<{
+    publications: { nodes: { id: string; catalog: { title: string } | null }[] };
+  }>(`{ publications(first: 30) { nodes { id catalog { title } } } }`);
+  const headless = data.publications.nodes.filter((p) => /headless/i.test(p.catalog?.title ?? ""));
+  if (!headless.length) {
+    throw new Error(
+      "No Headless publication found — install the Headless channel, or products won't show on the site.",
     );
   }
-  console.log(`✓ Publishing to: ${pubs.map((p) => p.name).join(", ")}`);
-  return pubs.map((p) => p.id);
+  console.log(`✓ Publishing to: ${headless.map((p) => p.catalog?.title).join(", ")}`);
+  return headless.map((p) => p.id);
 }
 
 async function publish(id: string, pubs: string[]) {
@@ -231,7 +236,7 @@ async function importCollections(pubs: string[]) {
       const data = await admin<{
         collectionCreate: { collection: { id: string } | null; userErrors: UserError[] };
       }>(
-        `mutation($input: CollectionInput!) { collectionCreate(input: $input) { collection { id } userErrors { field message } } }`,
+        `mutation($input: CollectionCreateInput!) { collectionCreate(collection: $input) { collection { id } userErrors { field message } } }`,
         { input },
       );
       const { collection, userErrors } = data.collectionCreate;
