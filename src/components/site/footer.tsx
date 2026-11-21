@@ -171,6 +171,14 @@ export function Footer() {
             </li>
             <li>
               <Link
+                to="/made-to-measure"
+                className="text-sm font-light text-washed transition-colors hover:text-ritual"
+              >
+                Made-to-measure
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/about"
                 className="text-sm font-light text-washed transition-colors hover:text-ritual"
               >

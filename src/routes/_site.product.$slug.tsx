@@ -6,6 +6,7 @@ import { useBag } from "@/lib/cart";
 import { Accordion, Badge, Button, Sheet } from "@/components/ui/brand";
 import { ProductCard } from "@/components/site/product-card";
 import { StitchDivider } from "@/components/site/motion";
+import { MtmForm } from "@/components/site/forms";
 import { jsonLdScript, productJsonLd, seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/product/$slug")({
@@ -53,6 +54,7 @@ function ProductPage() {
   const [size, setSize] = useState<string | null>(null);
   const [error, setError] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
+  const [mtmOpen, setMtmOpen] = useState(false);
 
   const totalStock = product.sizes.reduce((s, sz) => s + sz.stock, 0);
   const selected = product.sizes.find((s) => s.size === size);
@@ -221,14 +223,9 @@ function ProductPage() {
           <Button className="mt-3 w-full" size="lg" onClick={addToBag} disabled={totalStock === 0}>
             {totalStock === 0 ? "Sold out" : "Add to bag"}
           </Button>
-          <a
-            href={`https://wa.me/919769728791?text=${encodeURIComponent(`Hi! I'd like to request the ${product.name} made to measure.`)}`}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-2 flex h-12 w-full items-center justify-center rounded-[2px] border border-ink/25 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:border-ink"
-          >
+          <Button variant="outline" className="mt-2 w-full" onClick={() => setMtmOpen(true)}>
             Request made-to-measure
-          </a>
+          </Button>
 
           <ul className="mt-6 grid grid-cols-3 gap-2 text-center font-sans text-[9px] uppercase tracking-[0.16em] text-taupe">
             <li className="border border-border px-2 py-3">Made in Mumbai</li>
@@ -282,6 +279,10 @@ function ProductPage() {
           </div>
         </section>
       )}
+
+      <Sheet open={mtmOpen} onClose={() => setMtmOpen(false)} title="Made-to-measure">
+        <MtmForm key={product.slug} productSlug={product.slug} productName={product.name} />
+      </Sheet>
 
       <Sheet open={guideOpen} onClose={() => setGuideOpen(false)} title="Size guide">
         <p className="text-sm font-light leading-relaxed text-washed">

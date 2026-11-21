@@ -372,14 +372,14 @@ What was done (`src/server.ts`, `src/lib/build-id.ts`, `src/hooks/use-version-ch
 - [ ] Checkout (guest checkout default + login option, address form, Razorpay)
 - [ ] Order confirmation, Track Your Order
 - [ ] Account / sign-in (email OTP + Google), order history, saved addresses
-- [ ] Contact page (WhatsApp, email, Mumbai, hours, contact form)
+- [x] Contact page (21 Nov 2026): `/contact`, WhatsApp, email, Mumbai, hours and a form saved to Supabase `contact_messages`.
 - [ ] Lookbook list + campaign pages (note: `_site.lookbook.tsx` has the same parent-route issue the shop had — rename to `_site.lookbook.index.tsx` when building it)
 - [ ] Pop-ups & Events
 
 **Functionality from the original brief (README.md sections 4–6)**
 - [ ] **Razorpay** payments: server-side order creation priced from the database (never trust browser prices), signature verification, webhook backup, mark paid and reduce stock only after verification, retry screen. Needs `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` (test mode first).
 - [ ] Emails: order confirmation, admin new-order alert, status updates.
-- [ ] Made-to-measure request form (currently a WhatsApp link) saved to the database with statuses New / Contacted / Confirmed / Closed.
+- [x] Made-to-measure (21 Nov 2026): a form in a drawer on every product page and at `/made-to-measure` (`?piece=<slug>` pre-fills the piece), saved to Supabase `mtm_requests` with status new / contacted / confirmed / closed. Forms validate in `src/lib/forms.ts` and save through `src/lib/forms.functions.ts`, with a honeypot field against spam bots. The owner reads submissions in the Supabase Table Editor; there are no email alerts yet.
 - [ ] **Admin dashboard** (`/admin`): products (images, sizes/stock, flags, drafts), categories & collections, orders with status flow, customers, made-to-measure requests, lookbook & pop-ups, settings (shipping, announcement), sales overview and low-stock alerts.
 - [x] SEO (21 Nov 2026): `src/lib/seo.ts`. Every page gets matching title/description/Open Graph/Twitter tags with an absolute share image (its own, or the brand cover), and product pages carry schema.org Product data (price in INR, in stock or sold out).
 

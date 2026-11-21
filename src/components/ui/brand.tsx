@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 
 /* ---------------------------------- Button --------------------------------- */
@@ -161,8 +162,10 @@ export function Sheet({
     };
   }, [open, onClose]);
 
-  if (!open) return null;
-  return (
+  if (!open || typeof document === "undefined") return null;
+  // Rendered into <body> so no animated or transformed ancestor (e.g. the page fade-in)
+  // can trap it beneath the sticky header.
+  return createPortal(
     <div className="fixed inset-0 z-[80]">
       <div className="absolute inset-0 bg-ink/40" onClick={onClose} aria-hidden />
       <div
@@ -195,7 +198,8 @@ export function Sheet({
         </div>
         <div className="flex-1 overflow-y-auto px-6 py-6">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
