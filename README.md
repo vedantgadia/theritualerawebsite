@@ -41,7 +41,7 @@ Layout: editorial magazine feel, big imagery, asymmetric grids, lots of whitespa
 9. Lookbook: a list of campaigns. Each campaign has a full editorial photo story with captions and "Shop this look" links to products.
 10. Pop-ups & Events: upcoming and past exhibitions, each with name, venue, date, address and a Google Maps link.
 11. About: brand philosophy, founder story with Priyanka's photo and a script signature, and craft and denim philosophy.
-12. Contact: WhatsApp button (+91 9769728791, link https://wa.me/919769728791), email theritualera.official@gmail.com, Mumbai, India, hours 10am–7pm (closed on public holidays), and a contact form.
+12. Contact: WhatsApp button (+91 9769728791, link https://wa.me/919769728791), email info@theritualera.com, Mumbai, India, hours 10am–7pm (closed on public holidays), and a contact form.
 13. Policy pages (required for Razorpay approval): Shipping Policy, Returns & Exchange Policy, Privacy Policy, Terms & Conditions. Fill them with sensible placeholder text that I will edit.
 Global: a minimal header (logo centred or left, Shop / Lookbook / Pop-ups / About, plus search, account and bag icons) and a floating WhatsApp button on mobile. The footer has a newsletter signup, Track Your Order link, policy links, Instagram and Facebook (facebook.com/theritualera.official), and "© The Ritual Era".
 

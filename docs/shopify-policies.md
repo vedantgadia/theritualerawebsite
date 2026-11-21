@@ -7,8 +7,8 @@ Drafted 21 November 2026 for The Ritual Era (store `cuzujw-1p`). The Privacy Pol
 **Before publishing, check these points.** They are reasonable defaults, not facts from the brand:
 
 - **Contact information**: fill in every `[TO CONFIRM]` (legal business name, studio address, GSTIN, grievance officer). Indian e-commerce rules expect these to be shown.
-- **Phone number**: +91 97697 28791 is used because the website uses it. The brand deck shows +91 74100 84301. Use whichever is correct.
-- **Email**: info@theritualera.com (the store's email). The website footer uses theritualera.official@gmail.com.
+- **Phone number**: +91 97697 28791 (confirmed).
+- **Email**: info@theritualera.com (confirmed).
 - **Refunds**: exchanges only (no refunds for change of mind). Refunds only for damaged, defective or wrong items, or cancellation before dispatch. Store credit is valid for 12 months. Sale items cannot be exchanged.
 - **Timings**: 48 hours to report damage. Dispatch in 3–5 working days (as on the product pages). Delivery in 2–4 working days to metros and 4–7 elsewhere. Refunds processed in 5–7 working days.
 - **Return shipping**: the customer pays to send back a size or style exchange, and the brand pays to send the replacement.
