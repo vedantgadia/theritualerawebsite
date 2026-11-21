@@ -9,6 +9,7 @@
  */
 import type { ProductDetail, ShopCategory, ShopCollection } from "@/lib/catalog";
 import { countByCollection } from "@/lib/catalog";
+import { POLICIES_QUERY, mapPolicies, type PolicyMap } from "@/lib/policies";
 import {
   CART_CREATE_MUTATION,
   CART_QUERY,
@@ -116,6 +117,30 @@ export async function shopifySnapshot(fresh = false): Promise<Snapshot> {
     throw err;
   } finally {
     if (!fresh) inflight = null;
+  }
+}
+
+/*
+ * Store policies from Shopify admin → Settings → Policies. They change rarely,
+ * so they are cached for five minutes; on a failed refresh the last good copy is kept.
+ */
+const POLICY_CACHE_MS = 5 * 60_000;
+let policyCache: { at: number; policies: PolicyMap } | null = null;
+
+export async function shopifyPolicies(): Promise<PolicyMap> {
+  if (policyCache && Date.now() - policyCache.at < POLICY_CACHE_MS) return policyCache.policies;
+  try {
+    const { shop } = await storefront<{ shop: Record<string, { title: string; body: string } | null> }>(
+      POLICIES_QUERY,
+    );
+    policyCache = { at: Date.now(), policies: mapPolicies(shop) };
+    return policyCache.policies;
+  } catch (err) {
+    if (policyCache) {
+      console.error("Shopify policies refresh failed; serving the cached copy", err);
+      return policyCache.policies;
+    }
+    throw err;
   }
 }
 

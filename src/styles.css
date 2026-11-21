@@ -361,3 +361,47 @@
 .img-zoom.reveal-img.is-visible:hover img {
   transform: scale(1.045);
 }
+
+/* Store policy text from Shopify (sanitised HTML in PolicyPage) */
+.policy-body {
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--color-ink);
+}
+.policy-body > * + * {
+  margin-top: 1rem;
+}
+.policy-body h2,
+.policy-body h3,
+.policy-body h4 {
+  margin-top: 2.5rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--color-ink);
+  line-height: 1.3;
+}
+.policy-body h2 { font-size: 1.5rem; }
+.policy-body h3 { font-size: 1.25rem; }
+.policy-body h4 { font-size: 1.0625rem; }
+.policy-body ul,
+.policy-body ol {
+  padding-left: 1.25rem;
+}
+.policy-body ul { list-style: disc; }
+.policy-body ol { list-style: decimal; }
+.policy-body li + li { margin-top: 0.5rem; }
+.policy-body li::marker { color: var(--color-taupe); }
+.policy-body strong,
+.policy-body b { font-weight: 500; }
+.policy-body a {
+  color: var(--color-ritual);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+.policy-body blockquote {
+  border-left: 1px solid var(--color-sand);
+  padding-left: 1rem;
+  color: var(--color-washed);
+}
