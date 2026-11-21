@@ -5,7 +5,10 @@ import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/bestsellers")({
   head: () => ({
-    meta: seo({ title: "Bestsellers", description: "The pieces our community returns to again and again." }),
+    meta: seo({
+      title: "Bestsellers",
+      description: "The pieces our community returns to again and again.",
+    }),
   }),
   loader: () => getCatalog({ data: { bestseller: true } }),
   component: Bestsellers,

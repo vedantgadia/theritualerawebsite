@@ -30,17 +30,30 @@ export type {
  * Where products come from: Shopify once its keys are set (SHOPIFY_STORE_DOMAIN +
  * SHOPIFY_STOREFRONT_PRIVATE_TOKEN), otherwise the lookbook mock catalogue.
  */
-async function catalogSource(): Promise<{ products: ProductDetail[]; categories: ShopCategory[]; collections: ShopCollection[] }> {
+async function catalogSource(): Promise<{
+  products: ProductDetail[];
+  categories: ShopCategory[];
+  collections: ShopCollection[];
+}> {
   if (shopifyEnabled()) return shopifySnapshot();
   return {
     products: MOCK_PRODUCTS,
     categories: CATEGORIES.map((c) => ({ id: c.slug, ...c })),
-    collections: COLLECTIONS.map((c) => ({ ...c, count: countByCollection(MOCK_PRODUCTS, c.slug) })),
+    collections: COLLECTIONS.map((c) => ({
+      ...c,
+      count: countByCollection(MOCK_PRODUCTS, c.slug),
+    })),
   };
 }
 
 /* Listing cards don't need the long accordion texts. */
-const toCard = ({ fabricNotes: _f, fitNotes: _n, careInstructions: _c, shippingReturns: _s, ...card }: ProductDetail): CatalogProduct => card;
+const toCard = ({
+  fabricNotes: _f,
+  fitNotes: _n,
+  careInstructions: _c,
+  shippingReturns: _s,
+  ...card
+}: ProductDetail): CatalogProduct => card;
 
 /* Publishable-key client for anonymous reads of lookbook and pop-up content (server side). */
 const publicClient = () =>
@@ -76,7 +89,9 @@ export const getProductBySlug = createServerFn({ method: "GET" })
 
 export const getRelatedProducts = createServerFn({ method: "GET" })
   .inputValidator((d: { categorySlug: string | null; excludeSlug: string }) =>
-    z.object({ categorySlug: z.string().max(80).nullable(), excludeSlug: z.string().max(120) }).parse(d),
+    z
+      .object({ categorySlug: z.string().max(80).nullable(), excludeSlug: z.string().max(120) })
+      .parse(d),
   )
   .handler(async ({ data }): Promise<CatalogProduct[]> => {
     const { products } = await catalogSource();
@@ -91,9 +106,13 @@ export const getSettings = createServerFn({ method: "GET" }).handler(
   }),
 );
 
-export const getCategories = createServerFn({ method: "GET" }).handler(async (): Promise<ShopCategory[]> => (await catalogSource()).categories);
+export const getCategories = createServerFn({ method: "GET" }).handler(
+  async (): Promise<ShopCategory[]> => (await catalogSource()).categories,
+);
 
-export const getCollections = createServerFn({ method: "GET" }).handler(async (): Promise<ShopCollection[]> => (await catalogSource()).collections);
+export const getCollections = createServerFn({ method: "GET" }).handler(
+  async (): Promise<ShopCollection[]> => (await catalogSource()).collections,
+);
 
 export interface LookbookCampaign {
   id: string;
@@ -113,64 +132,68 @@ export interface LookbookImage {
   productPrice: number | null;
 }
 
-export const getLookbookCampaigns = createServerFn({ method: "GET" }).handler(async (): Promise<LookbookCampaign[]> => {
-  const db = publicClient();
-  const { data } = await db
-    .from("lookbook_campaigns")
-    .select("id, title, slug, description, cover_image, created_at")
-    .eq("published", true)
-    .order("sort_order", { ascending: true });
-  return (data ?? []).map((c) => ({
-    id: c.id,
-    title: c.title,
-    slug: c.slug,
-    description: c.description ?? "",
-    coverImage: (c.cover_image as string) ?? "",
-    createdAt: c.created_at,
-  }));
-});
+export const getLookbookCampaigns = createServerFn({ method: "GET" }).handler(
+  async (): Promise<LookbookCampaign[]> => {
+    const db = publicClient();
+    const { data } = await db
+      .from("lookbook_campaigns")
+      .select("id, title, slug, description, cover_image, created_at")
+      .eq("published", true)
+      .order("sort_order", { ascending: true });
+    return (data ?? []).map((c) => ({
+      id: c.id,
+      title: c.title,
+      slug: c.slug,
+      description: c.description ?? "",
+      coverImage: (c.cover_image as string) ?? "",
+      createdAt: c.created_at,
+    }));
+  },
+);
 
 export const getLookbookCampaign = createServerFn({ method: "GET" })
   .inputValidator((d: { slug: string }) => z.object({ slug: z.string().min(1).max(120) }).parse(d))
-  .handler(async ({ data }): Promise<{ campaign: LookbookCampaign; images: LookbookImage[] } | null> => {
-    const db = publicClient();
-    const { data: c } = await db
-      .from("lookbook_campaigns")
-      .select("id, title, slug, description, cover_image, created_at")
-      .eq("slug", data.slug)
-      .eq("published", true)
-      .maybeSingle();
-    if (!c) return null;
-    const { data: imgs } = await db
-      .from("lookbook_images")
-      .select("id, image_url, caption, sort_order, product_slug")
-      .eq("campaign_id", c.id)
-      .order("sort_order", { ascending: true });
-    // Images link to a product by its slug (the Shopify handle); name and price come from the catalogue.
-    const { products } = await catalogSource();
-    const bySlug = new Map(products.map((p) => [p.slug, p]));
-    return {
-      campaign: {
-        id: c.id,
-        title: c.title,
-        slug: c.slug,
-        description: c.description ?? "",
-        coverImage: (c.cover_image as string) ?? "",
-        createdAt: c.created_at,
-      },
-      images: (imgs ?? []).map((i) => {
-        const p = i.product_slug ? bySlug.get(i.product_slug) : undefined;
-        return {
-          id: i.id,
-          imageUrl: i.image_url ?? "",
-          caption: i.caption ?? "",
-          productSlug: p?.slug ?? null,
-          productName: p?.name ?? null,
-          productPrice: p?.price ?? null,
-        };
-      }),
-    };
-  });
+  .handler(
+    async ({ data }): Promise<{ campaign: LookbookCampaign; images: LookbookImage[] } | null> => {
+      const db = publicClient();
+      const { data: c } = await db
+        .from("lookbook_campaigns")
+        .select("id, title, slug, description, cover_image, created_at")
+        .eq("slug", data.slug)
+        .eq("published", true)
+        .maybeSingle();
+      if (!c) return null;
+      const { data: imgs } = await db
+        .from("lookbook_images")
+        .select("id, image_url, caption, sort_order, product_slug")
+        .eq("campaign_id", c.id)
+        .order("sort_order", { ascending: true });
+      // Images link to a product by its slug (the Shopify handle); name and price come from the catalogue.
+      const { products } = await catalogSource();
+      const bySlug = new Map(products.map((p) => [p.slug, p]));
+      return {
+        campaign: {
+          id: c.id,
+          title: c.title,
+          slug: c.slug,
+          description: c.description ?? "",
+          coverImage: (c.cover_image as string) ?? "",
+          createdAt: c.created_at,
+        },
+        images: (imgs ?? []).map((i) => {
+          const p = i.product_slug ? bySlug.get(i.product_slug) : undefined;
+          return {
+            id: i.id,
+            imageUrl: i.image_url ?? "",
+            caption: i.caption ?? "",
+            productSlug: p?.slug ?? null,
+            productName: p?.name ?? null,
+            productPrice: p?.price ?? null,
+          };
+        }),
+      };
+    },
+  );
 
 export interface PopupEvent {
   id: string;
@@ -183,21 +206,23 @@ export interface PopupEvent {
   description: string;
 }
 
-export const getPopupEvents = createServerFn({ method: "GET" }).handler(async (): Promise<PopupEvent[]> => {
-  const db = publicClient();
-  const { data } = await db
-    .from("popup_events")
-    .select("id, title, venue, address, maps_url, event_date, is_upcoming, description")
-    .eq("published", true)
-    .order("event_date", { ascending: false });
-  return (data ?? []).map((e) => ({
-    id: e.id,
-    title: e.title,
-    venue: e.venue,
-    address: e.address ?? "",
-    mapsUrl: e.maps_url || "",
-    eventDate: e.event_date,
-    upcoming: e.is_upcoming,
-    description: e.description ?? "",
-  }));
-});
+export const getPopupEvents = createServerFn({ method: "GET" }).handler(
+  async (): Promise<PopupEvent[]> => {
+    const db = publicClient();
+    const { data } = await db
+      .from("popup_events")
+      .select("id, title, venue, address, maps_url, event_date, is_upcoming, description")
+      .eq("published", true)
+      .order("event_date", { ascending: false });
+    return (data ?? []).map((e) => ({
+      id: e.id,
+      title: e.title,
+      venue: e.venue,
+      address: e.address ?? "",
+      mapsUrl: e.maps_url || "",
+      eventDate: e.event_date,
+      upcoming: e.is_upcoming,
+      description: e.description ?? "",
+    }));
+  },
+);

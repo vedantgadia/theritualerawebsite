@@ -28,55 +28,66 @@ export const Button = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariant; size?: ButtonSize }
 >(({ className, variant = "primary", size = "default", ...props }, ref) => (
-  <button ref={ref} className={cn(buttonBase, buttonVariants[variant], buttonSizes[size], className)} {...props} />
+  <button
+    ref={ref}
+    className={cn(buttonBase, buttonVariants[variant], buttonSizes[size], className)}
+    {...props}
+  />
 ));
 Button.displayName = "Button";
 
 /* ---------------------------------- Inputs --------------------------------- */
 
-export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, ...props }, ref) => (
-    <input
-      ref={ref}
-      className={cn(
-        "h-11 w-full rounded-[2px] border border-input bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-primary focus:outline-none",
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+export const Input = React.forwardRef<
+  HTMLInputElement,
+  React.InputHTMLAttributes<HTMLInputElement>
+>(({ className, ...props }, ref) => (
+  <input
+    ref={ref}
+    className={cn(
+      "h-11 w-full rounded-[2px] border border-input bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-primary focus:outline-none",
+      className,
+    )}
+    {...props}
+  />
+));
 Input.displayName = "Input";
 
-export const Textarea = React.forwardRef<HTMLTextAreaElement, React.TextareaHTMLAttributes<HTMLTextAreaElement>>(
-  ({ className, ...props }, ref) => (
-    <textarea
-      ref={ref}
-      className={cn(
-        "min-h-24 w-full rounded-[2px] border border-input bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-primary focus:outline-none",
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+export const Textarea = React.forwardRef<
+  HTMLTextAreaElement,
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>
+>(({ className, ...props }, ref) => (
+  <textarea
+    ref={ref}
+    className={cn(
+      "min-h-24 w-full rounded-[2px] border border-input bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-primary focus:outline-none",
+      className,
+    )}
+    {...props}
+  />
+));
 Textarea.displayName = "Textarea";
 
-export const Select = React.forwardRef<HTMLSelectElement, React.SelectHTMLAttributes<HTMLSelectElement>>(
-  ({ className, ...props }, ref) => (
-    <select
-      ref={ref}
-      className={cn(
-        "h-11 w-full rounded-[2px] border border-input bg-card px-3 text-sm text-foreground focus:border-primary focus:outline-none",
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+export const Select = React.forwardRef<
+  HTMLSelectElement,
+  React.SelectHTMLAttributes<HTMLSelectElement>
+>(({ className, ...props }, ref) => (
+  <select
+    ref={ref}
+    className={cn(
+      "h-11 w-full rounded-[2px] border border-input bg-card px-3 text-sm text-foreground focus:border-primary focus:outline-none",
+      className,
+    )}
+    {...props}
+  />
+));
 Select.displayName = "Select";
 
-export function Label({ className, children, ...props }: React.LabelHTMLAttributes<HTMLLabelElement>) {
+export function Label({
+  className,
+  children,
+  ...props
+}: React.LabelHTMLAttributes<HTMLLabelElement>) {
   return (
     <label className={cn("eyebrow mb-1.5 block text-taupe", className)} {...props}>
       {children}
@@ -84,7 +95,15 @@ export function Label({ className, children, ...props }: React.LabelHTMLAttribut
   );
 }
 
-export function Field({ label, children, className }: { label: string; children: React.ReactNode; className?: string }) {
+export function Field({
+  label,
+  children,
+  className,
+}: {
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <div className={className}>
       <Label>{label}</Label>
@@ -101,7 +120,9 @@ export function Accordion({ items }: { items: { title: string; content: React.Re
       {items.map((item) => (
         <details key={item.title} className="group">
           <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-sm text-ink transition-colors hover:text-ritual [&::-webkit-details-marker]:hidden">
-            <span className="font-sans text-[11px] font-medium uppercase tracking-[0.18em]">{item.title}</span>
+            <span className="font-sans text-[11px] font-medium uppercase tracking-[0.18em]">
+              {item.title}
+            </span>
             <span className="relative block h-4 w-4 text-washed">
               <span className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-current" />
               <span className="absolute left-0 top-1/2 h-px w-4 -translate-y-1/2 bg-current transition-transform duration-300 group-open:scale-x-0" />
@@ -155,8 +176,19 @@ export function Sheet({
       >
         <div className="flex items-center justify-between border-b border-border px-6 py-5">
           <span className="font-display text-lg text-ink">{title}</span>
-          <button onClick={onClose} aria-label="Close" className="text-washed transition-colors hover:text-ink">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1">
+          <button
+            onClick={onClose}
+            aria-label="Close"
+            className="text-washed transition-colors hover:text-ink"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1"
+            >
               <path d="M1 1l16 16M17 1L1 17" />
             </svg>
           </button>
@@ -206,7 +238,14 @@ export function Modal({
           aria-label="Close"
           className="absolute right-4 top-4 text-washed transition-colors hover:text-ink"
         >
-          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 18 18"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+          >
             <path d="M1 1l16 16M17 1L1 17" />
           </svg>
         </button>
@@ -219,14 +258,25 @@ export function Modal({
 
 /* ----------------------------------- Badge ---------------------------------- */
 
-export function Badge({ children, tone = "gold" }: { children: React.ReactNode; tone?: "gold" | "rust" | "ink" }) {
+export function Badge({
+  children,
+  tone = "gold",
+}: {
+  children: React.ReactNode;
+  tone?: "gold" | "rust" | "ink";
+}) {
   const tones = {
     gold: "border-gold bg-[#f7ecdc] text-[#6b5327]",
     rust: "border-rust/40 bg-[#f7e5dc] text-terracotta",
     ink: "border-ink/20 bg-ivory text-ink",
   } as const;
   return (
-    <span className={cn("inline-block rounded-[2px] border px-2 py-0.5 font-sans text-[9px] font-medium uppercase tracking-[0.16em]", tones[tone])}>
+    <span
+      className={cn(
+        "inline-block rounded-[2px] border px-2 py-0.5 font-sans text-[9px] font-medium uppercase tracking-[0.16em]",
+        tones[tone],
+      )}
+    >
       {children}
     </span>
   );

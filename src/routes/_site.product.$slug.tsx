@@ -13,10 +13,16 @@ export const Route = createFileRoute("/_site/product/$slug")({
     const product = await getProductBySlug({ data: { slug: params.slug } });
     if (!product) throw notFound();
     const [related, collections] = await Promise.all([
-      getRelatedProducts({ data: { categorySlug: product.categorySlug, excludeSlug: product.slug } }),
+      getRelatedProducts({
+        data: { categorySlug: product.categorySlug, excludeSlug: product.slug },
+      }),
       getCollections(),
     ]);
-    return { product, related, collections: collections.filter((c) => product.collections.includes(c.slug)) };
+    return {
+      product,
+      related,
+      collections: collections.filter((c) => product.collections.includes(c.slug)),
+    };
   },
   head: ({ loaderData }) => ({
     meta: loaderData
@@ -71,14 +77,26 @@ function ProductPage() {
     <>
       <nav aria-label="Breadcrumb" className="mx-auto max-w-7xl px-4 pt-6 sm:px-8">
         <ol className="flex flex-wrap items-center gap-2 font-sans text-[10px] uppercase tracking-[0.18em] text-taupe">
-          <li><Link to="/" className="hover:text-ritual">Home</Link></li>
+          <li>
+            <Link to="/" className="hover:text-ritual">
+              Home
+            </Link>
+          </li>
           <li aria-hidden>/</li>
-          <li><Link to="/shop" className="hover:text-ritual">Clothing</Link></li>
+          <li>
+            <Link to="/shop" className="hover:text-ritual">
+              Clothing
+            </Link>
+          </li>
           {product.categorySlug && (
             <>
               <li aria-hidden>/</li>
               <li>
-                <Link to="/shop/$category" params={{ category: product.categorySlug }} className="hover:text-ritual">
+                <Link
+                  to="/shop/$category"
+                  params={{ category: product.categorySlug }}
+                  className="hover:text-ritual"
+                >
                   {product.categoryName}
                 </Link>
               </li>
@@ -118,31 +136,48 @@ function ProductPage() {
           </div>
           <div className="-mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 lg:hidden">
             {product.images.map((src, i) => (
-              <img key={src} src={src} alt={i === 0 ? product.name : ""} className="aspect-[4/5] w-[86%] flex-none snap-center object-cover" />
+              <img
+                key={src}
+                src={src}
+                alt={i === 0 ? product.name : ""}
+                className="aspect-[4/5] w-[86%] flex-none snap-center object-cover"
+              />
             ))}
           </div>
         </div>
 
         {/* Details */}
-        <div className="rise-in lg:sticky lg:top-28 lg:self-start" style={{ animationDelay: "0.15s" }}>
+        <div
+          className="rise-in lg:sticky lg:top-28 lg:self-start"
+          style={{ animationDelay: "0.15s" }}
+        >
           <div className="flex flex-wrap gap-1.5">
             {product.isNew && <Badge tone="ink">New</Badge>}
             {product.limitedEdition && <Badge tone="gold">Limited Edition</Badge>}
             {totalStock > 0 && totalStock <= 2 && <Badge tone="rust">Only {totalStock} left</Badge>}
           </div>
-          <h1 className="mt-4 font-display text-3xl leading-tight text-ink sm:text-4xl">{product.name}</h1>
-          <p className="mt-2 font-sans text-[11px] uppercase tracking-[0.2em] text-taupe">{product.fabric} · {product.colour}</p>
+          <h1 className="mt-4 font-display text-3xl leading-tight text-ink sm:text-4xl">
+            {product.name}
+          </h1>
+          <p className="mt-2 font-sans text-[11px] uppercase tracking-[0.2em] text-taupe">
+            {product.fabric} · {product.colour}
+          </p>
           <p className="mt-5 text-lg text-ink">
             {formatINR(product.price)}
             <span className="ml-2 text-xs font-light text-taupe">Inclusive of all taxes</span>
           </p>
 
-          <p className="mt-6 text-sm font-light leading-relaxed text-deep-denim">{product.description}</p>
+          <p className="mt-6 text-sm font-light leading-relaxed text-deep-denim">
+            {product.description}
+          </p>
 
           <div className="mt-8">
             <div className="mb-3 flex items-center justify-between">
               <p className="eyebrow">Size{size ? ` — ${size}` : ""}</p>
-              <button onClick={() => setGuideOpen(true)} className="font-sans text-[10px] uppercase tracking-[0.18em] text-ritual underline underline-offset-4">
+              <button
+                onClick={() => setGuideOpen(true)}
+                className="font-sans text-[10px] uppercase tracking-[0.18em] text-ritual underline underline-offset-4"
+              >
                 Size guide
               </button>
             </div>
@@ -176,7 +211,9 @@ function ProductPage() {
               {error ? (
                 <span className="text-terracotta">Please choose a size.</span>
               ) : selected && selected.stock <= 2 ? (
-                <span className="text-terracotta">Only {selected.stock} left in {selected.size}.</span>
+                <span className="text-terracotta">
+                  Only {selected.stock} left in {selected.size}.
+                </span>
               ) : null}
             </p>
           </div>
@@ -216,7 +253,11 @@ function ProductPage() {
               {collections.map((c, i) => (
                 <span key={c.slug}>
                   {i > 0 && " and "}
-                  <Link to="/collections/$slug" params={{ slug: c.slug }} className="text-ritual underline underline-offset-4">
+                  <Link
+                    to="/collections/$slug"
+                    params={{ slug: c.slug }}
+                    className="text-ritual underline underline-offset-4"
+                  >
                     {c.name}
                   </Link>
                 </span>
@@ -230,7 +271,9 @@ function ProductPage() {
         <section className="border-t border-border">
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-8">
             <StitchDivider className="mx-auto mb-10 max-w-xs" />
-            <h2 className="mb-10 text-center font-display text-4xl text-ink">You may also <em className="font-normal italic text-ritual">like</em></h2>
+            <h2 className="mb-10 text-center font-display text-4xl text-ink">
+              You may also <em className="font-normal italic text-ritual">like</em>
+            </h2>
             <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
               {related.map((p) => (
                 <ProductCard key={p.id} product={p} />
@@ -241,12 +284,17 @@ function ProductPage() {
       )}
 
       <Sheet open={guideOpen} onClose={() => setGuideOpen(false)} title="Size guide">
-        <p className="text-sm font-light leading-relaxed text-washed">Body measurements in inches. Between sizes? Size up for a relaxed fit, or message us for made-to-measure.</p>
+        <p className="text-sm font-light leading-relaxed text-washed">
+          Body measurements in inches. Between sizes? Size up for a relaxed fit, or message us for
+          made-to-measure.
+        </p>
         <table className="mt-6 w-full text-left text-sm">
           <thead>
             <tr className="border-b border-border font-sans text-[10px] uppercase tracking-[0.16em] text-taupe">
               {["Size", "Bust", "Waist", "Hip", "Shoulder"].map((h) => (
-                <th key={h} className="py-2 font-medium">{h}</th>
+                <th key={h} className="py-2 font-medium">
+                  {h}
+                </th>
               ))}
             </tr>
           </thead>
@@ -254,7 +302,12 @@ function ProductPage() {
             {SIZE_CHART.map((row) => (
               <tr key={row[0]} className="border-b border-border/60">
                 {row.map((cell, i) => (
-                  <td key={i} className={`py-2.5 ${i === 0 ? "text-ink" : "font-light text-washed"}`}>{cell}</td>
+                  <td
+                    key={i}
+                    className={`py-2.5 ${i === 0 ? "text-ink" : "font-light text-washed"}`}
+                  >
+                    {cell}
+                  </td>
                 ))}
               </tr>
             ))}

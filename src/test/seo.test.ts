@@ -7,7 +7,9 @@ const ORIGIN = "https://shop.example";
 describe("seo helpers", () => {
   it("makes local paths absolute and leaves full URLs alone", () => {
     expect(absoluteUrl("/media/a.webp", ORIGIN)).toBe("https://shop.example/media/a.webp");
-    expect(absoluteUrl("https://cdn.shopify.com/x.webp", ORIGIN)).toBe("https://cdn.shopify.com/x.webp");
+    expect(absoluteUrl("https://cdn.shopify.com/x.webp", ORIGIN)).toBe(
+      "https://cdn.shopify.com/x.webp",
+    );
   });
 
   it("gives every page matching title, description and image tags", () => {
@@ -35,7 +37,10 @@ describe("seo helpers", () => {
       },
     });
     expect(ld.image.every((u) => u.startsWith(ORIGIN) || u.startsWith("https://"))).toBe(true);
-    const soldOut = productJsonLd({ ...p, sizes: p.sizes.map((s) => ({ ...s, stock: 0 })) }, ORIGIN);
+    const soldOut = productJsonLd(
+      { ...p, sizes: p.sizes.map((s) => ({ ...s, stock: 0 })) },
+      ORIGIN,
+    );
     expect(soldOut.offers.availability).toBe("https://schema.org/OutOfStock");
   });
 

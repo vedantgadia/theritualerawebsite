@@ -5,7 +5,11 @@ import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/shop/")({
   head: () => ({
-    meta: seo({ title: "Clothing", description: "Shop tops & shirts, dresses, co-ord sets, denim and jackets from The Ritual Era." }),
+    meta: seo({
+      title: "Clothing",
+      description:
+        "Shop tops & shirts, dresses, co-ord sets, denim and jackets from The Ritual Era.",
+    }),
   }),
   loader: async () => {
     const [products, categories] = await Promise.all([getCatalog({ data: {} }), getCategories()]);

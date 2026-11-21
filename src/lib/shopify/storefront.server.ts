@@ -130,9 +130,9 @@ let policyCache: { at: number; policies: PolicyMap } | null = null;
 export async function shopifyPolicies(): Promise<PolicyMap> {
   if (policyCache && Date.now() - policyCache.at < POLICY_CACHE_MS) return policyCache.policies;
   try {
-    const { shop } = await storefront<{ shop: Record<string, { title: string; body: string } | null> }>(
-      POLICIES_QUERY,
-    );
+    const { shop } = await storefront<{
+      shop: Record<string, { title: string; body: string } | null>;
+    }>(POLICIES_QUERY);
     policyCache = { at: Date.now(), policies: mapPolicies(shop) };
     return policyCache.policies;
   } catch (err) {

@@ -49,7 +49,10 @@ export function ProductListing({
   const shown = useMemo(() => {
     const { min, max } = PRICE_BANDS[band]!;
     const list = products.filter(
-      (p) => p.price >= min && p.price <= max && (!size || p.sizes.some((s) => s.size === size && s.stock > 0)),
+      (p) =>
+        p.price >= min &&
+        p.price <= max &&
+        (!size || p.sizes.some((s) => s.size === size && s.stock > 0)),
     );
     if (sort === "price-asc") return [...list].sort((a, b) => a.price - b.price);
     if (sort === "price-desc") return [...list].sort((a, b) => b.price - a.price);
@@ -60,32 +63,51 @@ export function ProductListing({
   return (
     <div ref={ref as React.RefObject<HTMLDivElement>}>
       <div className="stitch-lattice">
-      <header className="mx-auto max-w-7xl px-4 pb-10 pt-12 sm:px-8 sm:pb-12 sm:pt-16">
-        <div className={aside ? "grid items-end gap-8 lg:grid-cols-[1fr_auto]" : ""}>
-          <div className="max-w-2xl">
-            <p className="eyebrow rise-in mb-3">{eyebrow}</p>
-            <h1 className="rise-in font-display text-5xl leading-[1.02] text-ritual sm:text-6xl" style={{ animationDelay: "0.12s" }}>{title}</h1>
-            {intro && <div className="rise-in mt-4 max-w-xl text-[15px] font-light leading-relaxed text-deep-denim" style={{ animationDelay: "0.24s" }}>{intro}</div>}
-          </div>
-          {aside}
-        </div>
-
-        {tabs && (
-          <nav aria-label="Categories" className="-mx-4 mt-8 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-            {tabs.map((t) => (
-              <Link
-                key={t.label}
-                {...(t.category ? { to: "/shop/$category", params: { category: t.category } } : { to: "/shop" })}
-                className={`whitespace-nowrap rounded-[2px] border px-4 py-2 font-sans text-[10px] font-medium uppercase tracking-[0.18em] transition-colors ${
-                  t.active ? "border-ritual bg-ritual text-ivory" : "border-ink/15 bg-ivory/70 text-ink/80 hover:border-ink/50 hover:bg-ivory"
-                }`}
+        <header className="mx-auto max-w-7xl px-4 pb-10 pt-12 sm:px-8 sm:pb-12 sm:pt-16">
+          <div className={aside ? "grid items-end gap-8 lg:grid-cols-[1fr_auto]" : ""}>
+            <div className="max-w-2xl">
+              <p className="eyebrow rise-in mb-3">{eyebrow}</p>
+              <h1
+                className="rise-in font-display text-5xl leading-[1.02] text-ritual sm:text-6xl"
+                style={{ animationDelay: "0.12s" }}
               >
-                {t.label}
-              </Link>
-            ))}
-          </nav>
-        )}
-      </header>
+                {title}
+              </h1>
+              {intro && (
+                <div
+                  className="rise-in mt-4 max-w-xl text-[15px] font-light leading-relaxed text-deep-denim"
+                  style={{ animationDelay: "0.24s" }}
+                >
+                  {intro}
+                </div>
+              )}
+            </div>
+            {aside}
+          </div>
+
+          {tabs && (
+            <nav
+              aria-label="Categories"
+              className="-mx-4 mt-8 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
+            >
+              {tabs.map((t) => (
+                <Link
+                  key={t.label}
+                  {...(t.category
+                    ? { to: "/shop/$category", params: { category: t.category } }
+                    : { to: "/shop" })}
+                  className={`whitespace-nowrap rounded-[2px] border px-4 py-2 font-sans text-[10px] font-medium uppercase tracking-[0.18em] transition-colors ${
+                    t.active
+                      ? "border-ritual bg-ritual text-ivory"
+                      : "border-ink/15 bg-ivory/70 text-ink/80 hover:border-ink/50 hover:bg-ivory"
+                  }`}
+                >
+                  {t.label}
+                </Link>
+              ))}
+            </nav>
+          )}
+        </header>
       </div>
 
       <div className="border-y border-border bg-ivory">
@@ -116,12 +138,16 @@ export function ProductListing({
                 className="bg-transparent font-sans text-[10px] uppercase tracking-[0.16em] text-ink focus:outline-none"
               >
                 {PRICE_BANDS.map((b, i) => (
-                  <option key={b.label} value={i}>{b.label}</option>
+                  <option key={b.label} value={i}>
+                    {b.label}
+                  </option>
                 ))}
               </select>
             </label>
             <label className="flex items-center gap-2">
-              <span className="font-sans text-[10px] uppercase tracking-[0.16em] text-taupe max-sm:hidden">Sort</span>
+              <span className="font-sans text-[10px] uppercase tracking-[0.16em] text-taupe max-sm:hidden">
+                Sort
+              </span>
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value as Sort)}
@@ -141,7 +167,9 @@ export function ProductListing({
         {shown.length === 0 ? (
           <div className="py-20 text-center">
             <p className="font-display text-2xl text-ink">Nothing in this edit just yet</p>
-            <p className="mt-2 text-sm font-light text-washed">Try another size or price — or browse everything.</p>
+            <p className="mt-2 text-sm font-light text-washed">
+              Try another size or price — or browse everything.
+            </p>
             <button
               onClick={() => {
                 setSize(null);

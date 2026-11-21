@@ -16,7 +16,9 @@ export const siteOrigin = createIsomorphicFn()
   .client(() => window.location.origin);
 
 export const absoluteUrl = (pathOrUrl: string, origin: string = siteOrigin()) =>
-  /^https?:\/\//.test(pathOrUrl) ? pathOrUrl : `${origin}${pathOrUrl.startsWith("/") ? "" : "/"}${pathOrUrl}`;
+  /^https?:\/\//.test(pathOrUrl)
+    ? pathOrUrl
+    : `${origin}${pathOrUrl.startsWith("/") ? "" : "/"}${pathOrUrl}`;
 
 export interface SeoInput {
   /** Page name without the brand, e.g. "Bestsellers". Omit for the brand's own title. */

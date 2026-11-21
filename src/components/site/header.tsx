@@ -1,7 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getCatalog, getCategories, getCollections, type CatalogProduct } from "@/lib/shop.functions";
+import {
+  getCatalog,
+  getCategories,
+  getCollections,
+  type CatalogProduct,
+} from "@/lib/shop.functions";
 import { useBag } from "@/lib/cart";
 import { formatINR } from "@/lib/format";
 import { Logo, useCycle } from "@/components/site/motion";
@@ -9,7 +14,9 @@ import { Logo, useCycle } from "@/components/site/motion";
 function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
     <Link to="/" className="block" aria-label="The Ritual Era — home">
-      <Logo className={`w-auto transition-[height] duration-500 ${compact ? "h-12 lg:h-14" : "h-14 lg:h-20"}`} />
+      <Logo
+        className={`w-auto transition-[height] duration-500 ${compact ? "h-12 lg:h-14" : "h-14 lg:h-20"}`}
+      />
     </Link>
   );
 }
@@ -25,7 +32,10 @@ function AnnouncementBar() {
   const [i] = useCycle(ANNOUNCEMENTS.length, 4500);
   return (
     <div className="stitch-lattice-ink relative z-[51] h-8 overflow-hidden px-4 text-center">
-      <p key={i} className="rise-in flex h-8 items-center justify-center font-sans text-[10px] font-light uppercase tracking-[0.2em] text-ivory/90">
+      <p
+        key={i}
+        className="rise-in flex h-8 items-center justify-center font-sans text-[10px] font-light uppercase tracking-[0.2em] text-ivory/90"
+      >
         {ANNOUNCEMENTS[i]}
       </p>
     </div>
@@ -79,13 +89,17 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
               onClick={onClose}
               className="flex items-center gap-4 py-3 transition-colors hover:bg-ink/[0.03]"
             >
-              {p.images[0] && <img src={p.images[0]} alt="" className="h-16 w-12 object-cover" loading="lazy" />}
+              {p.images[0] && (
+                <img src={p.images[0]} alt="" className="h-16 w-12 object-cover" loading="lazy" />
+              )}
               <span className="flex-1 text-sm font-light text-ink">{p.name}</span>
               <span className="text-xs text-taupe">{formatINR(p.price)}</span>
             </Link>
           ))}
           {q.trim() && results.length === 0 && (
-            <p className="py-6 text-sm font-light text-washed">Nothing found yet — try another word.</p>
+            <p className="py-6 text-sm font-light text-washed">
+              Nothing found yet — try another word.
+            </p>
           )}
         </div>
       </div>
@@ -100,7 +114,16 @@ const navLinkClass =
 
 function Chevron({ open }: { open: boolean }) {
   return (
-    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" strokeWidth="1" className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`} aria-hidden>
+    <svg
+      width="8"
+      height="8"
+      viewBox="0 0 8 8"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+      className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+      aria-hidden
+    >
       <path d="M1 2.5l3 3 3-3" />
     </svg>
   );
@@ -116,8 +139,14 @@ export function Header() {
   const [hidden, setHidden] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { data: categories = [] } = useQuery({ queryKey: ["categories"], queryFn: () => getCategories() });
-  const { data: collections = [] } = useQuery({ queryKey: ["collections"], queryFn: () => getCollections() });
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getCategories(),
+  });
+  const { data: collections = [] } = useQuery({
+    queryKey: ["collections"],
+    queryFn: () => getCollections(),
+  });
 
   useEffect(() => {
     let last = window.scrollY;
@@ -163,34 +192,83 @@ export function Header() {
         className={`sticky top-0 z-50 border-b border-border bg-ivory/95 backdrop-blur transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] ${hidden && !megaOpen && !menuOpen ? "-translate-y-full" : ""}`}
         onMouseLeave={closeMega}
       >
-        <div className={`mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 transition-[padding] duration-500 sm:px-8 ${scrolled ? "py-2.5 lg:pb-1.5 lg:pt-3" : "py-3 lg:pb-2 lg:pt-4"}`}>
+        <div
+          className={`mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 transition-[padding] duration-500 sm:px-8 ${scrolled ? "py-2.5 lg:pb-1.5 lg:pt-3" : "py-3 lg:pb-2 lg:pt-4"}`}
+        >
           {/* Left — mobile menu / desktop search */}
           <div className="flex items-center gap-4">
-            <button className="p-1 text-ink lg:hidden" aria-label="Menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
-              <svg width="20" height="20" viewBox="0 0 20 20" stroke="currentColor" strokeWidth="1" fill="none">
+            <button
+              className="p-1 text-ink lg:hidden"
+              aria-label="Menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(true)}
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                stroke="currentColor"
+                strokeWidth="1"
+                fill="none"
+              >
                 <path d="M1 5h18M1 10h18M1 15h18" />
               </svg>
             </button>
-            <button aria-label="Search" className="flex items-center gap-2 text-ink/80 transition-colors hover:text-ritual" onClick={() => setSearchOpen(true)}>
-              <svg width="17" height="17" viewBox="0 0 18 18" stroke="currentColor" strokeWidth="1.1" fill="none">
+            <button
+              aria-label="Search"
+              className="flex items-center gap-2 text-ink/80 transition-colors hover:text-ritual"
+              onClick={() => setSearchOpen(true)}
+            >
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 18 18"
+                stroke="currentColor"
+                strokeWidth="1.1"
+                fill="none"
+              >
                 <circle cx="7.5" cy="7.5" r="5.5" />
                 <path d="M12 12l5 5" />
               </svg>
-              <span className="hidden font-sans text-[10px] uppercase tracking-[0.2em] lg:inline">Search</span>
+              <span className="hidden font-sans text-[10px] uppercase tracking-[0.2em] lg:inline">
+                Search
+              </span>
             </button>
           </div>
 
           <Wordmark compact={scrolled} />
 
           <div className="flex items-center justify-end gap-5">
-            <a href="/account" aria-label="Account" className="hidden text-ink/80 transition-colors hover:text-ritual sm:block">
-              <svg width="18" height="18" viewBox="0 0 18 18" stroke="currentColor" strokeWidth="1.1" fill="none">
+            <a
+              href="/account"
+              aria-label="Account"
+              className="hidden text-ink/80 transition-colors hover:text-ritual sm:block"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                stroke="currentColor"
+                strokeWidth="1.1"
+                fill="none"
+              >
                 <circle cx="9" cy="5.5" r="3.5" />
                 <path d="M2 16.5c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" />
               </svg>
             </a>
-            <button aria-label={`Bag, ${bag.count} items`} className="relative text-ink/80 transition-colors hover:text-ritual" onClick={bag.openBag}>
-              <svg width="18" height="18" viewBox="0 0 18 18" stroke="currentColor" strokeWidth="1.1" fill="none">
+            <button
+              aria-label={`Bag, ${bag.count} items`}
+              className="relative text-ink/80 transition-colors hover:text-ritual"
+              onClick={bag.openBag}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                stroke="currentColor"
+                strokeWidth="1.1"
+                fill="none"
+              >
                 <path d="M3 5.5h12l-1 11H4l-1-11Z" />
                 <path d="M6 5.5V4a3 3 0 0 1 6 0v1.5" />
               </svg>
@@ -204,8 +282,16 @@ export function Header() {
         </div>
 
         {/* Desktop primary navigation */}
-        <nav className={`hidden justify-center gap-8 transition-[padding] xl:gap-10 duration-500 lg:flex ${scrolled ? "pb-2.5" : "pb-3.5"}`} aria-label="Primary">
-          <Link to="/new-arrivals" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
+        <nav
+          className={`hidden justify-center gap-8 transition-[padding] xl:gap-10 duration-500 lg:flex ${scrolled ? "pb-2.5" : "pb-3.5"}`}
+          aria-label="Primary"
+        >
+          <Link
+            to="/new-arrivals"
+            className={navLinkClass}
+            activeProps={{ className: "text-ritual" }}
+            onMouseEnter={closeMega}
+          >
             New Arrivals
           </Link>
           {(["clothing", "collections"] as const).map((key) => (
@@ -221,13 +307,28 @@ export function Header() {
               <Chevron open={megaOpen === key} />
             </button>
           ))}
-          <Link to="/bestsellers" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
+          <Link
+            to="/bestsellers"
+            className={navLinkClass}
+            activeProps={{ className: "text-ritual" }}
+            onMouseEnter={closeMega}
+          >
             Bestsellers
           </Link>
-          <Link to="/style-notes" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
+          <Link
+            to="/style-notes"
+            className={navLinkClass}
+            activeProps={{ className: "text-ritual" }}
+            onMouseEnter={closeMega}
+          >
             Style Notes
           </Link>
-          <Link to="/about" className={navLinkClass} activeProps={{ className: "text-ritual" }} onMouseEnter={closeMega}>
+          <Link
+            to="/about"
+            className={navLinkClass}
+            activeProps={{ className: "text-ritual" }}
+            onMouseEnter={closeMega}
+          >
             About Us
           </Link>
         </nav>
@@ -240,18 +341,30 @@ export function Header() {
             onMouseLeave={closeMega}
           >
             {megaOpen === "clothing" ? (
-              <div key="clothing" className="rise-in mx-auto grid max-w-7xl grid-cols-[220px_1fr] gap-12 px-8 py-10">
+              <div
+                key="clothing"
+                className="rise-in mx-auto grid max-w-7xl grid-cols-[220px_1fr] gap-12 px-8 py-10"
+              >
                 <div>
                   <p className="eyebrow mb-5">Shop by category</p>
                   <ul className="space-y-3">
                     <li>
-                      <Link to="/shop" onClick={closeAll} className="font-display text-lg text-ink transition-colors hover:text-ritual">
+                      <Link
+                        to="/shop"
+                        onClick={closeAll}
+                        className="font-display text-lg text-ink transition-colors hover:text-ritual"
+                      >
                         All Clothing
                       </Link>
                     </li>
                     {categories.map((c) => (
                       <li key={c.slug}>
-                        <Link to="/shop/$category" params={{ category: c.slug }} onClick={closeAll} className="font-display text-lg text-ink transition-colors hover:text-ritual">
+                        <Link
+                          to="/shop/$category"
+                          params={{ category: c.slug }}
+                          onClick={closeAll}
+                          className="font-display text-lg text-ink transition-colors hover:text-ritual"
+                        >
                           {c.name}
                         </Link>
                       </li>
@@ -260,29 +373,54 @@ export function Header() {
                 </div>
                 <div className="grid grid-cols-5 gap-4">
                   {categories.map((c) => (
-                    <Link key={c.slug} to="/shop/$category" params={{ category: c.slug }} onClick={closeAll} className="group block">
+                    <Link
+                      key={c.slug}
+                      to="/shop/$category"
+                      params={{ category: c.slug }}
+                      onClick={closeAll}
+                      className="group block"
+                    >
                       <div className="img-zoom aspect-[3/4] bg-sand/40">
-                        <img src={c.image} alt="" loading="lazy" className="h-full w-full object-cover" />
+                        <img
+                          src={c.image}
+                          alt=""
+                          loading="lazy"
+                          className="h-full w-full object-cover"
+                        />
                       </div>
-                      <p className="mt-2 font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-ink group-hover:text-ritual">{c.name}</p>
+                      <p className="mt-2 font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-ink group-hover:text-ritual">
+                        {c.name}
+                      </p>
                     </Link>
                   ))}
                 </div>
               </div>
             ) : (
-              <div key="collections" className="rise-in mx-auto grid max-w-7xl grid-cols-[260px_1fr] gap-12 px-8 py-10">
+              <div
+                key="collections"
+                className="rise-in mx-auto grid max-w-7xl grid-cols-[260px_1fr] gap-12 px-8 py-10"
+              >
                 <div>
                   <p className="eyebrow mb-5">The stories</p>
                   <ul className="space-y-3">
                     {collections.map((c) => (
                       <li key={c.slug}>
-                        <Link to="/collections/$slug" params={{ slug: c.slug }} onClick={closeAll} className="font-display text-lg text-ink transition-colors hover:text-ritual">
+                        <Link
+                          to="/collections/$slug"
+                          params={{ slug: c.slug }}
+                          onClick={closeAll}
+                          className="font-display text-lg text-ink transition-colors hover:text-ritual"
+                        >
                           {c.name}
                         </Link>
                       </li>
                     ))}
                     <li className="pt-2">
-                      <Link to="/collections" onClick={closeAll} className="font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-ritual underline underline-offset-4">
+                      <Link
+                        to="/collections"
+                        onClick={closeAll}
+                        className="font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-ritual underline underline-offset-4"
+                      >
                         All collections
                       </Link>
                     </li>
@@ -290,11 +428,24 @@ export function Header() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   {collections.slice(0, 3).map((c) => (
-                    <Link key={c.slug} to="/collections/$slug" params={{ slug: c.slug }} onClick={closeAll} className="group block">
+                    <Link
+                      key={c.slug}
+                      to="/collections/$slug"
+                      params={{ slug: c.slug }}
+                      onClick={closeAll}
+                      className="group block"
+                    >
                       <div className="img-zoom aspect-[4/3] bg-sand/40">
-                        <img src={c.coverImage} alt="" loading="lazy" className="h-full w-full object-cover object-top" />
+                        <img
+                          src={c.coverImage}
+                          alt=""
+                          loading="lazy"
+                          className="h-full w-full object-cover object-top"
+                        />
                       </div>
-                      <p className="mt-3 font-display text-base text-ink group-hover:text-ritual">{c.name}</p>
+                      <p className="mt-3 font-display text-base text-ink group-hover:text-ritual">
+                        {c.name}
+                      </p>
                       <p className="mt-0.5 text-xs font-light text-washed">{c.tagline}</p>
                     </Link>
                   ))}
@@ -307,18 +458,40 @@ export function Header() {
 
       {/* Mobile menu drawer */}
       <div className={menuOpen ? "fixed inset-0 z-[85] lg:hidden" : "hidden"}>
-        <div className="absolute inset-0 bg-ink/40" onClick={() => setMenuOpen(false)} aria-hidden />
-        <nav aria-label="Mobile" className="absolute inset-y-0 left-0 flex w-[86%] max-w-sm flex-col overflow-y-auto bg-ivory">
+        <div
+          className="absolute inset-0 bg-ink/40"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden
+        />
+        <nav
+          aria-label="Mobile"
+          className="absolute inset-y-0 left-0 flex w-[86%] max-w-sm flex-col overflow-y-auto bg-ivory"
+        >
           <div className="flex items-center justify-between border-b border-border px-6 py-5">
             <span className="eyebrow">Menu</span>
-            <button onClick={() => setMenuOpen(false)} aria-label="Close menu" className="text-washed hover:text-ink">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1">
+            <button
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close menu"
+              className="text-washed hover:text-ink"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+              >
                 <path d="M1 1l16 16M17 1L1 17" />
               </svg>
             </button>
           </div>
           <div className="px-6 py-2">
-            <Link to="/new-arrivals" onClick={closeAll} className="block border-b border-border/60 py-4 font-display text-xl text-ink">
+            <Link
+              to="/new-arrivals"
+              onClick={closeAll}
+              className="block border-b border-border/60 py-4 font-display text-xl text-ink"
+            >
               New Arrivals
             </Link>
             {(["clothing", "collections"] as const).map((key) => (
@@ -335,10 +508,25 @@ export function Header() {
                   <ul className="space-y-3 pb-5 pl-1">
                     {key === "clothing" ? (
                       <>
-                        <li><Link to="/shop" onClick={closeAll} className="text-sm font-light text-washed">All Clothing</Link></li>
+                        <li>
+                          <Link
+                            to="/shop"
+                            onClick={closeAll}
+                            className="text-sm font-light text-washed"
+                          >
+                            All Clothing
+                          </Link>
+                        </li>
                         {categories.map((c) => (
                           <li key={c.slug}>
-                            <Link to="/shop/$category" params={{ category: c.slug }} onClick={closeAll} className="text-sm font-light text-washed">{c.name}</Link>
+                            <Link
+                              to="/shop/$category"
+                              params={{ category: c.slug }}
+                              onClick={closeAll}
+                              className="text-sm font-light text-washed"
+                            >
+                              {c.name}
+                            </Link>
                           </li>
                         ))}
                       </>
@@ -346,31 +534,66 @@ export function Header() {
                       <>
                         {collections.map((c) => (
                           <li key={c.slug}>
-                            <Link to="/collections/$slug" params={{ slug: c.slug }} onClick={closeAll} className="text-sm font-light text-washed">{c.name}</Link>
+                            <Link
+                              to="/collections/$slug"
+                              params={{ slug: c.slug }}
+                              onClick={closeAll}
+                              className="text-sm font-light text-washed"
+                            >
+                              {c.name}
+                            </Link>
                           </li>
                         ))}
-                        <li><Link to="/collections" onClick={closeAll} className="text-sm font-light text-ritual">All collections</Link></li>
+                        <li>
+                          <Link
+                            to="/collections"
+                            onClick={closeAll}
+                            className="text-sm font-light text-ritual"
+                          >
+                            All collections
+                          </Link>
+                        </li>
                       </>
                     )}
                   </ul>
                 )}
               </div>
             ))}
-            <Link to="/bestsellers" onClick={closeAll} className="block border-b border-border/60 py-4 font-display text-xl text-ink">
+            <Link
+              to="/bestsellers"
+              onClick={closeAll}
+              className="block border-b border-border/60 py-4 font-display text-xl text-ink"
+            >
               Bestsellers
             </Link>
-            <Link to="/style-notes" onClick={closeAll} className="block border-b border-border/60 py-4 font-display text-xl text-ink">
+            <Link
+              to="/style-notes"
+              onClick={closeAll}
+              className="block border-b border-border/60 py-4 font-display text-xl text-ink"
+            >
               Style Notes
             </Link>
-            <Link to="/about" onClick={closeAll} className="block border-b border-border/60 py-4 font-display text-xl text-ink">
+            <Link
+              to="/about"
+              onClick={closeAll}
+              className="block border-b border-border/60 py-4 font-display text-xl text-ink"
+            >
               About Us
             </Link>
           </div>
           <div className="mt-auto space-y-3 border-t border-border px-6 py-6">
-            <a href="/account" onClick={closeAll} className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink">
+            <a
+              href="/account"
+              onClick={closeAll}
+              className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink"
+            >
               My account
             </a>
-            <Link to="/contact" onClick={closeAll} className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink">
+            <Link
+              to="/contact"
+              onClick={closeAll}
+              className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink"
+            >
               Contact
             </Link>
           </div>

@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /** The brand logo: a vector trace of the supplied artwork, in its original ink colour, so it stays sharp at any size. */
-export function Logo({ className = "", animate = false }: { className?: string; animate?: boolean }) {
+export function Logo({
+  className = "",
+  animate = false,
+}: {
+  className?: string;
+  animate?: boolean;
+}) {
   return (
     <img
       src="/brand/logo.svg"
@@ -14,7 +20,9 @@ export function Logo({ className = "", animate = false }: { className?: string; 
 }
 
 function prefersReducedMotion() {
-  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return (
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
 }
 
 /** Endless horizontal ticker. Children are rendered twice so the loop is seamless. */
@@ -31,7 +39,10 @@ export function Marquee({
 }) {
   return (
     <div className={`marquee overflow-hidden ${className}`}>
-      <div className={`marquee-track ${pauseOnHover ? "pause-on-hover" : ""}`} style={{ ["--marquee-duration" as string]: `${duration}s` }}>
+      <div
+        className={`marquee-track ${pauseOnHover ? "pause-on-hover" : ""}`}
+        style={{ ["--marquee-duration" as string]: `${duration}s` }}
+      >
         <div className="flex shrink-0 items-center">{children}</div>
         <div className="flex shrink-0 items-center" aria-hidden>
           {children}
@@ -42,7 +53,15 @@ export function Marquee({
 }
 
 /** Moves its child vertically against the scroll, for a soft depth effect. */
-export function Parallax({ children, speed = 0.12, className = "" }: { children: ReactNode; speed?: number; className?: string }) {
+export function Parallax({
+  children,
+  speed = 0.12,
+  className = "",
+}: {
+  children: ReactNode;
+  speed?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -108,7 +127,11 @@ export function ScrollWords({ text, className = "" }: { text: string; className?
       {words.map((w, i) => {
         const lit = progress * words.length - i;
         return (
-          <span key={i} className="transition-opacity duration-300" style={{ opacity: Math.min(1, Math.max(0.16, lit)) }}>
+          <span
+            key={i}
+            className="transition-opacity duration-300"
+            style={{ opacity: Math.min(1, Math.max(0.16, lit)) }}
+          >
             {w}{" "}
           </span>
         );
@@ -118,16 +141,44 @@ export function ScrollWords({ text, className = "" }: { text: string; className?
 }
 
 /** Dashed running stitch with the four-point star — the stitches keep sewing. */
-export function StitchDivider({ className = "", tone = "taupe" }: { className?: string; tone?: "taupe" | "ivory" }) {
+export function StitchDivider({
+  className = "",
+  tone = "taupe",
+}: {
+  className?: string;
+  tone?: "taupe" | "ivory";
+}) {
   const stroke = tone === "ivory" ? "#f5efe8" : "#7a6a5f";
   return (
     <div className={`flex items-center gap-4 ${className}`} aria-hidden>
       <svg className="h-2 flex-1" preserveAspectRatio="none" viewBox="0 0 100 2">
-        <line x1="0" y1="1" x2="100" y2="1" stroke={stroke} strokeOpacity=".45" strokeWidth="1" vectorEffect="non-scaling-stroke" className="stitch-march" />
+        <line
+          x1="0"
+          y1="1"
+          x2="100"
+          y2="1"
+          stroke={stroke}
+          strokeOpacity=".45"
+          strokeWidth="1"
+          vectorEffect="non-scaling-stroke"
+          className="stitch-march"
+        />
       </svg>
-      <span className={`select-none text-[11px] ${tone === "ivory" ? "text-gold" : "text-ritual"}`}>✦</span>
+      <span className={`select-none text-[11px] ${tone === "ivory" ? "text-gold" : "text-ritual"}`}>
+        ✦
+      </span>
       <svg className="h-2 flex-1 -scale-x-100" preserveAspectRatio="none" viewBox="0 0 100 2">
-        <line x1="0" y1="1" x2="100" y2="1" stroke={stroke} strokeOpacity=".45" strokeWidth="1" vectorEffect="non-scaling-stroke" className="stitch-march" />
+        <line
+          x1="0"
+          y1="1"
+          x2="100"
+          y2="1"
+          stroke={stroke}
+          strokeOpacity=".45"
+          strokeWidth="1"
+          vectorEffect="non-scaling-stroke"
+          className="stitch-march"
+        />
       </svg>
     </div>
   );
@@ -136,7 +187,14 @@ export function StitchDivider({ className = "", tone = "taupe" }: { className?: 
 /** A small thread spool, echoing the one at the end of the logo's thread. */
 export function Spool({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 40 48" className={className} fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
+    <svg
+      viewBox="0 0 40 48"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      aria-hidden
+    >
       <ellipse cx="20" cy="6" rx="15" ry="4" />
       <ellipse cx="20" cy="42" rx="15" ry="4" />
       <path d="M8 8v32M32 8v32" strokeOpacity=".5" />

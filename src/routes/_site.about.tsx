@@ -5,7 +5,12 @@ import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/about")({
   head: () => ({
-    meta: seo({ title: "About Us", description: "The Ritual Era designs timeless everyday wear for the modern woman — made in-house in Mumbai, in limited editions.", image: "/media/founder-priyanka.webp" }),
+    meta: seo({
+      title: "About Us",
+      description:
+        "The Ritual Era designs timeless everyday wear for the modern woman — made in-house in Mumbai, in limited editions.",
+      image: "/media/founder-priyanka.webp",
+    }),
   }),
   component: About,
 });
@@ -34,7 +39,10 @@ function About() {
         <div className="mx-auto flex max-w-4xl flex-col items-center px-6 py-20 text-center sm:py-28">
           <p className="eyebrow rise-in">About Us</p>
           <Logo animate className="mt-10 h-auto w-[78%] max-w-[520px]" />
-          <p className="rise-in mt-10 font-display text-2xl italic text-ritual sm:text-3xl" style={{ animationDelay: "1.6s" }}>
+          <p
+            className="rise-in mt-10 font-display text-2xl italic text-ritual sm:text-3xl"
+            style={{ animationDelay: "1.6s" }}
+          >
             Her Forever Prêt
           </p>
         </div>
@@ -51,26 +59,43 @@ function About() {
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-8 sm:py-24 md:grid-cols-2 md:gap-20">
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <div className="reveal-img">
-            <img src="/media/products/editorial-2.webp" alt="Teal linen wrap jacket and ivory trousers" loading="lazy" className="aspect-[3/4] w-full object-cover" />
+            <img
+              src="/media/products/editorial-2.webp"
+              alt="Teal linen wrap jacket and ivory trousers"
+              loading="lazy"
+              className="aspect-[3/4] w-full object-cover"
+            />
           </div>
           <Parallax speed={0.08} className="mt-12">
             <div className="reveal-img">
-              <img src="/media/products/editorial-4.webp" alt="Teal floral silk wrap dress" loading="lazy" className="aspect-[3/4] w-full object-cover" />
+              <img
+                src="/media/products/editorial-4.webp"
+                alt="Teal floral silk wrap dress"
+                loading="lazy"
+                className="aspect-[3/4] w-full object-cover"
+              />
             </div>
           </Parallax>
         </div>
         <div className="reveal max-w-md space-y-5 text-[15px] font-light leading-relaxed text-deep-denim">
           <p className="eyebrow">Our philosophy</p>
-          <p>It's a chance to express who you are, how you feel, and how you choose to show up in the world.</p>
           <p>
-            Born from a desire to create clothing that feels as effortless as it is intentional, The Ritual Era designs timeless everyday wear for the
-            modern woman. We focus on elevated essentials that blend comfort, versatility and thoughtful craftsmanship — pieces that move seamlessly
-            through every part of your day.
+            It's a chance to express who you are, how you feel, and how you choose to show up in the
+            world.
           </p>
           <p>
-            Because we believe true style isn't about constantly becoming someone new. It's about returning to yourself, every single day.
+            Born from a desire to create clothing that feels as effortless as it is intentional, The
+            Ritual Era designs timeless everyday wear for the modern woman. We focus on elevated
+            essentials that blend comfort, versatility and thoughtful craftsmanship — pieces that
+            move seamlessly through every part of your day.
           </p>
-          <p className="font-display text-lg italic text-ink">And that's where every ritual begins.</p>
+          <p>
+            Because we believe true style isn't about constantly becoming someone new. It's about
+            returning to yourself, every single day.
+          </p>
+          <p className="font-display text-lg italic text-ink">
+            And that's where every ritual begins.
+          </p>
         </div>
       </section>
 
@@ -79,7 +104,12 @@ function About() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-8 sm:py-24 md:grid-cols-[1fr_1.1fr] md:gap-20">
           <div className="reveal mx-auto w-full max-w-sm">
             <div className="reveal-img aspect-[4/5] overflow-hidden rounded-t-[999px] bg-sand/40">
-              <img src="/media/founder-priyanka.webp" alt="Priyanka Bhartia, founder of The Ritual Era, at her desk in the studio" loading="lazy" className="h-full w-full object-cover" />
+              <img
+                src="/media/founder-priyanka.webp"
+                alt="Priyanka Bhartia, founder of The Ritual Era, at her desk in the studio"
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
           <div className="reveal max-w-md">
@@ -87,13 +117,17 @@ function About() {
             <h2 className="font-display text-4xl text-ink">Priyanka Bhartia</h2>
             <div className="mt-6 space-y-4 text-[15px] font-light leading-relaxed text-deep-denim">
               <p>
-                A Fashion Design graduate from De Montfort University, Priyanka started The Ritual Era to make the clothes she couldn't find: refined,
-                easy to wear, and full of quiet detail.
+                A Fashion Design graduate from De Montfort University, Priyanka started The Ritual
+                Era to make the clothes she couldn't find: refined, easy to wear, and full of quiet
+                detail.
               </p>
               <p>
-                Her design language returns again and again to denim — pieced, panelled and stitched alongside the Indian textiles she grew up with.
+                Her design language returns again and again to denim — pieced, panelled and stitched
+                alongside the Indian textiles she grew up with.
               </p>
-              <p className="font-display text-lg italic text-ink">"We don't design for a season. We design beyond it."</p>
+              <p className="font-display text-lg italic text-ink">
+                "We don't design for a season. We design beyond it."
+              </p>
             </div>
             <p className="mt-6 font-script text-5xl text-ritual">Priyanka</p>
           </div>
@@ -104,7 +138,12 @@ function About() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-8 sm:py-24">
         <div className="grid gap-12 md:grid-cols-[1.1fr_1fr] md:gap-20">
           <div className="reveal-img">
-            <img src="/media/craft.jpg" alt="Hands sashiko-stitching dark denim" loading="lazy" className="aspect-[5/4] w-full object-cover" />
+            <img
+              src="/media/craft.jpg"
+              alt="Hands sashiko-stitching dark denim"
+              loading="lazy"
+              className="aspect-[5/4] w-full object-cover"
+            />
           </div>
           <div className="space-y-10">
             {PILLARS.map((p, i) => (
@@ -124,10 +163,16 @@ function About() {
         <div className="mx-auto max-w-2xl px-6 py-20 text-center">
           <p className="font-display text-3xl text-ink">Find your everyday ritual</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link to="/new-arrivals" className="inline-flex h-12 items-center justify-center rounded-[2px] bg-primary px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]">
+            <Link
+              to="/new-arrivals"
+              className="inline-flex h-12 items-center justify-center rounded-[2px] bg-primary px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]"
+            >
               Shop new arrivals
             </Link>
-            <Link to="/collections" className="inline-flex h-12 items-center justify-center rounded-[2px] border border-ink/25 px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:border-ink">
+            <Link
+              to="/collections"
+              className="inline-flex h-12 items-center justify-center rounded-[2px] border border-ink/25 px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:border-ink"
+            >
               Explore collections
             </Link>
           </div>

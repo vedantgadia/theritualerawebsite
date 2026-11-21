@@ -384,8 +384,8 @@ What was done (`src/server.ts`, `src/lib/build-id.ts`, `src/hooks/use-version-ch
 - [x] SEO (21 Nov 2026): `src/lib/seo.ts`. Every page gets matching title/description/Open Graph/Twitter tags with an absolute share image (its own, or the brand cover), and product pages carry schema.org Product data (price in INR, in stock or sold out).
 
 **Technical housekeeping**
-- [ ] `npm run lint` reports many Prettier formatting errors across the codebase (pre-existing style); type checks and the build are clean.
-- [ ] Unused placeholder images in `public/media/` can be removed once the Supabase seed is replaced.
+- [x] Code formatted with Prettier (21 Nov 2026); `npm run lint` has 0 errors. The 9 remaining warnings are `react-refresh/only-export-components` (dev hot-reload only) in the shadcn `ui/` components, `motion.tsx` and `cart.tsx`.
+- [x] Old placeholder images and the Lovable Cloud schema removed (21 Nov 2026). `public/media/product-1.jpg` stays as the fallback for a product without photos.
 
 ---
 

@@ -120,5 +120,10 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   useVersionCheck();
 
-  return <QueryClientProvider client={queryClient}>{/* All routes render here. */}<Outlet /></QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      {/* All routes render here. */}
+      <Outlet />
+    </QueryClientProvider>
+  );
 }

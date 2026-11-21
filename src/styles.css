@@ -44,16 +44,16 @@
   --color-ring: var(--ring);
 
   /* Brand palette */
-  --color-ritual: #1f3a5f;        /* Ritual Indigo */
-  --color-ink: #0f2233;           /* Ink Blue */
+  --color-ritual: #1f3a5f; /* Ritual Indigo */
+  --color-ink: #0f2233; /* Ink Blue */
   --color-deep-denim: #2c3e50;
-  --color-washed: #5a6e7f;        /* Washed Indigo */
-  --color-ivory: #f5efe8;         /* Soft Ivory */
-  --color-sand: #d6c6b8;          /* Warm Sand */
-  --color-blush: #efd3c7;         /* Blush */
+  --color-washed: #5a6e7f; /* Washed Indigo */
+  --color-ivory: #f5efe8; /* Soft Ivory */
+  --color-sand: #d6c6b8; /* Warm Sand */
+  --color-blush: #efd3c7; /* Blush */
   --color-stone: #9a9188;
   --color-taupe: #7a6a5f;
-  --color-gold: #e6c79a;          /* Antique Gold */
+  --color-gold: #e6c79a; /* Antique Gold */
   --color-saffron: #c46a2d;
   --color-rust: #c65d2e;
   --color-terracotta: #a44a2f;
@@ -121,7 +121,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     font-weight: 500;
     color: var(--color-ink);
@@ -178,7 +181,9 @@
 .reveal {
   opacity: 0;
   transform: translateY(26px);
-  transition: opacity 1.1s cubic-bezier(0.22, 0.61, 0.36, 1), transform 1.1s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition:
+    opacity 1.1s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 1.1s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .reveal.is-visible {
   opacity: 1;
@@ -231,7 +236,9 @@
 
 /* Infinite marquee: content is duplicated once, track slides by half its width */
 @keyframes marquee {
-  to { transform: translateX(-50%); }
+  to {
+    transform: translateX(-50%);
+  }
 }
 .marquee-track {
   display: flex;
@@ -244,8 +251,12 @@
 
 /* Slow editorial zoom for hero slides */
 @keyframes kenburns {
-  from { transform: scale(1.12) translate3d(0, 1.5%, 0); }
-  to { transform: scale(1) translate3d(0, 0, 0); }
+  from {
+    transform: scale(1.12) translate3d(0, 1.5%, 0);
+  }
+  to {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
 }
 .kenburns {
   animation: kenburns 7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
@@ -253,7 +264,9 @@
 
 /* A running stitch that keeps sewing */
 @keyframes stitch-march {
-  to { stroke-dashoffset: -24; }
+  to {
+    stroke-dashoffset: -24;
+  }
 }
 .stitch-march {
   stroke-dasharray: 6 6;
@@ -262,8 +275,12 @@
 
 /* Thread drawing in on load (SVG paths with pathLength=1) */
 @keyframes thread-in {
-  from { stroke-dashoffset: 1; }
-  to { stroke-dashoffset: 0; }
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 .thread-in {
   stroke-dasharray: 1;
@@ -273,8 +290,13 @@
 
 /* Spool wobble as the thread pulls */
 @keyframes spool {
-  0%, 100% { transform: rotate(-4deg); }
-  50% { transform: rotate(5deg); }
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
 }
 .spool {
   transform-origin: 50% 60%;
@@ -283,8 +305,12 @@
 
 /* Logo "stitched in": wipes in left to right */
 @keyframes stitch-reveal {
-  from { clip-path: inset(0 100% 0 0); }
-  to { clip-path: inset(0 0 0 0); }
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
 }
 .stitch-reveal {
   animation: stitch-reveal 2.2s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both;
@@ -309,8 +335,14 @@
 
 /* Hotspot pulse */
 @keyframes pulse-ring {
-  0% { transform: scale(0.6); opacity: 0.8; }
-  100% { transform: scale(2.4); opacity: 0; }
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
 }
 .pulse-ring {
   animation: pulse-ring 2s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
@@ -318,8 +350,14 @@
 
 /* Fade + rise for page content and rotating copy */
 @keyframes rise-in {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .rise-in {
   animation: rise-in 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
@@ -349,14 +387,20 @@
 
 /* Soft page entrance on navigation */
 @keyframes page-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .page-in {
   animation: page-in 0.6s ease-out both;
 }
 @media (prefers-reduced-motion: reduce) {
-  .page-in { animation: none; }
+  .page-in {
+    animation: none;
+  }
 }
 .img-zoom.reveal-img.is-visible:hover img {
   transform: scale(1.045);
@@ -381,19 +425,35 @@
   color: var(--color-ink);
   line-height: 1.3;
 }
-.policy-body h2 { font-size: 1.5rem; }
-.policy-body h3 { font-size: 1.25rem; }
-.policy-body h4 { font-size: 1.0625rem; }
+.policy-body h2 {
+  font-size: 1.5rem;
+}
+.policy-body h3 {
+  font-size: 1.25rem;
+}
+.policy-body h4 {
+  font-size: 1.0625rem;
+}
 .policy-body ul,
 .policy-body ol {
   padding-left: 1.25rem;
 }
-.policy-body ul { list-style: disc; }
-.policy-body ol { list-style: decimal; }
-.policy-body li + li { margin-top: 0.5rem; }
-.policy-body li::marker { color: var(--color-taupe); }
+.policy-body ul {
+  list-style: disc;
+}
+.policy-body ol {
+  list-style: decimal;
+}
+.policy-body li + li {
+  margin-top: 0.5rem;
+}
+.policy-body li::marker {
+  color: var(--color-taupe);
+}
 .policy-body strong,
-.policy-body b { font-weight: 500; }
+.policy-body b {
+  font-weight: 500;
+}
 .policy-body a {
   color: var(--color-ritual);
   text-decoration: underline;

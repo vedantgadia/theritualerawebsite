@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import { checkoutCompleted } from "@/lib/checkout.functions";
 
 export interface BagItem {
@@ -106,7 +114,11 @@ export function BagProvider({ children }: { children: ReactNode }) {
     setItems((prev) =>
       quantity <= 0
         ? prev.filter((i) => !(i.productId === productId && i.size === size))
-        : prev.map((i) => (i.productId === productId && i.size === size ? { ...i, quantity: Math.min(quantity, 10) } : i)),
+        : prev.map((i) =>
+            i.productId === productId && i.size === size
+              ? { ...i, quantity: Math.min(quantity, 10) }
+              : i,
+          ),
     );
   }, []);
 
@@ -117,7 +129,18 @@ export function BagProvider({ children }: { children: ReactNode }) {
   const value = useMemo<BagContextValue>(() => {
     const count = items.reduce((s, i) => s + i.quantity, 0);
     const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
-    return { items, count, subtotal, isOpen, openBag, closeBag, addItem, removeItem, updateQuantity, clear };
+    return {
+      items,
+      count,
+      subtotal,
+      isOpen,
+      openBag,
+      closeBag,
+      addItem,
+      removeItem,
+      updateQuantity,
+      clear,
+    };
   }, [items, isOpen, openBag, closeBag, addItem, removeItem, updateQuantity, clear]);
 
   return <BagContext.Provider value={value}>{children}</BagContext.Provider>;

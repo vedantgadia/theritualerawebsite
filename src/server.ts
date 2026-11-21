@@ -43,7 +43,11 @@ function withHtmlCacheHeaders(response: Response): Response {
   if (!contentType.includes("text/html")) return response;
   const headers = new Headers(response.headers);
   headers.set("cache-control", "no-cache, must-revalidate");
-  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
 }
 
 function versionResponse(): Response {
