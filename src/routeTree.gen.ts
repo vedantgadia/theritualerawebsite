@@ -19,6 +19,7 @@ import { Route as SiteCartRouteImport } from './routes/_site.cart'
 import { Route as SiteCheckoutRouteImport } from './routes/_site.checkout'
 import { Route as SiteContactRouteImport } from './routes/_site.contact'
 import { Route as SiteLookbookRouteImport } from './routes/_site.lookbook'
+import { Route as SiteMadeToMeasureRouteImport } from './routes/_site.made-to-measure'
 import { Route as SiteNewArrivalsRouteImport } from './routes/_site.new-arrivals'
 import { Route as SitePopUpsRouteImport } from './routes/_site.pop-ups'
 import { Route as SitePrivacyPolicyRouteImport } from './routes/_site.privacy-policy'
@@ -81,6 +82,11 @@ const SiteContactRoute = SiteContactRouteImport.update({
 const SiteLookbookRoute = SiteLookbookRouteImport.update({
   id: '/lookbook',
   path: '/lookbook',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteMadeToMeasureRoute = SiteMadeToMeasureRouteImport.update({
+  id: '/made-to-measure',
+  path: '/made-to-measure',
   getParentRoute: () => SiteRoute,
 } as any)
 const SiteNewArrivalsRoute = SiteNewArrivalsRouteImport.update({
@@ -164,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof SiteCheckoutRoute
   '/contact': typeof SiteContactRoute
   '/lookbook': typeof SiteLookbookRouteWithChildren
+  '/made-to-measure': typeof SiteMadeToMeasureRoute
   '/new-arrivals': typeof SiteNewArrivalsRoute
   '/pop-ups': typeof SitePopUpsRoute
   '/privacy-policy': typeof SitePrivacyPolicyRoute
@@ -188,6 +195,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof SiteCheckoutRoute
   '/contact': typeof SiteContactRoute
   '/lookbook': typeof SiteLookbookRouteWithChildren
+  '/made-to-measure': typeof SiteMadeToMeasureRoute
   '/new-arrivals': typeof SiteNewArrivalsRoute
   '/pop-ups': typeof SitePopUpsRoute
   '/privacy-policy': typeof SitePrivacyPolicyRoute
@@ -215,6 +223,7 @@ export interface FileRoutesById {
   '/_site/checkout': typeof SiteCheckoutRoute
   '/_site/contact': typeof SiteContactRoute
   '/_site/lookbook': typeof SiteLookbookRouteWithChildren
+  '/_site/made-to-measure': typeof SiteMadeToMeasureRoute
   '/_site/new-arrivals': typeof SiteNewArrivalsRoute
   '/_site/pop-ups': typeof SitePopUpsRoute
   '/_site/privacy-policy': typeof SitePrivacyPolicyRoute
@@ -243,6 +252,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/lookbook'
+    | '/made-to-measure'
     | '/new-arrivals'
     | '/pop-ups'
     | '/privacy-policy'
@@ -267,6 +277,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/lookbook'
+    | '/made-to-measure'
     | '/new-arrivals'
     | '/pop-ups'
     | '/privacy-policy'
@@ -293,6 +304,7 @@ export interface FileRouteTypes {
     | '/_site/checkout'
     | '/_site/contact'
     | '/_site/lookbook'
+    | '/_site/made-to-measure'
     | '/_site/new-arrivals'
     | '/_site/pop-ups'
     | '/_site/privacy-policy'
@@ -384,6 +396,13 @@ declare module '@tanstack/react-router' {
       path: '/lookbook'
       fullPath: '/lookbook'
       preLoaderRoute: typeof SiteLookbookRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/made-to-measure': {
+      id: '/_site/made-to-measure'
+      path: '/made-to-measure'
+      fullPath: '/made-to-measure'
+      preLoaderRoute: typeof SiteMadeToMeasureRouteImport
       parentRoute: typeof SiteRoute
     }
     '/_site/new-arrivals': {
@@ -508,6 +527,7 @@ interface SiteRouteChildren {
   SiteCheckoutRoute: typeof SiteCheckoutRoute
   SiteContactRoute: typeof SiteContactRoute
   SiteLookbookRoute: typeof SiteLookbookRouteWithChildren
+  SiteMadeToMeasureRoute: typeof SiteMadeToMeasureRoute
   SiteNewArrivalsRoute: typeof SiteNewArrivalsRoute
   SitePopUpsRoute: typeof SitePopUpsRoute
   SitePrivacyPolicyRoute: typeof SitePrivacyPolicyRoute
@@ -533,6 +553,7 @@ const SiteRouteChildren: SiteRouteChildren = {
   SiteCheckoutRoute: SiteCheckoutRoute,
   SiteContactRoute: SiteContactRoute,
   SiteLookbookRoute: SiteLookbookRouteWithChildren,
+  SiteMadeToMeasureRoute: SiteMadeToMeasureRoute,
   SiteNewArrivalsRoute: SiteNewArrivalsRoute,
   SitePopUpsRoute: SitePopUpsRoute,
   SitePrivacyPolicyRoute: SitePrivacyPolicyRoute,

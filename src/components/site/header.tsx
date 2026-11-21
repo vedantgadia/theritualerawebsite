@@ -25,7 +25,7 @@ const ANNOUNCEMENTS = [
   "Complimentary shipping across India on orders above ₹5,000",
   "New arrivals — the Autumn Edit is here",
   "Designed & made in-house in Mumbai · Limited editions",
-  "Made-to-measure on request — message us on WhatsApp",
+  "Made-to-measure on request — any piece, cut to you",
 ];
 
 function AnnouncementBar() {
