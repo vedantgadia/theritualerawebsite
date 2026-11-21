@@ -74,12 +74,24 @@ export function productSetInput(p: ProductDetail, opts: { imageBase: string; loc
   };
 }
 
-const tagRule = (condition: string) => ({
-  appliedDisjunctively: false,
-  rules: [{ column: "TAG", relation: "EQUALS", condition }],
-});
+/*
+ * Membership rule: every product tagged `tag`. This is the Admin API 2026-10 form
+ * (`collection: { sources }`); the older `input: { ruleSet }` is deprecated.
+ */
+const taggedWith = (tag: string) => [
+  {
+    source: {
+      title: `Tagged ${tag}`,
+      targetType: "PRODUCTS",
+      inclusion: {
+        matchType: "ALL",
+        conditions: [{ productTag: { matchType: "ANY", relation: "TAGGED_WITH", values: [tag] } }],
+      },
+    },
+  },
+];
 
-/** CollectionInput for the five categories and the six story collections (automated by tag). */
+/** CollectionCreateInput for the five categories and the six story collections (automated by tag). */
 export function collectionInputs(
   categories: MockCategory[],
   stories: MockCollection[],
@@ -91,7 +103,7 @@ export function collectionInputs(
       handle: c.slug,
       descriptionHtml: `<p>${escapeHtml(c.blurb)}</p>`,
       image: { src: absolute(imageBase, c.image), altText: c.name },
-      ruleSet: tagRule(`${CATEGORY_TAG_PREFIX}${c.slug}`),
+      sources: taggedWith(`${CATEGORY_TAG_PREFIX}${c.slug}`),
       metafields: [
         ...metafield("kind", "single_line_text_field", "category"),
         ...metafield("position", "number_integer", i + 1),
@@ -102,7 +114,7 @@ export function collectionInputs(
       handle: c.slug,
       descriptionHtml: `<p>${escapeHtml(c.story)}</p>`,
       image: { src: absolute(imageBase, c.coverImage), altText: c.name },
-      ruleSet: tagRule(`${COLLECTION_TAG_PREFIX}${c.slug}`),
+      sources: taggedWith(`${COLLECTION_TAG_PREFIX}${c.slug}`),
       metafields: [
         ...metafield("kind", "single_line_text_field", "story"),
         ...metafield("tagline", "single_line_text_field", c.tagline),
