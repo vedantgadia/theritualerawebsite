@@ -149,10 +149,7 @@ export function CartDrawer() {
                   ? "Shipping is on us — your order qualifies for free delivery."
                   : `${formatINR(shippingFee)} shipping · add ${formatINR(remaining)} for free shipping`}
               </p>
-              <CheckoutButton
-                onNavigate={bag.closeBag}
-                className="mt-4 flex h-12 w-full items-center justify-center rounded-[2px] bg-primary font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]"
-              />
+              <CheckoutButton className="mt-4 flex h-12 w-full items-center justify-center rounded-[2px] bg-primary font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]" />
               <Link
                 to="/cart"
                 onClick={bag.closeBag}

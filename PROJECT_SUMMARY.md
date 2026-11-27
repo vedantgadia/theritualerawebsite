@@ -369,9 +369,9 @@ What was done (`src/server.ts`, `src/lib/build-id.ts`, `src/hooks/use-version-ch
 - [ ] Policy texts: drafts in `docs/shopify-policies.md`. Confirm the assumptions, paste them into Shopify (Settings → Policies). The site's policy pages then show them within 5 minutes. Needed for Razorpay approval.
 
 **Pages still placeholders** (they render "This page is being dressed"):
-- [ ] Checkout (guest checkout default + login option, address form, Razorpay)
-- [ ] Order confirmation, Track Your Order
-- [ ] Account / sign-in (email OTP + Google), order history, saved addresses
+- [x] Checkout is Shopify's. The bag's Checkout button goes to Shopify. If Shopify isn't connected, it offers a WhatsApp order message in place. `/checkout` redirects to `/cart`.
+- [x] Order confirmation is Shopify's. `/track-order` explains signing in to Shopify customer accounts (`/account`) or using the order-email link, with WhatsApp as a fallback.
+- [x] Account and sign-in: Shopify customer accounts (`/account` redirects there; `/auth` redirects to `/account`).
 - [x] Contact page (21 Nov 2026): `/contact`, WhatsApp, email, Mumbai, hours and a form saved to Supabase `contact_messages`.
 - [ ] Lookbook list + campaign pages (note: `_site.lookbook.tsx` has the same parent-route issue the shop had — rename to `_site.lookbook.index.tsx` when building it)
 - [ ] Pop-ups & Events

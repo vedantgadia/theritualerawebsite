@@ -1,27 +1,22 @@
-import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { whatsappLink } from "@/lib/contact";
 import { rememberCheckout, useBag } from "@/lib/cart";
 import { startCheckout } from "@/lib/checkout.functions";
 
 /*
- * Sends the bag to Shopify's secure checkout. Until Shopify is connected it
- * falls back to the on-site /checkout page.
+ * Sends the bag to Shopify's secure checkout. If checkout can't start (Shopify
+ * not connected, e.g. in local development), it says so here and offers WhatsApp.
  */
-export function CheckoutButton({
-  className,
-  onNavigate,
-}: {
-  className: string;
-  onNavigate?: () => void;
-}) {
+export function CheckoutButton({ className }: { className: string }) {
   const bag = useBag();
-  const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
   const [problems, setProblems] = useState<string[]>([]);
+  const [offline, setOffline] = useState(false);
 
   async function go() {
     setBusy(true);
     setProblems([]);
+    setOffline(false);
     try {
       const res = await startCheckout({
         data: {
@@ -34,8 +29,7 @@ export function CheckoutButton({
         return; // keep the button busy while the browser leaves
       }
       if (res.status === "unavailable") {
-        onNavigate?.();
-        await navigate({ to: "/checkout" });
+        setOffline(true);
       } else {
         setProblems(res.problems);
       }
@@ -58,6 +52,21 @@ export function CheckoutButton({
       >
         {busy ? "One moment…" : "Checkout"}
       </button>
+      {offline && (
+        <p role="alert" className="mt-3 text-xs font-light text-washed">
+          Online checkout isn't open just yet.{" "}
+          <a
+            href={whatsappLink(
+              `Hi! I'd like to order: ${bag.items.map((i) => `${i.name} (${i.size}) × ${i.quantity}`).join(", ")}`,
+            )}
+            target="_blank"
+            rel="noreferrer"
+            className="text-ritual underline underline-offset-4"
+          >
+            Order on WhatsApp
+          </a>
+        </p>
+      )}
       {problems.length > 0 && (
         <ul role="alert" className="mt-3 space-y-1 text-xs font-light text-terracotta">
           {problems.map((p) => (
