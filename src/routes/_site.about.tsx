@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_site/about")({
     meta: seo({
       title: "About Us",
       description:
-        "The Ritual Era designs timeless everyday wear for the modern woman — made in-house in Mumbai, in limited editions.",
+        "The Ritual Era designs timeless everyday wear for the modern woman, made in-house in Mumbai in limited editions.",
       image: "/media/founder-priyanka.webp",
     }),
   }),
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/_site/about")({
 const PILLARS = [
   {
     title: "Denim at the heart",
-    body: "Denim is our constant. We reimagine it through Indian textiles — ajrakh, hakoba, chanderi and crochet — and unexpected fabric pairings.",
+    body: "Denim is our constant. We reimagine it through Indian textiles like ajrakh, hakoba, chanderi and crochet, and through unexpected fabric pairings.",
   },
   {
     title: "Made in-house",
@@ -26,7 +26,7 @@ const PILLARS = [
   },
   {
     title: "Longevity over excess",
-    body: "Our collections are designed to be worn, repeated and reimagined — a lasting part of your wardrobe, not a passing moment.",
+    body: "Our collections are designed to be worn, repeated and reimagined: a lasting part of your wardrobe, not a passing moment.",
   },
 ];
 
@@ -50,7 +50,7 @@ function About() {
 
       <section className="mx-auto max-w-5xl px-6 py-24 text-center sm:py-32">
         <ScrollWords
-          text="At The Ritual Era, we believe getting dressed is one of the first rituals of the day — a quiet moment that sets the tone for everything that follows."
+          text="At The Ritual Era, we believe getting dressed is one of the first rituals of the day, a quiet moment that sets the tone for everything that follows."
           className="font-display text-[1.75rem] leading-[1.3] text-ink sm:text-[2.6rem]"
         />
         <StitchDivider className="mx-auto mt-14 max-w-xs" />
@@ -86,8 +86,8 @@ function About() {
           <p>
             Born from a desire to create clothing that feels as effortless as it is intentional, The
             Ritual Era designs timeless everyday wear for the modern woman. We focus on elevated
-            essentials that blend comfort, versatility and thoughtful craftsmanship — pieces that
-            move seamlessly through every part of your day.
+            essentials that blend comfort, versatility and thoughtful craftsmanship, creating pieces
+            that move seamlessly through every part of your day.
           </p>
           <p>
             Because we believe true style isn't about constantly becoming someone new. It's about
@@ -122,7 +122,7 @@ function About() {
                 detail.
               </p>
               <p>
-                Her design language returns again and again to denim — pieced, panelled and stitched
+                Her design language returns again and again to denim, pieced, panelled and stitched
                 alongside the Indian textiles she grew up with.
               </p>
               <p className="font-display text-lg italic text-ink">

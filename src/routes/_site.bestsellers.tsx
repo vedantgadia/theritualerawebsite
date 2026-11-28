@@ -20,7 +20,7 @@ function Bestsellers() {
     <ProductListing
       eyebrow="Most loved"
       title="Bestsellers"
-      intro="The pieces our community reaches for again and again — worn, repeated and reimagined. Start here if you're new to us."
+      intro="The pieces our community reaches for again and again: worn, repeated and reimagined. Start here if you're new to us."
       products={products}
     />
   );

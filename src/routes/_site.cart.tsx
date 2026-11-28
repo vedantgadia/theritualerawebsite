@@ -6,7 +6,7 @@ import { getSettings } from "@/lib/shop.functions";
 import { CheckoutButton } from "@/components/site/checkout-button";
 
 export const Route = createFileRoute("/_site/cart")({
-  head: () => ({ meta: [{ title: "Your Bag — The Ritual Era" }] }),
+  head: () => ({ meta: [{ title: "Your Bag | The Ritual Era" }] }),
   component: CartPage,
 });
 

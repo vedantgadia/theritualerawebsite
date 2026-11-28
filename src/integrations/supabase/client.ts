@@ -1,7 +1,7 @@
 /*
  * Public Supabase client for the site's content tables (lookbook, pop-ups) and
  * forms (newsletter). It only ever uses the publishable key: row-level security
- * decides what visitors can read or insert. There are no Supabase logins —
+ * decides what visitors can read or insert. There are no Supabase logins;
  * customer accounts live in Shopify.
  *
  * Browser: VITE_SUPABASE_URL / VITE_SUPABASE_PUBLISHABLE_KEY (from .env at build time).

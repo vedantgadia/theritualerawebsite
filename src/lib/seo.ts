@@ -1,7 +1,7 @@
 /*
  * Page metadata for search engines and link previews (WhatsApp, Instagram,
  * Facebook, X). Link previews need absolute image URLs, so local paths like
- * /media/... are prefixed with the address the page was requested on — no
+ * /media/... are prefixed with the address the page was requested on, with no
  * hard-coded domain, so it keeps working when the site moves to its own domain.
  */
 import { createIsomorphicFn } from "@tanstack/react-start";
@@ -31,7 +31,7 @@ export interface SeoInput {
 }
 
 export function seo({ title, description, image, type = "website", origin }: SeoInput) {
-  const fullTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — Her Forever Prêt`;
+  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | Her Forever Prêt`;
   const img = absoluteUrl(image || DEFAULT_SHARE_IMAGE, origin ?? siteOrigin());
   return [
     { title: fullTitle },

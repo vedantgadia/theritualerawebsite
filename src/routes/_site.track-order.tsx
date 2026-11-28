@@ -26,7 +26,7 @@ function TrackOrderPage() {
         Track your <em className="font-normal italic text-ritual">order</em>
       </h1>
       <p className="mt-5 text-sm font-light leading-relaxed text-washed">
-        Sign in with the email address you used at checkout — we'll send you a one-time code, no
+        Sign in with the email address you used at checkout and we'll send you a one-time code, no
         password needed. You'll see every order placed with that email, its status and, once it has
         shipped, its tracking.
       </p>

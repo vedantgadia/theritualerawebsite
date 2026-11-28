@@ -16,8 +16,8 @@ describe("seo helpers", () => {
     const meta = seo({ title: "Bestsellers", description: "Loved pieces.", origin: ORIGIN });
     const get = (k: string) =>
       meta.find((m) => ("property" in m && m.property === k) || ("name" in m && m.name === k));
-    expect(meta[0]).toEqual({ title: "Bestsellers — The Ritual Era" });
-    expect(get("og:title")?.content).toBe("Bestsellers — The Ritual Era");
+    expect(meta[0]).toEqual({ title: "Bestsellers | The Ritual Era" });
+    expect(get("og:title")?.content).toBe("Bestsellers | The Ritual Era");
     expect(get("twitter:description")?.content).toBe("Loved pieces.");
     expect(get("og:image")?.content).toBe("https://shop.example/media/products/hero-cover.webp");
   });

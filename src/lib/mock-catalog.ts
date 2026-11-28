@@ -81,7 +81,7 @@ export const COLLECTIONS: MockCollection[] = [
     name: "Denim, Reimagined",
     tagline: "Indigo, in conversation with Indian craft",
     story:
-      "Denim sits at the heart of everything we make. Here it meets kantha-like running stitches, hakoba eyelets, crochet and hand-block prints — pieced, panelled and top-stitched until the familiar feels new again.",
+      "Denim sits at the heart of everything we make. Here it meets kantha-like running stitches, hakoba eyelets, crochet and hand-block prints, pieced, panelled and top-stitched until the familiar feels new again.",
     coverImage: "/media/products/editorial-3.webp",
   },
   {
@@ -97,7 +97,7 @@ export const COLLECTIONS: MockCollection[] = [
     name: "The Crochet Edit",
     tagline: "Lace and crochet, worn every day",
     story:
-      "Floral crochet panels set into crisp cotton — on a sleeve, a yoke or a hem. Delicate enough to notice, sturdy enough to wear on an ordinary Tuesday.",
+      "Floral crochet panels set into crisp cotton: on a sleeve, a yoke or a hem. Delicate enough to notice, sturdy enough to wear on an ordinary Tuesday.",
     coverImage: img("amaya-shirt"),
   },
   {
@@ -121,7 +121,7 @@ export const COLLECTIONS: MockCollection[] = [
     name: "Chanderi Hours",
     tagline: "Featherlight mul chanderi, from desk to dinner",
     story:
-      "Sheer, light and quietly lustrous. Chanderi and mul chanderi shirts, tunics and dresses with thread-work and soft prints — the polish of occasionwear with the ease of a day shirt.",
+      "Sheer, light and quietly lustrous. Chanderi and mul chanderi shirts, tunics and dresses with thread-work and soft prints. The polish of occasionwear with the ease of a day shirt.",
     coverImage: img("flora-dress"),
   },
 ];
@@ -201,7 +201,7 @@ export const PRODUCTS: MockProduct[] = [
     isNew: true,
     collections: ["chanderi-hours"],
     description:
-      "Apricot mul chanderi with a cropped floral bib layered over the front — a shirt and vest in one.",
+      "Apricot mul chanderi with a cropped floral bib layered over the front. A shirt and vest in one.",
     details: ["Printed floral bib overlay", "Classic collar", "Featherlight, slightly sheer"],
     fit: "Relaxed fit through the body.",
   },
@@ -244,7 +244,7 @@ export const PRODUCTS: MockProduct[] = [
     price: 3790,
     collections: ["linen-days"],
     description:
-      "Cotton-linen in a patchwork of indigo prints — dots, checks and florals pieced together like a well-loved quilt.",
+      "Cotton-linen in a patchwork of indigo prints: dots, checks and florals pieced together like a well-loved quilt.",
     details: ["Patchwork print", "Camp collar", "Short sleeves"],
     fit: "Relaxed, straight hem.",
   },
@@ -319,7 +319,7 @@ export const PRODUCTS: MockProduct[] = [
     featured: true,
     collections: ["denim-reimagined"],
     description:
-      "Mid-indigo denim traced with rows of ecru top-stitching at the pockets and hem — a nod to sashiko, our favourite stitch.",
+      "Mid-indigo denim traced with rows of ecru top-stitching at the pockets and hem, a nod to sashiko, our favourite stitch.",
     details: ["Sashiko-inspired top-stitching", "Two patch pockets", "Camp collar"],
     fit: "Relaxed, short-sleeved.",
   },
@@ -849,7 +849,7 @@ export const PRODUCTS: MockProduct[] = [
     isNew: true,
     collections: ["linen-days"],
     description: "Hand tie-dyed linen in rose and coral, with a notched lapel and a self-tie belt.",
-    details: ["Hand tie-dye — each piece unique", "Self-tie belt", "Sleeveless"],
+    details: ["Hand tie-dye, so each piece is unique", "Self-tie belt", "Sleeveless"],
     fit: "Relaxed; midi length.",
   },
   {
@@ -1056,7 +1056,7 @@ export const PRODUCTS: MockProduct[] = [
     price: 6790,
     collections: ["linen-days"],
     description:
-      "Sage linen printed with ecru squiggles — a side-buttoned V-neck top and easy straight trousers.",
+      "Sage linen printed with ecru squiggles: a side-buttoned V-neck top and easy straight trousers.",
     details: ["Two pieces: top and trousers", "Side fastening", "Elasticated waist"],
     fit: "Relaxed.",
   },
@@ -1090,7 +1090,7 @@ export function imagesFor(p: MockProduct): string[] {
 const FABRIC_CARE: [RegExp, string][] = [
   [
     /silk|satin/i,
-    "Dry clean recommended. If hand washing, use cold water and a mild detergent; do not wring. Dry flat in the shade. Ajrakh and natural dyes may soften with time — that is part of their charm.",
+    "Dry clean recommended. If hand washing, use cold water and a mild detergent; do not wring. Dry flat in the shade. Ajrakh and natural dyes may soften with time. That is part of their charm.",
   ],
   [
     /chanderi/i,
@@ -1135,7 +1135,7 @@ export function createdAtFor(p: MockProduct, index: number): string {
 
 const categoryName = (slug: string) => CATEGORIES.find((c) => c.slug === slug)?.name ?? null;
 
-/* The mock catalogue in the site's product shape — also the source for the Shopify import script. */
+/* The mock catalogue in the site's product shape; also the source for the Shopify import script. */
 export const MOCK_PRODUCTS: ProductDetail[] = PRODUCTS.map((p, i) => ({
   id: `mock-${i + 1}`,
   name: p.name,

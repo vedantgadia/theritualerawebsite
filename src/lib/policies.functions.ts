@@ -5,7 +5,7 @@ import { shopifyEnabled, shopifyPolicies } from "@/lib/shopify/storefront.server
 
 /*
  * One store policy as written in Shopify admin, or null when Shopify isn't
- * connected, the policy hasn't been written yet, or Shopify can't be reached —
+ * connected, the policy hasn't been written yet, or Shopify can't be reached;
  * the page then shows a short "being finalised" note instead of failing.
  */
 export const getPolicy = createServerFn({ method: "GET" })

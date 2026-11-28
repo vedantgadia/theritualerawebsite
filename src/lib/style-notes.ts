@@ -49,7 +49,7 @@ export const STYLE_NOTES: StyleNote[] = [
     tips: [
       {
         title: "Let it be the only texture",
-        body: "Keep everything else smooth — plain trousers, simple shoes — so the crochet stays the focus.",
+        body: "Keep everything else smooth, with plain trousers and simple shoes, so the crochet stays the focus.",
       },
       {
         title: "Frame it with something dark",
@@ -96,7 +96,7 @@ export const STYLE_NOTES: StyleNote[] = [
     title: "Co-ords, worn apart",
     kicker: "Two pieces, many looks",
     intro:
-      "A co-ord is really two wardrobe staples that happen to match. Wear them together when you want ease — and apart when you want range.",
+      "A co-ord is really two wardrobe staples that happen to match. Wear them together when you want ease, and apart when you want range.",
     image: img("bloom-co-ord"),
     detail: img("bloom-co-ord-detail"),
     tips: [
@@ -126,7 +126,7 @@ export const STYLE_NOTES: StyleNote[] = [
     tips: [
       {
         title: "One print per look",
-        body: "Let the ajrakh piece lead and keep everything else solid — ivory, indigo or black.",
+        body: "Let the ajrakh piece lead and keep everything else solid: ivory, indigo or black.",
       },
       {
         title: "Throw it over basics",
@@ -150,7 +150,7 @@ export const STYLE_NOTES: StyleNote[] = [
     tips: [
       {
         title: "Size for ease",
-        body: "A little room lets linen move and breathe — that relaxed drape is the point.",
+        body: "A little room lets linen move and breathe. That relaxed drape is the point.",
       },
       {
         title: "Love the creases",
@@ -168,7 +168,7 @@ export const STYLE_NOTES: StyleNote[] = [
 export const CARE_NOTES: { fabric: string; body: string }[] = [
   {
     fabric: "Denim",
-    body: "Wash less, cold and inside out. Indigo may bleed in the first washes — wash with darks, dry in the shade.",
+    body: "Wash less, cold and inside out. Indigo may bleed in the first washes, so wash with darks and dry in the shade.",
   },
   {
     fabric: "Silk & ajrakh",
@@ -176,7 +176,7 @@ export const CARE_NOTES: { fabric: string; body: string }[] = [
   },
   {
     fabric: "Crochet & lace",
-    body: "Hand wash cold and dry flat. Never wring or hang wet crochet — it loses its shape.",
+    body: "Hand wash cold and dry flat. Never wring or hang wet crochet, or it loses its shape.",
   },
   {
     fabric: "Linen",

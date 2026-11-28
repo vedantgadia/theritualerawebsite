@@ -98,7 +98,7 @@ async function load(): Promise<Snapshot> {
 /*
  * The whole catalogue (a few dozen pieces) in one go, cached briefly so page
  * loads stay fast while admin edits still show up within a minute.
- * `fresh` bypasses the cache — used at checkout so stock and prices are current.
+ * `fresh` bypasses the cache; it is used at checkout so stock and prices are current.
  */
 export async function shopifySnapshot(fresh = false): Promise<Snapshot> {
   if (!fresh && cache && Date.now() - cache.at < CACHE_MS) return cache;

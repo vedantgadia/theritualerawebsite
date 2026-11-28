@@ -39,7 +39,7 @@ function StyleNotes() {
             className="rise-in mt-5 max-w-xl text-[15px] font-light leading-relaxed text-deep-denim"
             style={{ animationDelay: "0.24s" }}
           >
-            Small styling rituals from our studio — ways to wear each piece more often, and love it
+            Small styling rituals from our studio: ways to wear each piece more often, and love it
             for longer.
           </p>
           <nav
@@ -109,7 +109,7 @@ function StyleNotes() {
           Need a second <em className="font-normal italic text-ritual">opinion?</em>
         </p>
         <p className="mt-4 text-sm font-light leading-relaxed text-washed">
-          Send us a photo or tell us the occasion — we'll help you find the right piece, size or
+          Send us a photo or tell us the occasion and we'll help you find the right piece, size or
           pairing.
         </p>
         <a

@@ -21,7 +21,7 @@ function NewsletterForm() {
   }
 
   if (state === "done") {
-    return <p className="text-sm font-light text-washed">Thank you — you're on the list. ✦</p>;
+    return <p className="text-sm font-light text-washed">Thank you, you're on the list. ✦</p>;
   }
 
   return (
@@ -238,7 +238,7 @@ export function Footer() {
                 rel="noreferrer"
                 className="text-sm font-light text-washed transition-colors hover:text-ritual"
               >
-                Instagram — @theritualera
+                Instagram: @theritualera
               </a>
             </li>
             <li>

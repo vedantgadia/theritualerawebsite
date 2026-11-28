@@ -146,7 +146,7 @@ export function CartDrawer() {
               </div>
               <p className="mt-1 text-xs font-light text-taupe">
                 {freeShipping
-                  ? "Shipping is on us — your order qualifies for free delivery."
+                  ? "Shipping is on us. Your order qualifies for free delivery."
                   : `${formatINR(shippingFee)} shipping · add ${formatINR(remaining)} for free shipping`}
               </p>
               <CheckoutButton className="mt-4 flex h-12 w-full items-center justify-center rounded-[2px] bg-primary font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]" />

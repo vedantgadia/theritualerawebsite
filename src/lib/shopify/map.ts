@@ -1,6 +1,6 @@
 /*
  * Storefront API queries and the mapping from Shopify's shapes to the site's.
- * Pure: no network, no environment — unit tested in src/test/shopify-map.test.ts.
+ * Pure: no network, no environment; unit tested in src/test/shopify-map.test.ts.
  */
 import {
   SHIPPING_RETURNS,

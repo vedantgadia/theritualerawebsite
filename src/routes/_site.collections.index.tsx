@@ -31,7 +31,7 @@ function Collections() {
           Stories in <em className="font-normal italic">cloth</em>
         </h1>
         <p className="mt-4 max-w-xl text-sm font-light leading-relaxed text-washed">
-          Each collection begins with a fabric or a craft — and the question of how it might live in
+          Each collection begins with a fabric or a craft, and the question of how it might live in
           an everyday wardrobe.
         </p>
       </header>
