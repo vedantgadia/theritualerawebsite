@@ -7,6 +7,7 @@ import { Accordion, Badge, Button, Sheet } from "@/components/ui/brand";
 import { ProductCard } from "@/components/site/product-card";
 import { StitchDivider } from "@/components/site/motion";
 import { MtmForm } from "@/components/site/forms";
+import { whatsappLink } from "@/lib/contact";
 import { jsonLdScript, productJsonLd, seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/_site/product/$slug")({
@@ -78,7 +79,7 @@ function ProductPage() {
   return (
     <>
       <nav aria-label="Breadcrumb" className="mx-auto max-w-7xl px-4 pt-6 sm:px-8">
-        <ol className="flex flex-wrap items-center gap-2 font-sans text-[10px] uppercase tracking-[0.18em] text-taupe">
+        <ol className="flex flex-wrap items-center gap-2 font-sans text-[13px] text-taupe">
           <li>
             <Link to="/" className="hover:text-ritual">
               Home
@@ -161,7 +162,7 @@ function ProductPage() {
           <h1 className="mt-4 font-display text-3xl leading-tight text-ink sm:text-4xl">
             {product.name}
           </h1>
-          <p className="mt-2 font-sans text-[11px] uppercase tracking-[0.2em] text-taupe">
+          <p className="mt-2 font-sans text-sm text-taupe">
             {product.fabric} · {product.colour}
           </p>
           <p className="mt-5 text-lg text-ink">
@@ -178,7 +179,7 @@ function ProductPage() {
               <p className="eyebrow">Size{size ? `: ${size}` : ""}</p>
               <button
                 onClick={() => setGuideOpen(true)}
-                className="font-sans text-[10px] uppercase tracking-[0.18em] text-ritual underline underline-offset-4"
+                className="font-sans text-[13px] text-ritual underline underline-offset-4"
               >
                 Size guide
               </button>
@@ -227,11 +228,27 @@ function ProductPage() {
             Request made-to-measure
           </Button>
 
-          <ul className="mt-6 grid grid-cols-3 gap-2 text-center font-sans text-[9px] uppercase tracking-[0.16em] text-taupe">
+          <ul className="mt-6 grid grid-cols-3 gap-2 text-center font-sans text-xs text-taupe">
             <li className="border border-border px-2 py-3">Made in Mumbai</li>
             <li className="border border-border px-2 py-3">Free shipping over ₹5,000</li>
             <li className="border border-border px-2 py-3">7-day exchange</li>
           </ul>
+
+          <div className="mt-6 border-l-2 border-sand pl-5">
+            <p className="font-script text-3xl leading-none text-ritual">made with care</p>
+            <p className="mt-2 text-sm leading-relaxed text-deep-denim">
+              Cut and stitched in our Mumbai studio, in a small run. Not sure about the size, the
+              fit or the fabric? Ask us; we're happy to help.
+            </p>
+            <a
+              href={whatsappLink(`Hi! I have a question about the ${product.name}.`)}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-ink underline underline-offset-4 hover:text-ritual"
+            >
+              Ask about this piece on WhatsApp
+            </a>
+          </div>
 
           <div className="mt-8">
             <Accordion
@@ -291,7 +308,7 @@ function ProductPage() {
         </p>
         <table className="mt-6 w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-border font-sans text-[10px] uppercase tracking-[0.16em] text-taupe">
+            <tr className="border-b border-border font-sans text-[13px] text-taupe">
               {["Size", "Bust", "Waist", "Hip", "Shoulder"].map((h) => (
                 <th key={h} className="py-2 font-medium">
                   {h}

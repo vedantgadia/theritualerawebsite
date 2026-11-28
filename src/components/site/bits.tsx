@@ -53,7 +53,7 @@ export function WhatsAppFloat() {
 /** Thin vertical editorial label, used along asymmetric grids. */
 export function VerticalLabel({ text }: { text: string }) {
   return (
-    <span className="hidden select-none font-sans text-[10px] font-medium uppercase tracking-[0.3em] text-stone [writing-mode:vertical-rl] lg:block">
+    <span className="hidden select-none font-sans text-[13px] font-medium text-stone [writing-mode:vertical-rl] lg:block">
       {text}
     </span>
   );

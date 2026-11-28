@@ -130,7 +130,7 @@ export function ScrollWords({ text, className = "" }: { text: string; className?
           <span
             key={i}
             className="transition-opacity duration-300"
-            style={{ opacity: Math.min(1, Math.max(0.16, lit)) }}
+            style={{ opacity: Math.min(1, Math.max(0.5, lit)) }}
           >
             {w}{" "}
           </span>

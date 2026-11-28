@@ -27,13 +27,13 @@ function CartPage() {
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             to="/new-arrivals"
-            className="inline-flex h-12 items-center rounded-[2px] bg-primary px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground hover:bg-[#2a4a76]"
+            className="inline-flex h-12 items-center rounded-[2px] bg-primary px-8 font-sans text-sm font-medium text-primary-foreground hover:bg-[#2a4a76]"
           >
             New arrivals
           </Link>
           <Link
             to="/bestsellers"
-            className="inline-flex h-12 items-center rounded-[2px] border border-ink/25 px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ink hover:border-ink"
+            className="inline-flex h-12 items-center rounded-[2px] border border-ink/25 px-8 font-sans text-sm font-medium text-ink hover:border-ink"
           >
             Bestsellers
           </Link>
@@ -71,9 +71,7 @@ function CartPage() {
                   </Link>
                   <span className="text-sm text-ink">{formatINR(item.price * item.quantity)}</span>
                 </div>
-                <p className="mt-1 font-sans text-[10px] uppercase tracking-[0.18em] text-taupe">
-                  Size {item.size}
-                </p>
+                <p className="mt-1 font-sans text-[13px] text-taupe">Size {item.size}</p>
                 <div className="mt-auto flex items-center justify-between pt-4">
                   <div className="flex items-center border border-border">
                     <button
@@ -98,7 +96,7 @@ function CartPage() {
                   </div>
                   <button
                     onClick={() => bag.removeItem(item.productId, item.size)}
-                    className="font-sans text-[10px] uppercase tracking-[0.18em] text-taupe underline underline-offset-4 hover:text-terracotta"
+                    className="font-sans text-[13px] text-taupe underline underline-offset-4 hover:text-terracotta"
                   >
                     Remove
                   </button>
@@ -129,10 +127,10 @@ function CartPage() {
               Add {formatINR(freeThreshold - bag.subtotal)} more for free shipping.
             </p>
           )}
-          <CheckoutButton className="mt-6 flex h-12 w-full items-center justify-center rounded-[2px] bg-primary font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground hover:bg-[#2a4a76]" />
+          <CheckoutButton className="mt-6 flex h-12 w-full items-center justify-center rounded-[2px] bg-primary font-sans text-sm font-medium text-primary-foreground hover:bg-[#2a4a76]" />
           <Link
             to="/shop"
-            className="mt-3 block text-center font-sans text-[10px] uppercase tracking-[0.18em] text-ink underline underline-offset-4"
+            className="mt-3 block text-center font-sans text-[13px] text-ink underline underline-offset-4"
           >
             Continue shopping
           </Link>

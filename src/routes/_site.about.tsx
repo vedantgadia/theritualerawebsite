@@ -165,13 +165,13 @@ function About() {
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               to="/new-arrivals"
-              className="inline-flex h-12 items-center justify-center rounded-[2px] bg-primary px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]"
+              className="inline-flex h-12 items-center justify-center rounded-[2px] bg-primary px-8 font-sans text-sm font-medium text-primary-foreground transition-colors hover:bg-[#2a4a76]"
             >
               Shop new arrivals
             </Link>
             <Link
               to="/collections"
-              className="inline-flex h-12 items-center justify-center rounded-[2px] border border-ink/25 px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:border-ink"
+              className="inline-flex h-12 items-center justify-center rounded-[2px] border border-ink/25 px-8 font-sans text-sm font-medium text-ink transition-colors hover:border-ink"
             >
               Explore collections
             </Link>

@@ -10,7 +10,7 @@ type ButtonVariant = "primary" | "outline" | "ghost" | "quiet";
 type ButtonSize = "default" | "sm" | "lg";
 
 const buttonBase =
-  "inline-flex items-center justify-center gap-2 rounded-[2px] font-sans text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-300 disabled:pointer-events-none disabled:opacity-50 cursor-pointer";
+  "inline-flex items-center justify-center gap-2 rounded-[2px] font-sans text-sm font-medium transition-colors duration-300 disabled:pointer-events-none disabled:opacity-50 cursor-pointer";
 
 const buttonVariants: Record<ButtonVariant, string> = {
   primary: "bg-primary text-primary-foreground hover:bg-[#2a4a76]",
@@ -121,9 +121,7 @@ export function Accordion({ items }: { items: { title: string; content: React.Re
       {items.map((item) => (
         <details key={item.title} className="group">
           <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-sm text-ink transition-colors hover:text-ritual [&::-webkit-details-marker]:hidden">
-            <span className="font-sans text-[11px] font-medium uppercase tracking-[0.18em]">
-              {item.title}
-            </span>
+            <span className="font-sans text-sm font-medium">{item.title}</span>
             <span className="relative block h-4 w-4 text-washed">
               <span className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-current" />
               <span className="absolute left-0 top-1/2 h-px w-4 -translate-y-1/2 bg-current transition-transform duration-300 group-open:scale-x-0" />
@@ -277,7 +275,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-block rounded-[2px] border px-2 py-0.5 font-sans text-[9px] font-medium uppercase tracking-[0.16em]",
+        "inline-block rounded-[2px] border px-2 py-0.5 font-sans text-[11px] font-medium",
         tones[tone],
       )}
     >

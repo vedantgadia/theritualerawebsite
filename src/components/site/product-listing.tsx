@@ -96,7 +96,7 @@ export function ProductListing({
                   {...(t.category
                     ? { to: "/shop/$category", params: { category: t.category } }
                     : { to: "/shop" })}
-                  className={`whitespace-nowrap rounded-[2px] border px-4 py-2 font-sans text-[10px] font-medium uppercase tracking-[0.18em] transition-colors ${
+                  className={`whitespace-nowrap rounded-[2px] border px-4 py-2 font-sans text-[13px] font-medium transition-colors${
                     t.active
                       ? "border-ritual bg-ritual text-ivory"
                       : "border-ink/15 bg-ivory/70 text-ink/80 hover:border-ink/50 hover:bg-ivory"
@@ -112,7 +112,7 @@ export function ProductListing({
 
       <div className="border-y border-border bg-ivory">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 sm:px-8">
-          <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-taupe">
+          <p className="font-sans text-[13px] text-taupe">
             {shown.length} {shown.length === 1 ? "piece" : "pieces"}
           </p>
           <div className="flex items-center gap-1" role="group" aria-label="Filter by size">
@@ -135,7 +135,7 @@ export function ProductListing({
               <select
                 value={band}
                 onChange={(e) => setBand(Number(e.target.value))}
-                className="bg-transparent font-sans text-[10px] uppercase tracking-[0.16em] text-ink focus:outline-none"
+                className="bg-transparent font-sans text-[13px] text-ink focus:outline-none"
               >
                 {PRICE_BANDS.map((b, i) => (
                   <option key={b.label} value={i}>
@@ -145,13 +145,11 @@ export function ProductListing({
               </select>
             </label>
             <label className="flex items-center gap-2">
-              <span className="font-sans text-[10px] uppercase tracking-[0.16em] text-taupe max-sm:hidden">
-                Sort
-              </span>
+              <span className="font-sans text-[13px] text-taupe max-sm:hidden">Sort</span>
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value as Sort)}
-                className="bg-transparent font-sans text-[10px] uppercase tracking-[0.16em] text-ink focus:outline-none"
+                className="bg-transparent font-sans text-[13px] text-ink focus:outline-none"
               >
                 <option value="featured">Featured</option>
                 <option value="newest">Newest</option>
@@ -175,7 +173,7 @@ export function ProductListing({
                 setSize(null);
                 setBand(0);
               }}
-              className="mt-6 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ritual underline underline-offset-4"
+              className="mt-6 font-sans text-sm font-medium text-ritual underline underline-offset-4"
             >
               Clear filters
             </button>

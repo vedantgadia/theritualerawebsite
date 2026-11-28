@@ -51,7 +51,7 @@ function StyleNotes() {
               <a
                 key={n.slug}
                 href={`#${n.slug}`}
-                className="whitespace-nowrap rounded-[2px] border border-ink/15 bg-ivory/70 px-4 py-2 font-sans text-[10px] font-medium uppercase tracking-[0.18em] text-ink/80 transition-colors hover:border-ritual hover:bg-ritual hover:text-ivory"
+                className="whitespace-nowrap rounded-[2px] border border-ink/15 bg-ivory/70 px-4 py-2 font-sans text-[13px] font-medium text-ink/80 transition-colors hover:border-ritual hover:bg-ritual hover:text-ivory"
               >
                 <span className="mr-2 text-taupe">{String(i + 1).padStart(2, "0")}</span>
                 {n.title}
@@ -59,7 +59,7 @@ function StyleNotes() {
             ))}
             <a
               href="#care"
-              className="whitespace-nowrap rounded-[2px] border border-ink/15 bg-ivory/70 px-4 py-2 font-sans text-[10px] font-medium uppercase tracking-[0.18em] text-ink/80 transition-colors hover:border-ritual hover:bg-ritual hover:text-ivory"
+              className="whitespace-nowrap rounded-[2px] border border-ink/15 bg-ivory/70 px-4 py-2 font-sans text-[13px] font-medium text-ink/80 transition-colors hover:border-ritual hover:bg-ritual hover:text-ivory"
             >
               Care rituals
             </a>
@@ -77,26 +77,24 @@ function StyleNotes() {
       ))}
 
       {/* Care */}
-      <section id="care" className="stitch-lattice-ink scroll-mt-24 text-ivory">
+      <section id="care" className="scroll-mt-24 border-y border-sand/60 bg-linen text-ink">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-8 sm:py-28">
           <div className="reveal max-w-2xl">
-            <p className="mb-3 font-sans text-[11px] font-medium uppercase tracking-[0.22em] text-sand">
-              Care rituals
-            </p>
-            <h2 className="font-display text-[2.2rem] leading-tight text-ivory sm:text-5xl">
-              Made to last, <em className="font-normal italic text-blush">cared for</em> to last
+            <p className="eyebrow mb-3">Care rituals</p>
+            <h2 className="font-display text-[2.2rem] leading-tight text-ink sm:text-5xl">
+              Made to last, <em className="font-normal italic text-ritual">cared for</em> to last
               longer
             </h2>
           </div>
-          <div className="mt-12 grid gap-px overflow-hidden border border-ivory/15 bg-ivory/15 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-12 grid gap-px overflow-hidden border border-sand bg-sand sm:grid-cols-2 lg:grid-cols-5">
             {CARE_NOTES.map((c, i) => (
               <div
                 key={c.fabric}
-                className="reveal bg-ritual p-6"
+                className="reveal bg-ivory p-6"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <p className="font-display text-xl italic text-blush">{c.fabric}</p>
-                <p className="mt-3 text-sm font-light leading-relaxed text-ivory/85">{c.body}</p>
+                <p className="font-display text-xl italic text-ritual">{c.fabric}</p>
+                <p className="mt-3 text-sm font-light leading-relaxed text-washed">{c.body}</p>
               </div>
             ))}
           </div>
@@ -116,7 +114,7 @@ function StyleNotes() {
           href={`https://wa.me/919769728791?text=${encodeURIComponent("Hi! I'd love some styling help.")}`}
           target="_blank"
           rel="noreferrer"
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-[2px] bg-primary px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]"
+          className="mt-8 inline-flex h-12 items-center justify-center rounded-[2px] bg-primary px-8 font-sans text-sm font-medium text-primary-foreground transition-colors hover:bg-[#2a4a76]"
         >
           Ask us on WhatsApp
         </a>
@@ -174,7 +172,7 @@ function Story({
         {/* Notes */}
         <div className={flip ? "lg:order-1" : ""}>
           <div className="reveal">
-            <p className="font-sans text-[11px] font-medium uppercase tracking-[0.22em] text-taupe">
+            <p className="font-sans text-sm font-medium text-taupe">
               Note {String(index + 1).padStart(2, "0")} · {note.kicker}
             </p>
             <h2 className="mt-4 font-display text-4xl leading-[1.08] text-ink sm:text-5xl">

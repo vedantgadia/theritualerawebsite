@@ -33,7 +33,7 @@ function TrackOrderPage() {
       {/* A full page load: /account forwards to Shopify's customer account pages. */}
       <a
         href="/account"
-        className="mt-8 inline-flex h-12 items-center justify-center rounded-[2px] bg-primary px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]"
+        className="mt-8 inline-flex h-12 items-center justify-center rounded-[2px] bg-primary px-8 font-sans text-sm font-medium text-primary-foreground transition-colors hover:bg-[#2a4a76]"
       >
         View my orders
       </a>

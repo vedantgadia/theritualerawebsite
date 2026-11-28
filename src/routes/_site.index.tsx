@@ -8,6 +8,7 @@ import {
 } from "@/lib/shop.functions";
 import { formatINR } from "@/lib/format";
 import { ProductCard } from "@/components/site/product-card";
+import { FounderNote } from "@/components/site/founder-note";
 import {
   Marquee,
   Parallax,
@@ -64,11 +65,11 @@ const LOOKBOOK_STRIP = [
 const SLIDE_MS = 5500;
 
 const ctaPrimary =
-  "group/cta inline-flex h-12 items-center justify-center gap-3 rounded-[2px] bg-primary px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]";
+  "group/cta inline-flex h-12 items-center justify-center gap-3 rounded-[2px] bg-primary px-8 font-sans text-sm font-medium text-primary-foreground transition-colors hover:bg-[#2a4a76]";
 const ctaOutline =
-  "inline-flex h-12 items-center justify-center rounded-[2px] border border-ink/25 bg-ivory/40 px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:border-ink hover:bg-ivory";
+  "inline-flex h-12 items-center justify-center rounded-[2px] border border-ink/25 bg-ivory/40 px-8 font-sans text-sm font-medium text-ink transition-colors hover:border-ink hover:bg-ivory";
 const textLink =
-  "relative font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:text-ritual after:absolute after:inset-x-0 after:-bottom-1.5 after:h-px after:bg-current after:transition-transform after:duration-500 hover:after:scale-x-50";
+  "relative font-sans text-sm font-medium text-ink transition-colors hover:text-ritual after:absolute after:inset-x-0 after:-bottom-1.5 after:h-px after:bg-current after:transition-transform after:duration-500 hover:after:scale-x-50";
 
 function Arrow() {
   return (
@@ -125,7 +126,7 @@ function Home() {
       <Hero looks={pick(HERO_LOOKS)} />
 
       {/* Ticker */}
-      <div className="border-y border-ritual bg-ritual py-3.5 text-ivory">
+      <div className="border-y border-sand/70 bg-linen py-3.5 text-ink">
         <Marquee duration={45}>
           {[
             "Denim, Reimagined",
@@ -142,7 +143,7 @@ function Home() {
               className="flex items-center whitespace-nowrap font-display text-lg italic sm:text-xl"
             >
               <span className="px-6 sm:px-10">{t}</span>
-              <span className="text-[10px] not-italic text-gold">✦</span>
+              <span className="text-[10px] not-italic text-terracotta/70">✦</span>
             </span>
           ))}
         </Marquee>
@@ -185,9 +186,7 @@ function Home() {
                 <img src={c.image} alt="" loading="lazy" className="h-full w-full object-cover" />
               </div>
               <div className="absolute inset-x-2.5 bottom-2.5 flex items-center justify-between bg-ivory/95 px-3 py-2.5 sm:inset-x-3 sm:bottom-3">
-                <span className="font-sans text-[10px] font-medium uppercase tracking-[0.18em] text-ink">
-                  {c.name}
-                </span>
+                <span className="font-sans text-[13px] font-medium text-ink">{c.name}</span>
                 <span
                   className="text-ritual transition-transform duration-500 group-hover:translate-x-1"
                   aria-hidden
@@ -201,6 +200,8 @@ function Home() {
       </section>
 
       <NewArrivals products={newArrivals} />
+
+      <FounderNote />
 
       {/* Denim, Reimagined, with a shoppable hotspot */}
       <section className="stitch-lattice overflow-hidden">
@@ -290,9 +291,7 @@ function Home() {
                 <span className="font-display text-2xl italic text-ritual">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="font-sans text-[9px] uppercase tracking-[0.22em] text-taupe">
-                  Most loved
-                </span>
+                <span className="font-sans text-xs text-taupe">Most loved</span>
               </p>
               <ProductCard product={p} />
             </div>
@@ -377,9 +376,7 @@ function Home() {
             >
               <path d={d} />
             </svg>
-            <p className="mt-4 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-ink">
-              {title}
-            </p>
+            <p className="mt-4 font-sans text-sm font-medium text-ink">{title}</p>
             <p className="mt-1.5 text-xs font-light text-washed">{sub}</p>
           </div>
         ))}
@@ -599,9 +596,7 @@ function Hero({ looks }: { looks: CatalogProduct[] }) {
                   />
                 ))}
               </div>
-              <p className="mt-2 font-sans text-[9px] uppercase tracking-[0.22em] text-taupe">
-                The detail
-              </p>
+              <p className="mt-2 font-sans text-xs text-taupe">The detail</p>
             </Parallax>
 
             {/* Now wearing */}
@@ -612,9 +607,7 @@ function Hero({ looks }: { looks: CatalogProduct[] }) {
                 params={{ slug: look.slug }}
                 className="rise-in group absolute right-0 top-[8%] hidden min-w-48 bg-ivory/95 px-4 py-3 shadow-[0_12px_30px_-16px_rgba(15,34,51,0.35)] sm:block lg:-right-4"
               >
-                <p className="font-sans text-[9px] uppercase tracking-[0.22em] text-taupe">
-                  Now wearing
-                </p>
+                <p className="font-sans text-xs text-taupe">Now wearing</p>
                 <p className="mt-1 font-display text-lg leading-tight text-ink group-hover:text-ritual">
                   {look.name}
                 </p>
@@ -766,9 +759,7 @@ function Hotspot({
         +
       </span>
       <span className="pointer-events-none absolute left-8 top-1/2 w-44 -translate-y-1/2 translate-x-1 bg-ivory px-3 py-2 opacity-0 shadow-[0_12px_30px_-16px_rgba(15,34,51,0.4)] transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-        <span className="block font-sans text-[9px] uppercase tracking-[0.2em] text-taupe">
-          {label ?? "Shop the look"}
-        </span>
+        <span className="block font-sans text-xs text-taupe">{label ?? "Shop the look"}</span>
         <span className="mt-0.5 block text-xs text-ink">{product.name}</span>
         <span className="block text-[11px] font-light text-washed">{formatINR(product.price)}</span>
       </span>
@@ -786,20 +777,18 @@ function CollectionsShowcase({
   const [hovered, setHovered] = useState(0);
 
   return (
-    <section className="stitch-lattice-ink overflow-hidden text-ivory">
+    <section className="overflow-hidden border-y border-sand/60 bg-linen text-ink">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-8 sm:py-28">
         <div className="reveal mb-12 flex items-end justify-between gap-6">
           <div>
-            <p className="mb-3 font-sans text-[11px] font-medium uppercase tracking-[0.22em] text-sand">
-              Collections
-            </p>
-            <h2 className="font-display text-[2rem] leading-tight text-ivory sm:text-5xl">
-              Stories in <em className="font-normal italic text-blush">cloth</em>
+            <p className="eyebrow mb-3">Collections</p>
+            <h2 className="font-display text-[2rem] leading-tight text-ink sm:text-5xl">
+              Stories in <em className="font-normal italic text-ritual">cloth</em>
             </h2>
           </div>
           <Link
             to="/collections"
-            className="font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ivory underline decoration-ivory/40 underline-offset-[6px] hover:decoration-ivory"
+            className="font-sans text-sm font-medium text-ink underline decoration-ink/30 underline-offset-[6px] hover:decoration-ink"
           >
             All collections
           </Link>
@@ -809,7 +798,7 @@ function CollectionsShowcase({
         <div className="hidden items-center gap-16 lg:grid lg:grid-cols-[1.1fr_1fr]">
           <ul>
             {collections.map((c, i) => (
-              <li key={c.slug} className="border-b border-dashed border-ivory/20 first:border-t">
+              <li key={c.slug} className="border-b border-dashed border-ink/15 first:border-t">
                 <Link
                   to="/collections/$slug"
                   params={{ slug: c.slug }}
@@ -817,16 +806,16 @@ function CollectionsShowcase({
                   onFocus={() => setHovered(i)}
                   className="group flex items-baseline gap-6 py-5"
                 >
-                  <span className="w-8 font-sans text-[10px] tracking-[0.2em] text-sand/70">
+                  <span className="w-8 font-sans text-[10px] tracking-[0.2em] text-taupe">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span
-                    className={`font-display text-4xl transition-all duration-500 ${hovered === i ? "translate-x-2 text-ivory" : "text-ivory/45"}`}
+                    className={`font-display text-4xl transition-all duration-500 ${hovered === i ? "translate-x-2 text-ink" : "text-ink/40"}`}
                   >
                     {c.name}
                   </span>
                   <span
-                    className={`ml-auto font-sans text-[10px] uppercase tracking-[0.2em] transition-opacity duration-500 ${hovered === i ? "opacity-100" : "opacity-0"}`}
+                    className={`ml-auto font-sans text-[13px] transition-opacity duration-500${hovered === i ? "opacity-100" : "opacity-0"}`}
                   >
                     {c.count} pieces →
                   </span>
@@ -871,7 +860,7 @@ function CollectionsShowcase({
                 />
               </div>
               <p className="mt-4 font-display text-2xl">{c.name}</p>
-              <p className="mt-1 text-xs font-light text-sand">{c.tagline}</p>
+              <p className="mt-1 text-xs font-light text-washed">{c.tagline}</p>
             </Link>
           ))}
         </div>

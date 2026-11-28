@@ -19,7 +19,7 @@ function Field({
   const msgId = `${id}-msg`;
   return (
     <div>
-      <label htmlFor={id} className="eyebrow mb-2 block">
+      <label htmlFor={id} className="mb-2 block text-sm font-medium text-ink">
         {label}
       </label>
       {children(id, error || hint ? msgId : undefined)}

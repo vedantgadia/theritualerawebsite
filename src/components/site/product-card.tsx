@@ -66,7 +66,7 @@ export function ProductCard({
           </div>
         </div>
         {(product.fabric || product.categoryName) && (
-          <p className="mt-1 font-sans text-[10px] uppercase tracking-[0.18em] text-taupe">
+          <p className="mt-1 font-sans text-[13px] text-taupe">
             {product.fabric || product.categoryName}
           </p>
         )}

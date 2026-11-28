@@ -31,10 +31,10 @@ const ANNOUNCEMENTS = [
 function AnnouncementBar() {
   const [i] = useCycle(ANNOUNCEMENTS.length, 4500);
   return (
-    <div className="stitch-lattice-ink relative z-[51] h-8 overflow-hidden px-4 text-center">
+    <div className="relative z-[51] h-8 overflow-hidden border-b border-sand/60 bg-linen px-4 text-center">
       <p
         key={i}
-        className="rise-in flex h-8 items-center justify-center font-sans text-[10px] font-light uppercase tracking-[0.2em] text-ivory/90"
+        className="rise-in flex h-8 items-center justify-center font-sans text-[13px] text-ink/80"
       >
         {ANNOUNCEMENTS[i]}
       </p>
@@ -110,7 +110,7 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
 type MenuKey = "clothing" | "collections" | null;
 
 const navLinkClass =
-  "relative py-1 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-ink/80 transition-colors hover:text-ritual after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-ritual after:transition-transform after:duration-500 hover:after:scale-x-100";
+  "relative py-1 font-sans text-sm font-medium text-ink/80 transition-colors hover:text-ritual after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-ritual after:transition-transform after:duration-500 hover:after:scale-x-100";
 
 function Chevron({ open }: { open: boolean }) {
   return (
@@ -230,9 +230,7 @@ export function Header() {
                 <circle cx="7.5" cy="7.5" r="5.5" />
                 <path d="M12 12l5 5" />
               </svg>
-              <span className="hidden font-sans text-[10px] uppercase tracking-[0.2em] lg:inline">
-                Search
-              </span>
+              <span className="hidden font-sans text-[13px] lg:inline">Search</span>
             </button>
           </div>
 
@@ -388,7 +386,7 @@ export function Header() {
                           className="h-full w-full object-cover"
                         />
                       </div>
-                      <p className="mt-2 font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-ink group-hover:text-ritual">
+                      <p className="mt-2 font-sans text-[13px] font-medium text-ink group-hover:text-ritual">
                         {c.name}
                       </p>
                     </Link>
@@ -419,7 +417,7 @@ export function Header() {
                       <Link
                         to="/collections"
                         onClick={closeAll}
-                        className="font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-ritual underline underline-offset-4"
+                        className="font-sans text-[13px] font-medium text-ritual underline underline-offset-4"
                       >
                         All collections
                       </Link>
@@ -582,18 +580,10 @@ export function Header() {
             </Link>
           </div>
           <div className="mt-auto space-y-3 border-t border-border px-6 py-6">
-            <a
-              href="/account"
-              onClick={closeAll}
-              className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink"
-            >
+            <a href="/account" onClick={closeAll} className="block font-sans text-sm text-ink">
               My account
             </a>
-            <Link
-              to="/contact"
-              onClick={closeAll}
-              className="block font-sans text-[11px] uppercase tracking-[0.2em] text-ink"
-            >
+            <Link to="/contact" onClick={closeAll} className="block font-sans text-sm text-ink">
               Contact
             </Link>
           </div>

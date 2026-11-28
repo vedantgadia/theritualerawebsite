@@ -60,7 +60,7 @@ function ContactPage() {
             </p>
             <Link
               to="/made-to-measure"
-              className="mt-4 inline-block font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ritual underline underline-offset-4"
+              className="mt-4 inline-block font-sans text-sm font-medium text-ritual underline underline-offset-4"
             >
               Request made-to-measure
             </Link>

@@ -52,7 +52,7 @@ export function CartDrawer() {
             <Link
               to="/shop"
               onClick={bag.closeBag}
-              className="mt-8 inline-flex h-11 items-center rounded-[2px] bg-primary px-8 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]"
+              className="mt-8 inline-flex h-11 items-center rounded-[2px] bg-primary px-8 font-sans text-sm font-medium text-primary-foreground transition-colors hover:bg-[#2a4a76]"
             >
               Shop the collection
             </Link>
@@ -103,9 +103,7 @@ export function CartDrawer() {
                         </svg>
                       </button>
                     </div>
-                    <p className="mt-1 font-sans text-[10px] uppercase tracking-[0.18em] text-taupe">
-                      Size {item.size}
-                    </p>
+                    <p className="mt-1 font-sans text-[13px] text-taupe">Size {item.size}</p>
                     <div className="mt-auto flex items-center justify-between">
                       <div className="flex items-center border border-border">
                         <button
@@ -149,11 +147,11 @@ export function CartDrawer() {
                   ? "Shipping is on us. Your order qualifies for free delivery."
                   : `${formatINR(shippingFee)} shipping · add ${formatINR(remaining)} for free shipping`}
               </p>
-              <CheckoutButton className="mt-4 flex h-12 w-full items-center justify-center rounded-[2px] bg-primary font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-[#2a4a76]" />
+              <CheckoutButton className="mt-4 flex h-12 w-full items-center justify-center rounded-[2px] bg-primary font-sans text-sm font-medium text-primary-foreground transition-colors hover:bg-[#2a4a76]" />
               <Link
                 to="/cart"
                 onClick={bag.closeBag}
-                className="mt-2 flex h-12 w-full items-center justify-center rounded-[2px] border border-ink/25 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:border-ink"
+                className="mt-2 flex h-12 w-full items-center justify-center rounded-[2px] border border-ink/25 font-sans text-sm font-medium text-ink transition-colors hover:border-ink"
               >
                 View bag
               </Link>

@@ -56,7 +56,7 @@ function Collections() {
               <h2 className="font-display text-2xl text-ink transition-colors group-hover:text-ritual sm:text-3xl">
                 {c.name}
               </h2>
-              <span className="whitespace-nowrap font-sans text-[10px] uppercase tracking-[0.2em] text-taupe">
+              <span className="whitespace-nowrap font-sans text-[13px] text-taupe">
                 {c.count} pieces
               </span>
             </div>

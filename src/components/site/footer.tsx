@@ -39,7 +39,7 @@ function NewsletterForm() {
       />
       <button
         type="submit"
-        className="h-11 whitespace-nowrap rounded-none bg-ritual px-5 font-sans text-[10px] font-medium uppercase tracking-[0.18em] text-ivory transition-colors hover:bg-[#2a4a76]"
+        className="h-11 whitespace-nowrap rounded-none bg-ritual px-5 font-sans text-[13px] font-medium text-ivory transition-colors hover:bg-[#2a4a76]"
       >
         Subscribe
       </button>
@@ -257,10 +257,8 @@ export function Footer() {
 
       <div className="border-t border-border/60 bg-ivory">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-5 text-center sm:flex-row sm:px-8 sm:text-left">
-          <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-taupe">
-            © The Ritual Era · Mumbai, India
-          </p>
-          <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-taupe">
+          <p className="font-sans text-[13px] text-taupe">© The Ritual Era · Mumbai, India</p>
+          <p className="font-sans text-[13px] text-taupe">
             We don't design for a season. We design beyond it.
           </p>
         </div>

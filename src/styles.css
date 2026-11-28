@@ -14,6 +14,8 @@
      Web stand-ins: Playfair Display (the kit's listed alternative), Albert Sans, Ms Madi. */
   --font-sans: "Albert Sans", ui-sans-serif, system-ui, sans-serif;
   --font-script: "Ms Madi", cursive;
+  /* "Light" text renders at regular weight: easier to read and warmer than hairline type. */
+  --font-weight-light: 400;
 
   --radius-sm: 0.125rem;
   --radius-md: 0.125rem;
@@ -47,7 +49,8 @@
   --color-ritual: #1f3a5f; /* Ritual Indigo */
   --color-ink: #0f2233; /* Ink Blue */
   --color-deep-denim: #2c3e50;
-  --color-washed: #5a6e7f; /* Washed Indigo */
+  /* Secondary text: a warm taupe-grey (was Washed Indigo #5a6e7f), for a homelier read. */
+  --color-washed: #625750;
   --color-ivory: #f5efe8; /* Soft Ivory */
   --color-sand: #d6c6b8; /* Warm Sand */
   --color-blush: #efd3c7; /* Blush */
@@ -58,6 +61,8 @@
   --color-rust: #c65d2e;
   --color-terracotta: #a44a2f;
   --color-ochre: #c2a24d;
+  /* Warm linen surface between Ivory and Sand, used instead of navy bands. */
+  --color-linen: #ece3d9;
 }
 
 :root {
@@ -115,6 +120,8 @@
 
   body {
     background-color: var(--color-background);
+    /* A faint paper grain so the ivory feels like cloth or paper, not a screen. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .48 0 0 0 0 .42 0 0 0 0 .37 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-weight: 400;
@@ -156,13 +163,13 @@
     repeating-linear-gradient(-45deg, rgba(31, 58, 95, 0.035) 0 1px, transparent 1px 14px);
 }
 
-/* Small uppercase label with wide tracking */
+/* Section label: a soft italic serif aside ("Just in", "Most loved"), not shouty capitals. */
 .eyebrow {
-  font-family: var(--font-sans);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
   color: var(--color-taupe);
 }
 
