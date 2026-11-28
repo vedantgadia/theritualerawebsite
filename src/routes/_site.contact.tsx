@@ -24,7 +24,7 @@ function ContactPage() {
           Write to the <em className="font-normal italic text-ritual">studio</em>
         </h1>
         <p className="mt-5 text-sm font-light leading-relaxed text-washed">
-          Questions about a piece, its fit or an order — we're happy to help. The quickest way to
+          Questions about a piece, its fit or an order? We're happy to help. The quickest way to
           reach us is WhatsApp.
         </p>
       </header>

@@ -168,7 +168,7 @@ export function ProductListing({
           <div className="py-20 text-center">
             <p className="font-display text-2xl text-ink">Nothing in this edit just yet</p>
             <p className="mt-2 text-sm font-light text-washed">
-              Try another size or price — or browse everything.
+              Try another size or price, or browse everything.
             </p>
             <button
               onClick={() => {

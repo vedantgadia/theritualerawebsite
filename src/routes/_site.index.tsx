@@ -148,11 +148,11 @@ function Home() {
         </Marquee>
       </div>
 
-      {/* Manifesto — words light up on scroll */}
+      {/* Manifesto: words light up on scroll */}
       <section className="mx-auto max-w-5xl px-6 py-24 text-center sm:py-36">
         <p className="eyebrow mb-8">The ritual</p>
         <ScrollWords
-          text="Getting dressed is one of the first rituals of the day — a quiet moment that sets the tone for everything that follows."
+          text="Getting dressed is one of the first rituals of the day, a quiet moment that sets the tone for everything that follows."
           className="font-display text-[1.9rem] leading-[1.25] text-ink sm:text-5xl sm:leading-[1.2]"
         />
         <StitchDivider className="mx-auto mt-14 max-w-xs" />
@@ -202,7 +202,7 @@ function Home() {
 
       <NewArrivals products={newArrivals} />
 
-      {/* Denim, Reimagined — with a shoppable hotspot */}
+      {/* Denim, Reimagined, with a shoppable hotspot */}
       <section className="stitch-lattice overflow-hidden">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
           <div className="relative">
@@ -302,7 +302,7 @@ function Home() {
 
       <CollectionsShowcase collections={collections} />
 
-      {/* Lookbook strip — moves continuously, pauses on hover */}
+      {/* Lookbook strip: moves continuously, pauses on hover */}
       <section className="border-y border-border bg-sand/30 py-20 sm:py-24">
         <div className="mx-auto mb-10 max-w-7xl px-4 text-center sm:px-8">
           <p className="eyebrow mb-3">The Lookbook</p>
@@ -393,7 +393,7 @@ function Home() {
 const DIFFERENCE = [
   {
     title: "Denim, at the heart",
-    body: "Every collection begins with denim — pieced, panelled and paired with Indian textiles you won't find on a high-street rail.",
+    body: "Every collection begins with denim, pieced, panelled and paired with Indian textiles you won't find on a high-street rail.",
     icon: "M6 3h12l1 18h-5l-2-9-2 9H5L6 3zM6 7h12M9 3v4M15 3v4",
   },
   {
@@ -403,12 +403,12 @@ const DIFFERENCE = [
   },
   {
     title: "Limited by design",
-    body: "Small runs, never mass-produced. When a piece sells out it rarely returns — which is what makes it yours.",
+    body: "Small runs, never mass-produced. When a piece sells out it rarely returns, which is what makes it yours.",
     icon: "M12 3v4M7 7h10l2 14H5L7 7zM10 12h4",
   },
   {
     title: "Craft you notice up close",
-    body: "Hand embroidery, crochet panels, ajrakh blocks and sashiko-inspired running stitch — details made to be looked at twice.",
+    body: "Hand embroidery, crochet panels, ajrakh blocks and sashiko-inspired running stitch. Details made to be looked at twice.",
     icon: "M12 12c-3-5-7-4-7-1s4 3 7 1zm0 0c3-5 7-4 7-1s-4 3-7 1zm0 0c-4 3-4 7-1 7s3-4 1-7zM12 12v9",
   },
   {
@@ -418,7 +418,7 @@ const DIFFERENCE = [
   },
   {
     title: "Designed beyond a season",
-    body: "Elevated essentials made to be worn, repeated and reimagined for years — never a passing trend.",
+    body: "Elevated essentials made to be worn, repeated and reimagined for years, never a passing trend.",
     icon: "M12 3a9 9 0 1 0 9 9M12 7v5l3 3M21 3v6h-6",
   },
 ];
@@ -435,7 +435,7 @@ function Difference() {
               Made with <em className="font-normal italic text-ritual">intention</em>
             </h2>
             <p className="mt-5 max-w-sm text-[15px] font-light leading-relaxed text-deep-denim">
-              Six things we never compromise on — from the first sketch to the last running stitch.
+              Six things we never compromise on, from the first sketch to the last running stitch.
             </p>
           </div>
           <div className="relative mt-10 hidden max-w-md lg:block">

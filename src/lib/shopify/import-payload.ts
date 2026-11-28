@@ -61,7 +61,7 @@ export function productSetInput(p: ProductDetail, opts: { imageBase: string; loc
     files: p.images.map((src, i) => ({
       originalSource: absolute(opts.imageBase, src),
       contentType: "IMAGE",
-      alt: i === 0 ? p.name : `${p.name} — detail`,
+      alt: i === 0 ? p.name : `${p.name}, detail`,
     })),
     variants: p.sizes.map((s) => ({
       optionValues: [{ optionName: SIZE_OPTION, name: s.size }],

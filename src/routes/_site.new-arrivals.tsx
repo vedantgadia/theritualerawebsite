@@ -25,7 +25,7 @@ function NewArrivals() {
           New <em className="font-normal italic">Arrivals</em>
         </>
       }
-      intro="Fresh off the cutting table. Small runs, made in-house — when a size is gone, it's usually gone for good."
+      intro="Fresh off the cutting table. Small runs, made in-house. When a size is gone, it's usually gone for good."
       products={products}
       defaultSort="newest"
     />

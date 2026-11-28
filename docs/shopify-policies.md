@@ -35,7 +35,7 @@ Every piece from The Ritual Era is designed and made in small runs in our Mumbai
 ### Refunds
 We do not offer refunds for change of mind. We refund to your original payment method only when:
 
-- the piece arrives damaged or defective, or we sent you the wrong item — please tell us within 48 hours of delivery, with photos of the piece and its packaging; or
+- the piece arrives damaged or defective, or we sent you the wrong item (please tell us within 48 hours of delivery, with photos of the piece and its packaging); or
 - you cancel your order before it has been dispatched; or
 - we are unable to fulfil your order.
 
@@ -118,7 +118,7 @@ You must be at least 18 years old, or using the site with the involvement of a p
 ### 4. Orders
 
 - Your order is an offer to buy. A contract is formed when we dispatch your order.
-- We may decline or cancel an order — for example, if a piece is out of stock, the price is wrong, or we suspect fraud. If we cancel after you have paid, we refund you in full to your original payment method.
+- We may decline or cancel an order, for example if a piece is out of stock, the price is wrong, or we suspect fraud. If we cancel after you have paid, we refund you in full to your original payment method.
 - You can cancel your order free of charge before it is dispatched by contacting us.
 
 ### 5. Made-to-measure
@@ -131,7 +131,7 @@ Delivery, exchanges and refunds are covered by our Shipping Policy and Refund & 
 If you create an account, you are responsible for keeping your login details safe and for activity under your account. Tell us straight away if you think someone else has used it.
 
 ### 8. Intellectual property
-All content on this site — including our name, logo, designs, photographs, text and graphics — belongs to The Ritual Era or our licensors. You may not copy, reproduce or use it for commercial purposes without our written permission.
+All content on this site, including our name, logo, designs, photographs, text and graphics, belongs to The Ritual Era or our licensors. You may not copy, reproduce or use it for commercial purposes without our written permission.
 
 ### 9. Acceptable use
 You agree not to misuse the site, including by attempting to gain unauthorised access, interfering with its operation, or using it for anything unlawful or fraudulent.
@@ -157,7 +157,7 @@ For any question or complaint, email info@theritualera.com or WhatsApp +91 97697
 
 **Proprietor:** Priyanka Bhartia
 
-**Address:** [TO CONFIRM — studio address], Mumbai, Maharashtra, India
+**Address:** [TO CONFIRM: studio address], Mumbai, Maharashtra, India
 
 **Email:** info@theritualera.com
 

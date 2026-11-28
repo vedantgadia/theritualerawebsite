@@ -175,7 +175,7 @@ function ProductPage() {
 
           <div className="mt-8">
             <div className="mb-3 flex items-center justify-between">
-              <p className="eyebrow">Size{size ? ` — ${size}` : ""}</p>
+              <p className="eyebrow">Size{size ? `: ${size}` : ""}</p>
               <button
                 onClick={() => setGuideOpen(true)}
                 className="font-sans text-[10px] uppercase tracking-[0.18em] text-ritual underline underline-offset-4"

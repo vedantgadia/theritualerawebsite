@@ -4,7 +4,7 @@ export function PagePlaceholder({ title }: { title: string }) {
       <p className="eyebrow mb-3">The Ritual Era</p>
       <h1 className="font-display text-4xl text-ink">{title}</h1>
       <p className="mt-4 text-sm font-light text-washed">
-        This page is being dressed — check back in a moment.
+        This page is being dressed. Check back soon.
       </p>
     </div>
   );

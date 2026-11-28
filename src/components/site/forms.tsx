@@ -116,7 +116,7 @@ export function ContactForm() {
   const f = useFormState({ name: "", email: "", phone: "", message: "", website: "" });
   if (f.status === "done") {
     return (
-      <ThankYou title="Thank you — message received.">
+      <ThankYou title="Thank you. Your message is with us.">
         We'll reply by email or phone, 10am–7pm. For anything urgent, message us on WhatsApp.
       </ThankYou>
     );
@@ -290,7 +290,7 @@ export function MtmForm({
       <fieldset>
         <legend className="eyebrow mb-1">Measurements, in inches (optional)</legend>
         <p className="mb-4 text-xs font-light text-taupe">
-          Fill in what you know — we'll take the rest together on a call.
+          Fill in what you know. We'll take the rest together on a call.
         </p>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
           {MEASUREMENTS.map((m) => (

@@ -36,7 +36,7 @@ export function resolveBagLines(bag: BagLine[], products: CatalogProduct[]): Res
     }
     if (quantity > size.stock) {
       problems.push(
-        `Only ${size.stock} of ${product.name} in ${line.size} left — please lower the quantity.`,
+        `Only ${size.stock} of ${product.name} in ${line.size} left. Please lower the quantity.`,
       );
       continue;
     }

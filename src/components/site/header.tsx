@@ -13,7 +13,7 @@ import { Logo, useCycle } from "@/components/site/motion";
 
 function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
-    <Link to="/" className="block" aria-label="The Ritual Era — home">
+    <Link to="/" className="block" aria-label="The Ritual Era home">
       <Logo
         className={`w-auto transition-[height] duration-500 ${compact ? "h-12 lg:h-14" : "h-14 lg:h-20"}`}
       />
@@ -23,9 +23,9 @@ function Wordmark({ compact = false }: { compact?: boolean }) {
 
 const ANNOUNCEMENTS = [
   "Complimentary shipping across India on orders above ₹5,000",
-  "New arrivals — the Autumn Edit is here",
+  "New arrivals: the Autumn Edit is here",
   "Designed & made in-house in Mumbai · Limited editions",
-  "Made-to-measure on request — any piece, cut to you",
+  "Made-to-measure on request. Any piece, cut to you",
 ];
 
 function AnnouncementBar() {
@@ -98,7 +98,7 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
           ))}
           {q.trim() && results.length === 0 && (
             <p className="py-6 text-sm font-light text-washed">
-              Nothing found yet — try another word.
+              Nothing found yet. Try another word.
             </p>
           )}
         </div>
@@ -195,7 +195,7 @@ export function Header() {
         <div
           className={`mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 transition-[padding] duration-500 sm:px-8 ${scrolled ? "py-2.5 lg:pb-1.5 lg:pt-3" : "py-3 lg:pb-2 lg:pt-4"}`}
         >
-          {/* Left — mobile menu / desktop search */}
+          {/* Left: mobile menu / desktop search */}
           <div className="flex items-center gap-4">
             <button
               className="p-1 text-ink lg:hidden"

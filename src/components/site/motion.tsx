@@ -140,7 +140,7 @@ export function ScrollWords({ text, className = "" }: { text: string; className?
   );
 }
 
-/** Dashed running stitch with the four-point star — the stitches keep sewing. */
+/** Dashed running stitch with the four-point star; the stitches keep sewing. */
 export function StitchDivider({
   className = "",
   tone = "taupe",

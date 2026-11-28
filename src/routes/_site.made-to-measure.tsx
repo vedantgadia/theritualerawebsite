@@ -46,7 +46,7 @@ function MadeToMeasurePage() {
           </h1>
           <p className="mt-5 text-sm font-light leading-relaxed text-washed">
             Every piece is designed and made in-house, so any of them can be cut to your
-            measurements — a longer sleeve, a different length, a fit that's simply yours.
+            measurements. A longer sleeve, a different length, a fit that's simply yours.
           </p>
           <StitchDivider className="my-10 max-w-xs" />
           <ol className="space-y-7">
